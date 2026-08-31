@@ -61,7 +61,13 @@ export const doc = partsJson as unknown as PartsDoc;
 export const geometry = geometryJson as unknown as {
   carcass: { openingWidth: number; clearHeight: number; depth: number; dividerX: number };
   top: { y0: number; y1: number; depth: number; frontOverhang: number };
-  drawerBox: { width: number; depth: number; usableDepth: number };
+  drawerBox: {
+    width: number;
+    depth: number;
+    usableDepth: number;
+    usableDepthBelowRail: number;
+    spaceZ: [number, number];
+  };
   rows: { row: number; frontHeight: number; frontTopY: number; frontBottomY: number }[];
   columnsX: { col: number; x0: number; x1: number }[];
 };

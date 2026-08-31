@@ -104,9 +104,16 @@ describe("typické chybné opravy (.claude/CLAUDE.md)", () => {
     expectFail((s) => { s.fronts.heights = [210, 210, 210, 210]; }, /spodný rad je najvyšší/);
   });
 
-  test("zaokrúhlenie hĺbky boxu na 750 prekročí využiteľnú hĺbku", () => {
-    // Za gola profilom a chrbtom zostáva 748 mm. 750 sa tam nezmestí.
-    expectFail((s) => { s.drawers.boxDepth = 750; }, /hĺbka na výsuv/);
+  test("predĺženie boxu za zadnú výstuhu prekročí využiteľnú hĺbku", () => {
+    // Medzi zadnou rovinou gola profilu (z 26) a výstuhou (z 759) je 733 mm.
+    expectFail((s) => { s.drawers.boxDepth = 760; }, /hĺbka na výsuv/);
+  });
+
+  test("hranica 733 mm je presná — 733 ešte prejde, 734 už nie", () => {
+    // Ak by invariant hlásil viac než 733, prvý rad by narazil do výstuhy
+    // a odhalila by to až kolízna kontrola. Obe hranice musia sedieť.
+    assert.equal(run(BUILD, (s) => { s.drawers.boxDepth = 733; }).code, 0);
+    expectFail((s) => { s.drawers.boxDepth = 734; }, /hĺbka na výsuv/);
   });
 
   test("wallAnchor.required: false neprejde schémou", () => {

@@ -85,11 +85,44 @@ check("svetlosť priehradky", openingWidth, 873);
 check("svetlá výška korpusu", clearHeight, 907);
 check("výška boku korpusu", sideHeight, 907);
 
+/* --- referenčné roviny --------------------------------------------- */
+const carcassZ0 = overall.depth - carcassDepth;          // 18 — čelná hrana korpusu
+const carcassZ1 = overall.depth;                          // 800 — zadná hrana
+const bottomY0 = legs.height;                             // 100
+const bottomY1 = bottomY0 + T_BODY;                       // 118
+const backZ1 = carcassZ1 - carcass.parts.back.groove.insetFromRear;
+const backZ0 = backZ1 - T_BACK;
+const railZ1 = backZ0;
+const railZ0 = railZ1 - T_BODY;
+const golaZ0 = 0;                                         // lícuje s rovinou čiel
+const golaZ1 = golaZ0 + gola.between.profileDepth;        // 26 — laps na čelnú hranu korpusu
+const golaLap = golaZ1 - carcassZ0;                       // 8 — prekrytie čelnej hrany
+const boxZ0 = golaZ1;
+const boxZ1 = boxZ0 + drawers.boxDepth;
+const dividerX0 = (overall.width - T_BODY) / 2;
+const openings = [
+  { x0: T_BODY, x1: dividerX0 },
+  { x0: dividerX0 + T_BODY, x1: overall.width - T_BODY },
+];
+
+check("otvor vľavo = svetlosť", openings[0].x1 - openings[0].x0, openingWidth);
+check("otvor vpravo = svetlosť", openings[1].x1 - openings[1].x0, openingWidth);
+assertTrue("box sa zmestí za gola profil", boxZ1 <= backZ0,
+  `box končí na z = ${boxZ1}, chrbát začína na z = ${backZ0}`);
+
 /* --- zásuvky -------------------------------------------------------- */
 const boxWidth = Math.floor(openingWidth - 2 * drawers.slide.clearancePerSide);
-const usableDepth = carcassDepth - gola.between.profileDepth - T_BACK;
+// Priestor pre box začína za gola profilom (z 26). Končí na prvej prekážke:
+// pod výstuhou je to chrbát (z 777), ale horný rad ide za zadnú výstuhu, ktorá
+// visí nižšie (z 759). Väzbové číslo je preto to menšie.
+// Pozor, nie carcassDepth − profileDepth − T_BACK: gola začína na z 0, do
+// korpusu teda zasahuje len 8 mm, a chrbát je odsadený od zadnej hrany. Tá
+// formulka dávala 748 — zhodou okolností dosť konzervatívne na to, aby výstuhu
+// úplne zakryla.
+const usableDepthBelowRail = backZ0 - boxZ0;   // 751
+const usableDepth = railZ0 - boxZ0;            // 733 — horný rad za výstuhou
 assertTrue("hĺbka na výsuv", usableDepth >= drawers.boxDepth,
-  `k dispozícii ${usableDepth} mm, výsuv potrebuje ${drawers.boxDepth} mm`);
+  `k dispozícii ${usableDepth} mm (z ${boxZ0} po výstuhu na ${railZ0}), výsuv potrebuje ${drawers.boxDepth} mm`);
 assertTrue("počet zásuviek", drawers.count === fronts.rows * fronts.columns,
   `${drawers.count} ≠ ${fronts.rows} × ${fronts.columns}`);
 
@@ -152,7 +185,13 @@ const geometry = {
   frontZone: { height: frontZone, y0: carcassBottomY, y1: topUnderside },
   rows,
   columnsX,
-  drawerBox: { width: boxWidth, depth: drawers.boxDepth, usableDepth },
+  drawerBox: {
+    width: boxWidth,
+    depth: drawers.boxDepth,
+    usableDepth,
+    usableDepthBelowRail,
+    spaceZ: [boxZ0, railZ0],
+  },
   changingPad: spec.changingPad.thickness === null ? { status: "PLACEHOLDER" } : {
     x0: (overall.width - spec.changingPad.width) / 2,
     z0: overall.depth - spec.changingPad.depth,
@@ -264,31 +303,6 @@ const place = (id, group, label, pos, size, material, extra = {}) => {
     ...extra,
   });
 };
-
-/* --- referenčné roviny --------------------------------------------- */
-const carcassZ0 = overall.depth - carcassDepth;          // 18 — čelná hrana korpusu
-const carcassZ1 = overall.depth;                          // 800 — zadná hrana
-const bottomY0 = legs.height;                             // 100
-const bottomY1 = bottomY0 + T_BODY;                       // 118
-const backZ1 = carcassZ1 - carcass.parts.back.groove.insetFromRear;
-const backZ0 = backZ1 - T_BACK;
-const railZ1 = backZ0;
-const railZ0 = railZ1 - T_BODY;
-const golaZ0 = 0;                                         // lícuje s rovinou čiel
-const golaZ1 = golaZ0 + gola.between.profileDepth;        // 26 — laps na čelnú hranu korpusu
-const golaLap = golaZ1 - carcassZ0;                       // 8 — prekrytie čelnej hrany
-const boxZ0 = golaZ1;
-const boxZ1 = boxZ0 + drawers.boxDepth;
-const dividerX0 = (overall.width - T_BODY) / 2;
-const openings = [
-  { x0: T_BODY, x1: dividerX0 },
-  { x0: dividerX0 + T_BODY, x1: overall.width - T_BODY },
-];
-
-check("otvor vľavo = svetlosť", openings[0].x1 - openings[0].x0, openingWidth);
-check("otvor vpravo = svetlosť", openings[1].x1 - openings[1].x0, openingWidth);
-assertTrue("box sa zmestí za gola profil", boxZ1 <= backZ0,
-  `box končí na z = ${boxZ1}, chrbát začína na z = ${backZ0}`);
 
 /* --- nožičky -------------------------------------------------------- */
 const legZ = [carcassZ0 + legs.cornerInset, carcassZ1 - legs.cornerInset];
@@ -509,7 +523,7 @@ console.log(`  korpus            ${overall.width} × ${carcass.height} × ${carc
 console.log(`  svetlosť          ${openingWidth} × ${clearHeight}`);
 console.log(`  čelo              ${fronts.width} × [${fronts.heights.join(", ")}]`);
 console.log(`  box               ${boxWidth} × ${drawers.boxDepth}`);
-console.log(`  hĺbka na výsuv    ${usableDepth} (potreba ${drawers.boxDepth})`);
+console.log(`  hĺbka na výsuv    ${usableDepth} = z ${boxZ0}..${railZ0} za výstuhou, ${usableDepthBelowRail} pod ňou (potreba ${drawers.boxDepth})`);
 console.log(`\n  ${parts.reduce((a, p) => a + p.qty, 0)} dielov v cutliste`);
 console.log(`  ${P.length} dielov umiestnených v priestore`);
 console.log("  → spec/derived/geometry.json");

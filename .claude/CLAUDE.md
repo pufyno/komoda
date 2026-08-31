@@ -41,7 +41,7 @@ Keď pridáš invariant, pridaj k nemu prípad — inak nevieš, či vôbec fung
 | svetlosť priehradky | (1800 − 3 × 18) / 2 = 873 |
 | svetlá výška korpusu | 950 − 25 − 18 = 907 |
 | spodná hrana posledného čela = spodok korpusu | 100 |
-| hĺbka na výsuv ≥ hĺbka boxu | 748 ≥ 700 |
+| hĺbka na výsuv ≥ hĺbka boxu | 733 ≥ 700 |
 | drážka v priečke udrží chrbát | 8 ≥ 8 |
 | spodný rad je najvyšší | 270 > 190 |
 | všetky diely v obálke | 1800 × 1050 × 800 |

@@ -68,7 +68,12 @@
   "drawerBox": {
     "width": 847,
     "depth": 700,
-    "usableDepth": 748
+    "usableDepth": 733,
+    "usableDepthBelowRail": 751,
+    "spaceZ": [
+      26,
+      759
+    ]
   },
   "changingPad": {
     "status": "PLACEHOLDER"

@@ -106,7 +106,9 @@ export default function Sidebar({
           <dt>Zásuvkový box</dt>
           <dd className="num">{geometry.drawerBox.width} × {geometry.drawerBox.depth}</dd>
           <dt>Hĺbka na výsuv</dt>
-          <dd className="num">{geometry.drawerBox.usableDepth} (potreba {geometry.drawerBox.depth})</dd>
+          <dd className="num" title={`od zadnej roviny gola profilu (z ${geometry.drawerBox.spaceZ[0]}) po zadnú výstuhu (z ${geometry.drawerBox.spaceZ[1]}); pod výstuhou ${geometry.drawerBox.usableDepthBelowRail}`}>
+            {geometry.drawerBox.usableDepth} (potreba {geometry.drawerBox.depth})
+          </dd>
           <dt>Svetlosť boxu</dt>
           <dd className="num">{doc.drawers[0].inner.width} × {doc.drawers[0].inner.height}</dd>
         </dl>
