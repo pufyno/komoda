@@ -17,6 +17,17 @@ npm run validate
 ```
 
 Spustí kontrolu schémy aj aritmetických invariantov a pregeneruje `spec/derived/`.
+Pri nekonzistentnom spece sa **nezapíše nič** — derived súbory zostanú také, aké boli.
+
+```bash
+npm test
+```
+
+`test/invariants.test.mjs` testuje validátor, nie nábytok: každý prípad zámerne
+pokazí spec a tvrdí, že build spadne a povie prečo. Prvé štyri sú presne tie
+chybné „opravy" nižšie. Beží nad kópiou specu v temp adresári
+(`KOMODA_SPEC` / `KOMODA_OUT`), takže sa `spec/derived/` nedotkne.
+Keď pridáš invariant, pridaj k nemu prípad — inak nevieš, či vôbec funguje.
 
 **Ak validácia zlyhá, nekonzistentný je spec — nie skript.** Neupravuj `scripts/build.mjs`, aby test prešiel. Oprav hodnoty v specu.
 
@@ -31,7 +42,8 @@ Spustí kontrolu schémy aj aritmetických invariantov a pregeneruje `spec/deriv
 | svetlá výška korpusu | 950 − 25 − 18 = 907 |
 | spodná hrana posledného čela = spodok korpusu | 100 |
 | hĺbka na výsuv ≥ hĺbka boxu | 748 ≥ 700 |
-| drážky v priečke sa nestretnú | 2 × 8 < 18 |
+| drážka v priečke udrží chrbát | 8 ≥ 8 |
+| spodný rad je najvyšší | 270 > 190 |
 | všetky diely v obálke | 1800 × 1050 × 800 |
 | žiadne nechcené prieniky dielov | 54 zamýšľaných, 0 iných |
 
@@ -41,7 +53,7 @@ Spustí kontrolu schémy aj aritmetických invariantov a pregeneruje `spec/deriv
 
 Typické chybné „opravy":
 - zjednotiť gola reveal na 21 → výška čela prestane vyjsť na celé číslo
-- zrovnať čelá na 4× 210 → stratí sa jediná hlboká zásuvka
+- zrovnať čelá na 4× 210 → stratí sa jediná hlboká zásuvka (súčet 925 sedí, chytá to až invariant „spodný rad je najvyšší")
 - zaokrúhliť box na 850 → zásuvka sa zasekne
 - nastaviť `wallAnchor.required: false` → komoda sa preklopí
 

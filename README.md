@@ -19,6 +19,7 @@ app/                      ← vizualizér (Vite + react-three-fiber)
 ```bash
 npm install
 npm run validate     # schéma + aritmetické invarianty + regenerácia derived/
+npm test             # testy validátora — pokazený spec musí build zhodiť
 npm run dev          # vizualizér na http://localhost:5173
 npm run build        # validácia + produkčný build do app/dist
 ```
@@ -70,6 +71,13 @@ Projekt sa importuje z tohto repa. Root Directory zostáva na koreni, aby build 
 Build command a output directory sú v `vercel.json`, takže sa nenastavujú klikaním. V dashboarde stačí Framework Preset `Other` a Root Directory na koreni repa (aby build videl `spec/`).
 
 `npm run build` spúšťa validáciu pred buildom, takže **nekonzistentný spec zhodí deploy** a na produkciu sa nedostane.
+
+## CI
+
+`.github/workflows/ci.yml` beží na každý push do `main` a na každý PR:
+validácia → testy → typecheck → build. Naviac kontroluje, že commitnuté
+`spec/derived/` sedí s výstupom generátora — ručná editácia alebo zabudnuté
+`npm run validate` neprejdú.
 
 ## Claude Code
 

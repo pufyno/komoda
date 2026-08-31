@@ -12,7 +12,17 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const spec = JSON.parse(readFileSync(resolve(ROOT, "spec/komoda.json"), "utf8"));
+
+// KOMODA_SPEC / KOMODA_OUT umožňujú spustiť build nad iným specom a zapísať
+// inam. Používa to testovacia sada — bez toho by testy prepisovali derived/.
+const SPEC_PATH = process.env.KOMODA_SPEC
+  ? resolve(process.env.KOMODA_SPEC)
+  : resolve(ROOT, "spec/komoda.json");
+const OUT_DIR = process.env.KOMODA_OUT
+  ? resolve(process.env.KOMODA_OUT)
+  : resolve(ROOT, "spec/derived");
+
+const spec = JSON.parse(readFileSync(SPEC_PATH, "utf8"));
 
 /* ------------------------------------------------------------------ */
 /* kontrola invariantov                                               */
@@ -55,6 +65,9 @@ assertTrue("počet gola C profilov", gola.between.count === fronts.rows - 1,
   `pri ${fronts.rows} radoch musí byť ${fronts.rows - 1} profilov medzi radmi, je ${gola.between.count}`);
 assertTrue("počet výšok čiel", fronts.heights.length === fronts.rows,
   `${fronts.heights.length} výšok pre ${fronts.rows} radov`);
+assertTrue("spodný rad je najvyšší", 
+  fronts.heights[fronts.rows - 1] > Math.max(...fronts.heights.slice(0, -1)),
+  `spodné čelo ${fronts.heights[fronts.rows - 1]} mm nie je vyššie než ostatné (${fronts.heights.slice(0, -1).join(", ")}) — stratí sa jediná hlboká zásuvka, pozri D5`);
 assertTrue("počet výšok boxov", drawers.boxSideHeights.length === fronts.rows,
   `${drawers.boxSideHeights.length} výšok pre ${fronts.rows} radov`);
 
@@ -117,7 +130,7 @@ const columnsX = [
 ];
 
 const geometry = {
-  generated: new Date().toISOString().slice(0, 10),
+  generated: spec.revision,
   source: "spec/komoda.json",
   warning: "GENEROVANÉ — needituj ručne. Zmeň spec a spusti npm run build.",
   carcass: {
@@ -168,8 +181,8 @@ const grooveDepth = carcass.parts.back.groove.depth;
 // medzi nimi. Chrbát preto nie je symetrický: hlbšia strana do boku,
 // plytšia do priečky.
 const dividerGrooveDepth = Math.floor((T_BODY - 2) / 2);
-assertTrue("drážky v priečke sa nestretnú", 2 * dividerGrooveDepth < T_BODY,
-  `2 × ${dividerGrooveDepth} mm drážka v ${T_BODY} mm priečke`);
+assertTrue("drážka v priečke udrží chrbát", dividerGrooveDepth >= T_BACK,
+  `drážka ${dividerGrooveDepth} mm pre ${T_BACK} mm chrbát — v ${T_BODY} mm priečke sa hlbšia z oboch strán nezmestí`);
 const backWidth = openingWidth + grooveDepth + dividerGrooveDepth;
 
 add("korpus", "Chrbát", carcass.parts.back.count,
@@ -465,17 +478,6 @@ const partsDoc = {
   intendedIntersections: intersections,
 };
 
-mkdirSync(resolve(ROOT, "spec/derived"), { recursive: true });
-writeFileSync(resolve(ROOT, "spec/derived/geometry.json"), JSON.stringify(geometry, null, 2) + "\n");
-writeFileSync(resolve(ROOT, "spec/derived/cutlist.json"), JSON.stringify({
-  generated: geometry.generated,
-  source: "spec/komoda.json",
-  warning: geometry.warning,
-  parts,
-  hardware,
-}, null, 2) + "\n");
-writeFileSync(resolve(ROOT, "spec/derived/parts.json"), JSON.stringify(partsDoc, null, 2) + "\n");
-
 const pad = (s, n) => String(s).padEnd(n);
 console.log("\nINVARIANTY");
 for (const c of checks) {
@@ -490,6 +492,17 @@ if (failures.length) {
   console.error("\nSpec je nekonzistentný. Oprav spec/komoda.json.\n");
   process.exit(1);
 }
+
+mkdirSync(OUT_DIR, { recursive: true });
+writeFileSync(resolve(OUT_DIR, "geometry.json"), JSON.stringify(geometry, null, 2) + "\n");
+writeFileSync(resolve(OUT_DIR, "cutlist.json"), JSON.stringify({
+  generated: geometry.generated,
+  source: "spec/komoda.json",
+  warning: geometry.warning,
+  parts,
+  hardware,
+}, null, 2) + "\n");
+writeFileSync(resolve(OUT_DIR, "parts.json"), JSON.stringify(partsDoc, null, 2) + "\n");
 
 console.log("\nODVODENÉ");
 console.log(`  korpus            ${overall.width} × ${carcass.height} × ${carcassDepth}`);

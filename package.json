@@ -10,11 +10,15 @@
   "scripts": {
     "dev": "npm -w app run dev",
     "validate": "node scripts/validate-schema.mjs && node scripts/build.mjs",
+    "test": "node --test \"test/*.test.mjs\"",
     "build": "npm run validate && npm -w app run build",
     "typecheck": "npm -w app run typecheck"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

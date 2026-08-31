@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Invarianty specu — tie isté, ktoré musia platiť pred výrobou.
+      - name: Validácia specu
+        run: npm run validate
+
+      # Testy validátora: pokazený spec musí build zhodiť.
+      - name: Testy invariantov
+        run: npm test
+
+      - name: Typová kontrola
+        run: npm run typecheck
+
+      - name: Build vizualizéra
+        run: npm run build
+
+      # spec/derived/ je generované. Ak sa po builde líši od commitnutého,
+      # niekto ho editoval ručne alebo zabudol spustiť npm run validate.
+      - name: spec/derived je aktuálne
+        run: |
+          if ! git diff --quiet -- spec/derived; then
+            echo "::error::spec/derived/ nesedí s výstupom buildu — spusti 'npm run validate' a commitni."
+            git diff --stat -- spec/derived
+            exit 1
+          fi

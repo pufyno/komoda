@@ -14,7 +14,9 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => JSON.parse(readFileSync(resolve(ROOT, p), "utf8"));
 
 const schema = read("spec/komoda.schema.json");
-const spec = read("spec/komoda.json");
+const spec = process.env.KOMODA_SPEC
+  ? JSON.parse(readFileSync(resolve(process.env.KOMODA_SPEC), "utf8"))
+  : read("spec/komoda.json");
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
