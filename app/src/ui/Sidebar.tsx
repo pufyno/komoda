@@ -6,9 +6,16 @@ interface Props {
   toggle: (group: string) => void;
   showEnvelope: boolean;
   setShowEnvelope: (v: boolean) => void;
+  openCount: number;
+  setAllDrawers: (open: boolean) => void;
+  explode: number;
+  setExplode: (v: number) => void;
 }
 
-export default function Sidebar({ visible, toggle, showEnvelope, setShowEnvelope }: Props) {
+export default function Sidebar({
+  visible, toggle, showEnvelope, setShowEnvelope,
+  openCount, setAllDrawers, explode, setExplode,
+}: Props) {
   const [openAssumptions, setOpenAssumptions] = useState(false);
   const counts = countByGroup(doc.parts);
   const groups = GROUP_ORDER.filter((g) => counts[g]);
@@ -45,6 +52,34 @@ export default function Sidebar({ visible, toggle, showEnvelope, setShowEnvelope
       </section>
 
       <section>
+        <h3>Zásuvky</h3>
+        <div className="controls">
+          <button
+            className="action"
+            onClick={() => setAllDrawers(openCount < doc.drawers.length)}
+          >
+            {openCount < doc.drawers.length ? "Otvoriť všetky" : "Zavrieť všetky"}
+          </button>
+          <span className="counter">{openCount} / {doc.drawers.length}</span>
+        </div>
+        <p className="micro">Dvojklik na zásuvku ju otvorí samostatne.</p>
+      </section>
+
+      <section>
+        <h3>Rozstrel</h3>
+        <input
+          className="slider"
+          type="range"
+          min={0}
+          max={1}
+          step={0.01}
+          value={explode}
+          onChange={(e) => setExplode(Number(e.target.value))}
+        />
+        <p className="micro">Odsunie diely od stredu, aby bolo vidieť skladbu.</p>
+      </section>
+
+      <section>
         <h3>Kľúčové rozmery</h3>
         <dl className="facts">
           <dt>Svetlosť priehradky</dt>
@@ -53,6 +88,8 @@ export default function Sidebar({ visible, toggle, showEnvelope, setShowEnvelope
           <dd className="num">{geometry.drawerBox.width} × {geometry.drawerBox.depth}</dd>
           <dt>Hĺbka na výsuv</dt>
           <dd className="num">{geometry.drawerBox.usableDepth} (potreba {geometry.drawerBox.depth})</dd>
+          <dt>Svetlosť boxu</dt>
+          <dd className="num">{doc.drawers[0].inner.width} × {doc.drawers[0].inner.height}</dd>
         </dl>
       </section>
 

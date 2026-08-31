@@ -49,7 +49,11 @@ Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
 
 ## Vizualizér
 
-Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — **nepočíta žiadnu geometriu**. Klik na diel ukáže jeho rozmer, materiál a rozhodnutie z `docs/decisions.md`, ktoré ten rozmer vysvetľuje.
+Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — **nepočíta žiadnu geometriu**.
+
+- **klik** na diel → rozmer, materiál, hrana a rozhodnutie z `docs/decisions.md`, ktoré ten rozmer vysvetľuje
+- **dvojklik** na zásuvku → vysunie sa na plný výsuv 700 mm a ukáže svetlosť boxu (815 × 130 × 668, spodný rad 815 × 180 × 668)
+- rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 800
 
 Stack: Vite + React + [react-three-fiber](https://github.com/pmndrs/react-three-fiber). Výstup je statický, bez servera.
 

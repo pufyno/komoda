@@ -33,6 +33,152 @@
     "výsuvy",
     "kotvenie"
   ],
+  "drawers": [
+    {
+      "id": "r1c1",
+      "row": 0,
+      "col": 0,
+      "frontHeight": 190,
+      "boxSideHeight": 150,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 130
+      },
+      "travel": 700,
+      "openTo": [
+        31,
+        833,
+        26
+      ]
+    },
+    {
+      "id": "r1c2",
+      "row": 0,
+      "col": 1,
+      "frontHeight": 190,
+      "boxSideHeight": 150,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 130
+      },
+      "travel": 700,
+      "openTo": [
+        922,
+        833,
+        26
+      ]
+    },
+    {
+      "id": "r2c1",
+      "row": 1,
+      "col": 0,
+      "frontHeight": 190,
+      "boxSideHeight": 150,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 130
+      },
+      "travel": 700,
+      "openTo": [
+        31,
+        622,
+        26
+      ]
+    },
+    {
+      "id": "r2c2",
+      "row": 1,
+      "col": 1,
+      "frontHeight": 190,
+      "boxSideHeight": 150,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 130
+      },
+      "travel": 700,
+      "openTo": [
+        922,
+        622,
+        26
+      ]
+    },
+    {
+      "id": "r3c1",
+      "row": 2,
+      "col": 0,
+      "frontHeight": 190,
+      "boxSideHeight": 150,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 130
+      },
+      "travel": 700,
+      "openTo": [
+        31,
+        411,
+        26
+      ]
+    },
+    {
+      "id": "r3c2",
+      "row": 2,
+      "col": 1,
+      "frontHeight": 190,
+      "boxSideHeight": 150,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 130
+      },
+      "travel": 700,
+      "openTo": [
+        922,
+        411,
+        26
+      ]
+    },
+    {
+      "id": "r4c1",
+      "row": 3,
+      "col": 0,
+      "frontHeight": 270,
+      "boxSideHeight": 200,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 180
+      },
+      "travel": 700,
+      "openTo": [
+        31,
+        135,
+        26
+      ]
+    },
+    {
+      "id": "r4c2",
+      "row": 3,
+      "col": 1,
+      "frontHeight": 270,
+      "boxSideHeight": 200,
+      "inner": {
+        "width": 815,
+        "depth": 668,
+        "height": 180
+      },
+      "travel": 700,
+      "openTo": [
+        922,
+        135,
+        26
+      ]
+    }
+  ],
   "parts": [
     {
       "id": "leg-1",
@@ -448,7 +594,8 @@
       "shape": "box",
       "decision": "D4",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r1c1"
     },
     {
       "id": "box-side-l-r1c1",
@@ -471,7 +618,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c1"
     },
     {
       "id": "box-side-r-r1c1",
@@ -494,7 +642,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c1"
     },
     {
       "id": "box-front-r1c1",
@@ -517,7 +666,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c1"
     },
     {
       "id": "box-back-r1c1",
@@ -540,7 +690,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c1"
     },
     {
       "id": "box-bottom-r1c1",
@@ -564,6 +715,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r1c1",
       "note": "v drážke 8 mm"
     },
     {
@@ -639,7 +791,8 @@
       "shape": "box",
       "decision": "D4",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r1c2"
     },
     {
       "id": "box-side-l-r1c2",
@@ -662,7 +815,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c2"
     },
     {
       "id": "box-side-r-r1c2",
@@ -685,7 +839,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c2"
     },
     {
       "id": "box-front-r1c2",
@@ -708,7 +863,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c2"
     },
     {
       "id": "box-back-r1c2",
@@ -731,7 +887,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r1c2"
     },
     {
       "id": "box-bottom-r1c2",
@@ -755,6 +912,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r1c2",
       "note": "v drážke 8 mm"
     },
     {
@@ -857,7 +1015,8 @@
       "shape": "box",
       "decision": "D4",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r2c1"
     },
     {
       "id": "box-side-l-r2c1",
@@ -880,7 +1039,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c1"
     },
     {
       "id": "box-side-r-r2c1",
@@ -903,7 +1063,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c1"
     },
     {
       "id": "box-front-r2c1",
@@ -926,7 +1087,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c1"
     },
     {
       "id": "box-back-r2c1",
@@ -949,7 +1111,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c1"
     },
     {
       "id": "box-bottom-r2c1",
@@ -973,6 +1136,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r2c1",
       "note": "v drážke 8 mm"
     },
     {
@@ -1048,7 +1212,8 @@
       "shape": "box",
       "decision": "D4",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r2c2"
     },
     {
       "id": "box-side-l-r2c2",
@@ -1071,7 +1236,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c2"
     },
     {
       "id": "box-side-r-r2c2",
@@ -1094,7 +1260,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c2"
     },
     {
       "id": "box-front-r2c2",
@@ -1117,7 +1284,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c2"
     },
     {
       "id": "box-back-r2c2",
@@ -1140,7 +1308,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r2c2"
     },
     {
       "id": "box-bottom-r2c2",
@@ -1164,6 +1333,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r2c2",
       "note": "v drážke 8 mm"
     },
     {
@@ -1266,7 +1436,8 @@
       "shape": "box",
       "decision": "D4",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r3c1"
     },
     {
       "id": "box-side-l-r3c1",
@@ -1289,7 +1460,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c1"
     },
     {
       "id": "box-side-r-r3c1",
@@ -1312,7 +1484,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c1"
     },
     {
       "id": "box-front-r3c1",
@@ -1335,7 +1508,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c1"
     },
     {
       "id": "box-back-r3c1",
@@ -1358,7 +1532,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c1"
     },
     {
       "id": "box-bottom-r3c1",
@@ -1382,6 +1557,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r3c1",
       "note": "v drážke 8 mm"
     },
     {
@@ -1457,7 +1633,8 @@
       "shape": "box",
       "decision": "D4",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r3c2"
     },
     {
       "id": "box-side-l-r3c2",
@@ -1480,7 +1657,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c2"
     },
     {
       "id": "box-side-r-r3c2",
@@ -1503,7 +1681,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c2"
     },
     {
       "id": "box-front-r3c2",
@@ -1526,7 +1705,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c2"
     },
     {
       "id": "box-back-r3c2",
@@ -1549,7 +1729,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r3c2"
     },
     {
       "id": "box-bottom-r3c2",
@@ -1573,6 +1754,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r3c2",
       "note": "v drážke 8 mm"
     },
     {
@@ -1648,7 +1830,8 @@
       "shape": "box",
       "decision": "D5",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r4c1"
     },
     {
       "id": "box-side-l-r4c1",
@@ -1671,7 +1854,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c1"
     },
     {
       "id": "box-side-r-r4c1",
@@ -1694,7 +1878,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c1"
     },
     {
       "id": "box-front-r4c1",
@@ -1717,7 +1902,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c1"
     },
     {
       "id": "box-back-r4c1",
@@ -1740,7 +1926,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c1"
     },
     {
       "id": "box-bottom-r4c1",
@@ -1764,6 +1951,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r4c1",
       "note": "v drážke 8 mm"
     },
     {
@@ -1839,7 +2027,8 @@
       "shape": "box",
       "decision": "D5",
       "edging": "ABS 2 mm dookola",
-      "grain": "horizontal"
+      "grain": "horizontal",
+      "drawer": "r4c2"
     },
     {
       "id": "box-side-l-r4c2",
@@ -1862,7 +2051,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c2"
     },
     {
       "id": "box-side-r-r4c2",
@@ -1885,7 +2075,8 @@
         376
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c2"
     },
     {
       "id": "box-front-r4c2",
@@ -1908,7 +2099,8 @@
         34
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c2"
     },
     {
       "id": "box-back-r4c2",
@@ -1931,7 +2123,8 @@
         718
       ],
       "shape": "box",
-      "decision": "D6"
+      "decision": "D6",
+      "drawer": "r4c2"
     },
     {
       "id": "box-bottom-r4c2",
@@ -1955,6 +2148,7 @@
       ],
       "shape": "box",
       "decision": "D6",
+      "drawer": "r4c2",
       "note": "v drážke 8 mm"
     },
     {

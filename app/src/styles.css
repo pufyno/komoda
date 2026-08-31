@@ -179,3 +179,44 @@ body {
   .sidebar { top: 12px; max-height: 44%; }
   .detail, .hint { top: auto; bottom: 12px; }
 }
+
+/* ------------------------------------------------------- ovládanie */
+
+.controls { display: flex; align-items: center; gap: 10px; }
+
+.action {
+  flex: 1;
+  background: #212a36;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  font: inherit;
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+.action:hover { background: #2a3543; border-color: #3d4a5c; }
+.action:active { background: #1b232d; }
+
+.counter { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+.micro { margin: 8px 0 0; font-size: 11px; color: var(--dim); }
+
+.slider { width: 100%; accent-color: var(--accent); }
+
+.drawer-box {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.drawer-box h3 {
+  margin: 0 0 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.drawer-box dl { margin-bottom: 12px; }
+
+.hint strong { color: var(--ink); font-weight: 600; }

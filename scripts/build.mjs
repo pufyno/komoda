@@ -238,6 +238,7 @@ const assumptions = [
 ];
 
 const P = [];
+const DRAWERS = [];
 const place = (id, group, label, pos, size, material, extra = {}) => {
   const [x, y, z] = pos.map((n) => Math.round(n * 100) / 100);
   const [sx, sy, sz] = size.map((n) => Math.round(n * 100) / 100);
@@ -336,20 +337,38 @@ rows.forEach((r, i) => {
 
     place(`front-${tag}`, "čelá", `Čelo ${r.frontHeight} mm`, [c.x0, r.frontBottomY, 0],
       [fronts.width, r.frontHeight, T_BODY], "ldtd18",
-      { decision: i === rows.length - 1 ? "D5" : "D4", edging: "ABS 2 mm dookola", grain: fronts.grain.direction });
+      { decision: i === rows.length - 1 ? "D5" : "D4", edging: "ABS 2 mm dookola",
+        grain: fronts.grain.direction, drawer: tag });
+
+    // Vnútorný priestor boxu — to, čo sa doň reálne zmestí.
+    const inner = {
+      width: boxWidth - 2 * T_BOX,
+      depth: drawers.boxDepth - 2 * T_BOX,
+      height: bh - PLACEMENT.drawerBoxBottomInset - t("hdf10"),
+    };
+    assertTrue(`svetlosť boxu (rad ${i + 1})`, inner.height > 0 && inner.width > 0 && inner.depth > 0,
+      `vyšla ${inner.width} × ${inner.height} × ${inner.depth}`);
+    DRAWERS.push({
+      id: tag, row: i, col: j,
+      frontHeight: r.frontHeight,
+      boxSideHeight: bh,
+      inner,
+      travel: drawers.boxDepth,
+      openTo: [bx0, by0, boxZ0],
+    });
 
     place(`box-side-l-${tag}`, "zásuvky", `Bok boxu (rad ${i + 1})`, [bx0, by0, boxZ0],
-      [T_BOX, bh, drawers.boxDepth], "ldtd16", { decision: "D6" });
+      [T_BOX, bh, drawers.boxDepth], "ldtd16", { decision: "D6", drawer: tag });
     place(`box-side-r-${tag}`, "zásuvky", `Bok boxu (rad ${i + 1})`, [bx0 + boxWidth - T_BOX, by0, boxZ0],
-      [T_BOX, bh, drawers.boxDepth], "ldtd16", { decision: "D6" });
+      [T_BOX, bh, drawers.boxDepth], "ldtd16", { decision: "D6", drawer: tag });
     place(`box-front-${tag}`, "zásuvky", `Predok boxu (rad ${i + 1})`, [bx0 + T_BOX, by0, boxZ0],
-      [boxWidth - 2 * T_BOX, bh, T_BOX], "ldtd16", { decision: "D6" });
+      [boxWidth - 2 * T_BOX, bh, T_BOX], "ldtd16", { decision: "D6", drawer: tag });
     place(`box-back-${tag}`, "zásuvky", `Zadok boxu (rad ${i + 1})`, [bx0 + T_BOX, by0, boxZ1 - T_BOX],
-      [boxWidth - 2 * T_BOX, bh, T_BOX], "ldtd16", { decision: "D6" });
+      [boxWidth - 2 * T_BOX, bh, T_BOX], "ldtd16", { decision: "D6", drawer: tag });
     place(`box-bottom-${tag}`, "zásuvky", `Dno boxu (rad ${i + 1})`,
       [bx0 + T_BOX - boxGroove, by0 + PLACEMENT.drawerBoxBottomInset, boxZ0 + T_BOX - boxGroove],
       [boxWidth - 2 * T_BOX + 2 * boxGroove, t("hdf10"), drawers.boxDepth - 2 * T_BOX + 2 * boxGroove], "hdf10",
-      { decision: "D6", note: `v drážke ${boxGroove} mm` });
+      { decision: "D6", drawer: tag, note: `v drážke ${boxGroove} mm` });
 
     const sy = by0 + (bh - PLACEMENT.slideHeight) / 2;
     place(`slide-l-${tag}`, "výsuvy", "Bočný plnovýsuv", [o.x0, sy, boxZ0],
@@ -371,6 +390,8 @@ anchorX.forEach((ax, i) => {
       fastener: spec.wallAnchor.fastener,
       note: `prechádza výstuhou; do steny pokračuje ďalších ${PLACEMENT.anchorLength - T_BODY} mm` });
 });
+assertTrue("počet pohyblivých zásuviek", DRAWERS.length === drawers.count,
+  `vygenerovaných ${DRAWERS.length}, spec hovorí ${drawers.count}`);
 assertTrue("počet kotiev", anchorX.length === spec.wallAnchor.count,
   `vygenerovaných ${anchorX.length}, spec hovorí ${spec.wallAnchor.count}`);
 
@@ -439,6 +460,7 @@ const partsDoc = {
   note: "position = minimálny roh kvádra, size = [dx, dy, dz], center = stred (pre BoxGeometry).",
   assumptions,
   groups: [...new Set(P.map((p) => p.group))],
+  drawers: DRAWERS,
   parts: P,
   intendedIntersections: intersections,
 };

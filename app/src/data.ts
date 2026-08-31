@@ -30,6 +30,17 @@ export interface Part {
   profileHeight?: number;
   finish?: string;
   loadKg?: number;
+  drawer?: string;
+}
+
+export interface Drawer {
+  id: string;
+  row: number;
+  col: number;
+  frontHeight: number;
+  boxSideHeight: number;
+  inner: { width: number; depth: number; height: number };
+  travel: number;
 }
 
 export interface PartsDoc {
@@ -39,6 +50,7 @@ export interface PartsDoc {
   axes: Record<string, string>;
   assumptions: string[];
   groups: string[];
+  drawers: Drawer[];
   parts: Part[];
   intendedIntersections: { a: string; b: string; overlap: Vec3; reason: string }[];
 }
@@ -64,9 +76,9 @@ export const GROUP_COLOR: Record<string, string> = {
   korpus: "#8ea3b8",
   "čelá": "#d3a05e",
   "zásuvky": "#7fae9f",
-  gola: "#2b2f36",
+  gola: "#525c69",
   "výsuvy": "#9aa1a8",
-  "nožičky": "#4a505a",
+  "nožičky": "#9aa3ad",
   kotvenie: "#c05a44",
 };
 
@@ -74,6 +86,8 @@ export const GROUP_ORDER = ["korpus", "čelá", "gola", "zásuvky", "výsuvy", "
 
 export const isMetal = (group: string) =>
   group === "gola" || group === "výsuvy" || group === "nožičky" || group === "kotvenie";
+
+export const drawerOf = (part: Part): string | null => part.drawer ?? null;
 
 export function countByGroup(parts: Part[]): Record<string, number> {
   return parts.reduce<Record<string, number>>((acc, p) => {

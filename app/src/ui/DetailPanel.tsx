@@ -1,4 +1,4 @@
-import { DECISION_TITLE, DECISIONS_URL, GROUP_COLOR, type Part } from "../data";
+import { DECISION_TITLE, DECISIONS_URL, GROUP_COLOR, doc, type Part } from "../data";
 
 const MATERIAL_LABEL: Record<string, string> = {
   ldtd25: "LDTD 25 mm",
@@ -8,9 +8,17 @@ const MATERIAL_LABEL: Record<string, string> = {
   hdf8: "HDF 8 mm",
 };
 
-export default function DetailPanel({ part, onClose }: { part: Part; onClose: () => void }) {
+interface Props {
+  part: Part;
+  open: boolean;
+  onToggleDrawer: (id: string) => void;
+  onClose: () => void;
+}
+
+export default function DetailPanel({ part, open, onToggleDrawer, onClose }: Props) {
   const [sx, sy, sz] = part.size;
   const [px, py, pz] = part.position;
+  const drawer = part.drawer ? doc.drawers.find((d) => d.id === part.drawer) : undefined;
 
   return (
     <aside className="panel detail">
@@ -27,20 +35,32 @@ export default function DetailPanel({ part, onClose }: { part: Part; onClose: ()
         <dt>Rozmer</dt>
         <dd className="num">{sx} × {sy} × {sz} mm</dd>
 
-        {part.material && (
-          <>
-            <dt>Materiál</dt>
-            <dd>{MATERIAL_LABEL[part.material] ?? part.material}</dd>
-          </>
-        )}
+        {part.material && (<><dt>Materiál</dt><dd>{MATERIAL_LABEL[part.material] ?? part.material}</dd></>)}
         {part.edging && (<><dt>Hrana</dt><dd>{part.edging}</dd></>)}
-        {part.grain && (<><dt>Kresba</dt><dd>{part.grain === "horizontal" ? "vodorovná, po dĺžke čela" : part.grain}</dd></>)}
-        {part.profileType && (<><dt>Profil</dt><dd>{part.profileType}, prierez {part.profileHeight} mm, {part.finish}</dd></>)}
+        {part.grain && (<><dt>Kresba</dt><dd>{part.grain === "horizontal" ? "vodorovná" : part.grain}</dd></>)}
+        {part.profileType && (<><dt>Profil</dt><dd>{part.profileType}, {part.profileHeight} mm, {part.finish}</dd></>)}
         {part.loadKg && (<><dt>Nosnosť</dt><dd className="num">{part.loadKg} kg</dd></>)}
 
         <dt>Poloha</dt>
         <dd className="num">x {px} · y {py} · z {pz}</dd>
       </dl>
+
+      {drawer && (
+        <div className="drawer-box">
+          <h3>Zásuvka — rad {drawer.row + 1}, {drawer.col === 0 ? "vľavo" : "vpravo"}</h3>
+          <dl>
+            <dt>Svetlosť boxu</dt>
+            <dd className="num">{drawer.inner.width} × {drawer.inner.height} × {drawer.inner.depth}</dd>
+            <dt>Výška bokov</dt>
+            <dd className="num">{drawer.boxSideHeight} mm</dd>
+            <dt>Výsuv</dt>
+            <dd className="num">{drawer.travel} mm (plný)</dd>
+          </dl>
+          <button className="action" onClick={() => onToggleDrawer(drawer.id)}>
+            {open ? "Zavrieť zásuvku" : "Otvoriť zásuvku"}
+          </button>
+        </div>
+      )}
 
       {part.note && <p className="note">{part.note}</p>}
 
