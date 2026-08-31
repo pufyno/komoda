@@ -1,0 +1,301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/pufyno/komoda/spec/komoda.schema.json",
+  "title": "Komoda — parametrický spec nábytku",
+  "description": "Štruktúra zdroja pravdy. Aritmetické invarianty (súčty, lícovanie) kontroluje scripts/build.mjs — JSON Schema ich vyjadriť nevie.",
+  "type": "object",
+  "required": ["id", "version", "units", "overall", "materials", "legs", "carcass", "gola", "fronts", "drawers", "wallAnchor"],
+  "additionalProperties": true,
+
+  "$defs": {
+    "mm": { "type": "number", "exclusiveMinimum": 0, "maximum": 5000 },
+    "mmOrNull": { "type": ["number", "null"], "exclusiveMinimum": 0, "maximum": 5000 },
+    "materialRef": {
+      "type": "string",
+      "enum": ["ldtd25", "ldtd18", "ldtd16", "hdf10", "hdf8"]
+    }
+  },
+
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "revision": { "type": "string", "format": "date" },
+    "units": { "const": "mm" },
+    "note": { "type": "string" },
+
+    "overall": {
+      "type": "object",
+      "required": ["width", "height", "depth"],
+      "properties": {
+        "width": { "$ref": "#/$defs/mm" },
+        "height": { "$ref": "#/$defs/mm" },
+        "depth": { "$ref": "#/$defs/mm" }
+      },
+      "additionalProperties": false
+    },
+
+    "materials": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["type", "thickness"],
+        "properties": {
+          "type": { "type": "string", "enum": ["LDTD", "HDF", "MDF", "masív", "preglejka"] },
+          "thickness": { "$ref": "#/$defs/mm" },
+          "decor": { "type": ["string", "null"] },
+          "decorCode": { "type": ["string", "null"] },
+          "finish": { "type": ["string", "null"] },
+          "abrasionClass": { "type": ["string", "null"] },
+          "emissionClass": { "type": ["string", "null"], "enum": ["E1", "E0.5", "CARB P2", null] },
+          "use": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "edging": {
+      "type": "object",
+      "properties": {
+        "material": { "type": "string" },
+        "thickness": { "$ref": "#/$defs/mm" },
+        "printed": { "type": "boolean" },
+        "matchDecor": { "type": "boolean" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "legs": {
+      "type": "object",
+      "required": ["height", "count"],
+      "properties": {
+        "height": { "$ref": "#/$defs/mm" },
+        "adjustable": { "type": "boolean" },
+        "adjustRangeApprox": { "$ref": "#/$defs/mm" },
+        "count": { "type": "integer", "minimum": 4, "maximum": 12 },
+        "cornerInset": { "$ref": "#/$defs/mm" },
+        "layout": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "carcass": {
+      "type": "object",
+      "required": ["height", "parts"],
+      "properties": {
+        "height": { "$ref": "#/$defs/mm" },
+        "construction": { "type": "string" },
+        "parts": {
+          "type": "object",
+          "required": ["bottom", "sides", "divider", "top", "back"],
+          "properties": {
+            "bottom": { "type": "object" },
+            "sides": { "type": "object" },
+            "divider": { "type": "object" },
+            "top": {
+              "type": "object",
+              "required": ["material", "overhang"],
+              "properties": {
+                "material": { "$ref": "#/$defs/materialRef" },
+                "width": { "$ref": "#/$defs/mm" },
+                "depth": { "$ref": "#/$defs/mm" },
+                "overhang": {
+                  "type": "object",
+                  "required": ["front", "left", "right"],
+                  "properties": {
+                    "front": { "type": "number", "minimum": 0 },
+                    "left": { "type": "number", "minimum": 0 },
+                    "right": { "type": "number", "minimum": 0 }
+                  },
+                  "additionalProperties": false
+                },
+                "note": { "type": "string" }
+              },
+              "additionalProperties": false
+            },
+            "rearRail": { "type": "object" },
+            "back": {
+              "type": "object",
+              "required": ["material", "groove"],
+              "properties": {
+                "material": { "$ref": "#/$defs/materialRef" },
+                "count": { "type": "integer", "minimum": 1 },
+                "split": { "type": "string" },
+                "groove": {
+                  "type": "object",
+                  "required": ["width", "depth"],
+                  "properties": {
+                    "width": { "$ref": "#/$defs/mm" },
+                    "depth": { "$ref": "#/$defs/mm" },
+                    "insetFromRear": { "$ref": "#/$defs/mm" }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "gola": {
+      "type": "object",
+      "required": ["top", "between"],
+      "description": "Bezúchytkový systém. Reveal = viditeľná medzera medzi čelami, NIE celková výška profilu.",
+      "properties": {
+        "system": { "type": "string" },
+        "finish": { "type": "string" },
+        "finishAlternative": { "type": "string" },
+        "top": {
+          "type": "object",
+          "required": ["reveal"],
+          "properties": {
+            "profileType": { "type": "string" },
+            "reveal": { "$ref": "#/$defs/mm" },
+            "count": { "type": "integer", "minimum": 1 },
+            "lengthEach": { "$ref": "#/$defs/mm" },
+            "position": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "between": {
+          "type": "object",
+          "required": ["reveal", "count"],
+          "properties": {
+            "profileType": { "type": "string" },
+            "reveal": { "$ref": "#/$defs/mm" },
+            "count": { "type": "integer", "minimum": 0 },
+            "lengthEach": { "$ref": "#/$defs/mm" },
+            "profileHeight": { "$ref": "#/$defs/mm" },
+            "profileDepth": { "$ref": "#/$defs/mm" },
+            "position": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "revealIsTarget": { "type": "boolean" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "fronts": {
+      "type": "object",
+      "required": ["material", "columns", "rows", "width", "heights"],
+      "properties": {
+        "material": { "$ref": "#/$defs/materialRef" },
+        "overlay": { "type": "string", "enum": ["full", "half", "inset"] },
+        "columns": { "type": "integer", "minimum": 1 },
+        "rows": { "type": "integer", "minimum": 1 },
+        "width": { "$ref": "#/$defs/mm" },
+        "centerGap": { "type": "number", "minimum": 0 },
+        "sideGap": { "type": "number", "minimum": 0 },
+        "heights": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/mm" },
+          "description": "Zhora nadol. Dĺžka musí zodpovedať rows."
+        },
+        "heightsNote": { "type": "string" },
+        "grain": {
+          "type": "object",
+          "properties": {
+            "direction": { "type": "string", "enum": ["horizontal", "vertical", "none"] },
+            "sequentialCut": { "type": "boolean" },
+            "note": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "drawers": {
+      "type": "object",
+      "required": ["count", "boxDepth", "slide"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 1 },
+        "boxDepth": { "$ref": "#/$defs/mm" },
+        "boxSideMaterial": { "$ref": "#/$defs/materialRef" },
+        "boxBottomMaterial": { "$ref": "#/$defs/materialRef" },
+        "boxSideHeights": { "type": "array", "items": { "$ref": "#/$defs/mm" } },
+        "slide": {
+          "type": "object",
+          "required": ["mount", "extension", "clearancePerSide"],
+          "properties": {
+            "mount": { "type": "string", "enum": ["side", "under", "center"] },
+            "extension": { "type": "string", "enum": ["full", "partial"] },
+            "softClose": { "type": "boolean" },
+            "length": { "$ref": "#/$defs/mm" },
+            "clearancePerSide": { "$ref": "#/$defs/mm" },
+            "loadKg": { "type": "number", "minimum": 0 },
+            "note": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "changingPad": {
+      "type": "object",
+      "properties": {
+        "width": { "$ref": "#/$defs/mm" },
+        "depth": { "$ref": "#/$defs/mm" },
+        "thickness": { "$ref": "#/$defs/mmOrNull" },
+        "removable": { "type": "boolean" },
+        "raisedSides": { "type": "boolean" },
+        "alignment": {
+          "type": "object",
+          "properties": {
+            "horizontal": { "type": "string", "enum": ["left", "center", "right"] },
+            "depth": { "type": "string", "enum": ["front", "center", "rear"] }
+          },
+          "additionalProperties": false
+        },
+        "status": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "wallAnchor": {
+      "type": "object",
+      "required": ["required", "count", "through"],
+      "properties": {
+        "required": { "const": true, "description": "Nikdy nesmie byť false — 1050 mm vysoká komoda s vysúvateľnými zásuvkami sa preklopí." },
+        "reason": { "type": "string" },
+        "wallType": { "type": "string" },
+        "count": { "type": "integer", "minimum": 2 },
+        "fastener": { "type": "string" },
+        "through": { "type": "string" },
+        "positions": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+
+    "joinery": { "type": "object" },
+
+    "openQuestions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "q"],
+        "properties": {
+          "id": { "type": "string" },
+          "q": { "type": "string" },
+          "impact": { "type": "string" },
+          "blocking": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "decidedElsewhere": { "type": "object" }
+  }
+}

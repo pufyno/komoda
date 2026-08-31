@@ -1,0 +1,76 @@
+{
+  "generated": "2026-08-31",
+  "source": "spec/komoda.json",
+  "warning": "GENEROVANÉ — needituj ručne. Zmeň spec a spusti npm run build.",
+  "carcass": {
+    "width": 1800,
+    "height": 950,
+    "depth": 782,
+    "bottomY": 100,
+    "sideHeight": 907,
+    "openingWidth": 873,
+    "clearHeight": 907,
+    "dividerX": 891
+  },
+  "top": {
+    "y0": 1025,
+    "y1": 1050,
+    "depth": 800,
+    "frontOverhang": 18
+  },
+  "frontZone": {
+    "height": 925,
+    "y0": 100,
+    "y1": 1025
+  },
+  "rows": [
+    {
+      "row": 0,
+      "frontHeight": 190,
+      "frontTopY": 1003,
+      "frontBottomY": 813,
+      "boxSideHeight": 150
+    },
+    {
+      "row": 1,
+      "frontHeight": 190,
+      "frontTopY": 792,
+      "frontBottomY": 602,
+      "boxSideHeight": 150
+    },
+    {
+      "row": 2,
+      "frontHeight": 190,
+      "frontTopY": 581,
+      "frontBottomY": 391,
+      "boxSideHeight": 150
+    },
+    {
+      "row": 3,
+      "frontHeight": 270,
+      "frontTopY": 370,
+      "frontBottomY": 100,
+      "boxSideHeight": 200
+    }
+  ],
+  "columnsX": [
+    {
+      "col": 0,
+      "x0": 0,
+      "x1": 898
+    },
+    {
+      "col": 1,
+      "x0": 902,
+      "x1": 1800
+    }
+  ],
+  "drawerBox": {
+    "width": 847,
+    "depth": 700,
+    "usableDepth": 748
+  },
+  "changingPad": {
+    "status": "PLACEHOLDER"
+  }
+}

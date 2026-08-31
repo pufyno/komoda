@@ -1,0 +1,213 @@
+{
+  "$schema": "./komoda.schema.json",
+  "id": "komoda-prebalovaci-pult",
+  "name": "Komoda / prebaľovací pult",
+  "version": "1.0.0",
+  "revision": "2026-08-31",
+  "units": "mm",
+  "note": "Toto je JEDINÝ zdroj pravdy pre geometriu. Odvodené rozmery počíta scripts/build.mjs — nezapisuj ich sem ručne.",
+
+  "overall": {
+    "width": 1800,
+    "height": 1050,
+    "depth": 800
+  },
+
+  "materials": {
+    "ldtd25": {
+      "type": "LDTD",
+      "thickness": 25,
+      "decor": "light-oak",
+      "decorCode": null,
+      "finish": "matt",
+      "abrasionClass": "AC3",
+      "emissionClass": "E1",
+      "use": "horná doska"
+    },
+    "ldtd18": {
+      "type": "LDTD",
+      "thickness": 18,
+      "decor": "light-oak",
+      "decorCode": null,
+      "finish": "matt",
+      "emissionClass": "E1",
+      "use": "korpus, čelá, výstuha"
+    },
+    "ldtd16": {
+      "type": "LDTD",
+      "thickness": 16,
+      "decor": "light-oak",
+      "decorCode": null,
+      "emissionClass": "E1",
+      "use": "boky zásuvkových boxov"
+    },
+    "hdf10": {
+      "type": "HDF",
+      "thickness": 10,
+      "use": "dná zásuviek"
+    },
+    "hdf8": {
+      "type": "HDF",
+      "thickness": 8,
+      "use": "chrbát"
+    }
+  },
+
+  "edging": {
+    "material": "ABS",
+    "thickness": 2,
+    "printed": true,
+    "matchDecor": true,
+    "note": "Pri drevenom dekore musí byť hrana s potlačou. Jednofarebná hrana je na dube okamžite vidieť."
+  },
+
+  "legs": {
+    "height": 100,
+    "adjustable": true,
+    "adjustRangeApprox": 15,
+    "count": 6,
+    "cornerInset": 60,
+    "layout": "4 rohy + 2 pod strednou priečkou",
+    "note": "Nastaviteľnosť je na vyrovnanie podlahy (±15 mm), nie na zmenu ergonómie."
+  },
+
+  "carcass": {
+    "height": 950,
+    "construction": "boky stoja na dne; horná doska leží na bokoch",
+    "parts": {
+      "bottom": { "material": "ldtd18", "spansFullWidth": true },
+      "sides": { "material": "ldtd18", "count": 2 },
+      "divider": { "material": "ldtd18", "count": 1, "fullHeight": true, "position": "center" },
+      "top": {
+        "material": "ldtd25",
+        "width": 1800,
+        "depth": 800,
+        "overhang": { "front": 18, "left": 0, "right": 0 },
+        "note": "Presah vpredu 18 mm je nutný, aby doska lícovala s full-overlay čelami."
+      },
+      "rearRail": {
+        "material": "ldtd18",
+        "height": 100,
+        "position": "top-rear",
+        "mountedInFrontOf": "back",
+        "purpose": "kotvenie do steny — do 8 mm HDF sa kotva dať nedá"
+      },
+      "back": {
+        "material": "hdf8",
+        "count": 2,
+        "split": "na strednej priečke",
+        "groove": { "width": 8, "depth": 10, "insetFromRear": 15 }
+      }
+    }
+  },
+
+  "gola": {
+    "system": "SALU / Tulip GOLA alebo ekvivalent",
+    "finish": "black-matt",
+    "finishAlternative": "hliník anodizovaný",
+    "top": {
+      "profileType": "J",
+      "reveal": 22,
+      "count": 1,
+      "lengthEach": 1800,
+      "position": "pod hornou doskou"
+    },
+    "between": {
+      "profileType": "C",
+      "reveal": 21,
+      "count": 3,
+      "lengthEach": 1800,
+      "profileHeight": 73.5,
+      "profileDepth": 26,
+      "position": "medzi radmi zásuviek"
+    },
+    "revealIsTarget": true,
+    "note": "Reveal 21/22 mm je ZVOLENÝ cieľ, nie odčítaný z datasheetu. Pri objednávke over v montážnom návode. Ak sa líši, uprav reveal tu a spusti build — výšky čiel sa musia prepočítať a invariant sumFronts to zachytí."
+  },
+
+  "fronts": {
+    "material": "ldtd18",
+    "overlay": "full",
+    "columns": 2,
+    "rows": 4,
+    "width": 898,
+    "centerGap": 4,
+    "sideGap": 0,
+    "heights": [190, 190, 190, 270],
+    "heightsNote": "Odstupňované — spodný rad vyšší na objemné veci (plienky, deky). Vnútorná svetlosť spodnej zásuvky ~227 mm.",
+    "grain": {
+      "direction": "horizontal",
+      "sequentialCut": true,
+      "note": "Čelá rezať v poradí z jednej dosky, aby kresba dubu na sebe nadväzovala."
+    }
+  },
+
+  "drawers": {
+    "count": 8,
+    "boxDepth": 700,
+    "boxSideMaterial": "ldtd16",
+    "boxBottomMaterial": "hdf10",
+    "boxSideHeights": [150, 150, 150, 200],
+    "slide": {
+      "mount": "side",
+      "extension": "full",
+      "softClose": true,
+      "length": 700,
+      "clearancePerSide": 12.7,
+      "loadKg": 40,
+      "note": "12,7 mm (½\") je priemyselný štandard pre bočné guličkové výsuvy. Over v datasheete pred nárezom boxov."
+    }
+  },
+
+  "changingPad": {
+    "width": 800,
+    "depth": 700,
+    "thickness": null,
+    "removable": true,
+    "raisedSides": true,
+    "alignment": { "horizontal": "center", "depth": "rear" },
+    "status": "PLACEHOLDER",
+    "note": "Rozmery sú zatiaľ z výkresu, nie z reálneho produktu. Kúpiť podložku PRVÚ, potom zakótovať zónu podľa nej. Bežné podložky majú 700–850 × 500–750 mm."
+  },
+
+  "wallAnchor": {
+    "required": true,
+    "reason": "1050 mm vysoká komoda s 8 vysúvateľnými zásuvkami — riziko preklopenia",
+    "wallType": "brick",
+    "count": 3,
+    "fastener": "nylonová hmoždinka 10 × 80",
+    "through": "rearRail",
+    "positions": ["pri ľavom boku", "pri strednej priečke", "pri pravom boku"]
+  },
+
+  "joinery": {
+    "carcass": "kolíky + excenter (minifix)",
+    "rationale": "rozoberateľné",
+    "drawerBox": "podľa technológie zhotoviteľa"
+  },
+
+  "openQuestions": [
+    {
+      "id": "gola-reveal-verify",
+      "q": "Over reveal zvoleného gola profilu v montážnom návode.",
+      "impact": "Ak nie je 21/22 mm, prepočítajú sa výšky čiel (súčet musí ostať 925).",
+      "blocking": true
+    },
+    {
+      "id": "pad-dimensions",
+      "q": "Reálne rozmery a hrúbka kúpenej prebaľovacej podložky.",
+      "impact": "Zóna na doske + finálna pracovná výška.",
+      "blocking": false
+    },
+    {
+      "id": "decor-code",
+      "q": "Konkrétny kód dekoru svetlý dub podľa vzorkovníka (Egger / Kronospan / Pfleiderer).",
+      "impact": "Objednávka materiálu a ABS hrán.",
+      "blocking": false
+    }
+  ],
+
+  "decidedElsewhere": {
+    "workingHeight": "Ponechané 1050 mm napriek tomu, že s podložkou vyjde ~1090 mm (bežná prebaľovacia výška je 950–1000 mm). Vedomé rozhodnutie — pozri docs/decisions.md."
+  }
+}

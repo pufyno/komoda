@@ -1,0 +1,245 @@
+{
+  "generated": "2026-08-31",
+  "source": "spec/komoda.json",
+  "warning": "GENEROVANÉ — needituj ručne. Zmeň spec a spusti npm run build.",
+  "parts": [
+    {
+      "group": "korpus",
+      "name": "Dno",
+      "qty": 1,
+      "length": 1800,
+      "width": 782,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "nesie nožičky"
+    },
+    {
+      "group": "korpus",
+      "name": "Bok",
+      "qty": 2,
+      "length": 907,
+      "width": 782,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "stojí na dne"
+    },
+    {
+      "group": "korpus",
+      "name": "Stredná priečka",
+      "qty": 1,
+      "length": 907,
+      "width": 782,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": ""
+    },
+    {
+      "group": "korpus",
+      "name": "Horná doska",
+      "qty": 1,
+      "length": 1800,
+      "width": 800,
+      "thickness": 25,
+      "material": "ldtd25",
+      "note": "presah vpredu 18 mm"
+    },
+    {
+      "group": "korpus",
+      "name": "Zadná výstuha",
+      "qty": 1,
+      "length": 1764,
+      "width": 100,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "kotvenie do steny"
+    },
+    {
+      "group": "korpus",
+      "name": "Chrbát",
+      "qty": 2,
+      "length": 917,
+      "width": 893,
+      "thickness": 8,
+      "material": "hdf8",
+      "note": "drážka 8 × 10 mm"
+    },
+    {
+      "group": "čelá",
+      "name": "Čelo 190 mm",
+      "qty": 6,
+      "length": 898,
+      "width": 190,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "ABS 2 mm dookola"
+    },
+    {
+      "group": "čelá",
+      "name": "Čelo 270 mm",
+      "qty": 2,
+      "length": 898,
+      "width": 270,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "ABS 2 mm dookola"
+    },
+    {
+      "group": "zásuvky",
+      "name": "Bok boxu (rad 1)",
+      "qty": 4,
+      "length": 700,
+      "width": 150,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Predok/zadok boxu (rad 1)",
+      "qty": 4,
+      "length": 815,
+      "width": 150,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Dno boxu (rad 1)",
+      "qty": 2,
+      "length": 831,
+      "width": 684,
+      "thickness": 10,
+      "material": "hdf10",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Bok boxu (rad 2)",
+      "qty": 4,
+      "length": 700,
+      "width": 150,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Predok/zadok boxu (rad 2)",
+      "qty": 4,
+      "length": 815,
+      "width": 150,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Dno boxu (rad 2)",
+      "qty": 2,
+      "length": 831,
+      "width": 684,
+      "thickness": 10,
+      "material": "hdf10",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Bok boxu (rad 3)",
+      "qty": 4,
+      "length": 700,
+      "width": 150,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Predok/zadok boxu (rad 3)",
+      "qty": 4,
+      "length": 815,
+      "width": 150,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Dno boxu (rad 3)",
+      "qty": 2,
+      "length": 831,
+      "width": 684,
+      "thickness": 10,
+      "material": "hdf10",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Bok boxu (rad 4)",
+      "qty": 4,
+      "length": 700,
+      "width": 200,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Predok/zadok boxu (rad 4)",
+      "qty": 4,
+      "length": 815,
+      "width": 200,
+      "thickness": 16,
+      "material": "ldtd16",
+      "note": ""
+    },
+    {
+      "group": "zásuvky",
+      "name": "Dno boxu (rad 4)",
+      "qty": 2,
+      "length": 831,
+      "width": 684,
+      "thickness": 10,
+      "material": "hdf10",
+      "note": ""
+    }
+  ],
+  "hardware": [
+    {
+      "item": "Gola profil J (pod dosku)",
+      "qty": 1,
+      "length": 1800,
+      "note": "reveal 22 mm, black-matt"
+    },
+    {
+      "item": "Gola profil C (medzi radmi)",
+      "qty": 3,
+      "length": 1800,
+      "note": "reveal 21 mm, black-matt"
+    },
+    {
+      "item": "Bočný plnovýsuv s tlmením",
+      "qty": "8 párov",
+      "length": 700,
+      "note": "12.7 mm/stranu, 40 kg"
+    },
+    {
+      "item": "Nastaviteľná nožička",
+      "qty": 6,
+      "length": 100,
+      "note": "4 rohy + 2 pod strednou priečkou"
+    },
+    {
+      "item": "Hmoždinka do tehly",
+      "qty": 3,
+      "length": null,
+      "note": "nylonová hmoždinka 10 × 80"
+    },
+    {
+      "item": "Kolík + excenter",
+      "qty": "podľa technológie",
+      "length": null,
+      "note": "kolíky + excenter (minifix)"
+    }
+  ]
+}
