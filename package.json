@@ -1,0 +1,15 @@
+{
+  "name": "komoda",
+  "version": "1.0.0",
+  "description": "Parametrický spec komody / prebaľovacieho pultu 1800 × 1050 × 800 mm",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "validate": "node scripts/validate-schema.mjs && node scripts/build.mjs",
+    "build": "npm run validate"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

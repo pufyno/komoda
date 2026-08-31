@@ -1,31 +1,60 @@
-# VIBE_coding
+# komoda
 
-## Claude Code plugin setup
+Parametrický spec komody / prebaľovacieho pultu **1800 × 1050 × 800 mm**, 8 zásuviek (2 × 4), bezúchytkové otváranie cez gola profil.
 
-`.claude/settings.json` declares two plugin marketplaces and enables one plugin
-from each, so anyone opening this repo in Claude Code gets the same skill set
-without running install commands by hand.
+Repo je zdroj dát pre vizualizér, nie len archív výkresu. Obrázok je referencia — čísla žijú v `spec/komoda.json`.
 
-| Plugin | Marketplace | Source |
-| --- | --- | --- |
-| `superpowers` | `claude-plugins-official` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) |
-| `mattpocock-skills` | `mattpocock` | [mattpocock/skills](https://github.com/mattpocock/skills) |
+```
+spec/komoda.json          ← jediný zdroj pravdy
+spec/komoda.schema.json   ← štruktúra
+spec/derived/             ← GENEROVANÉ (geometria + cutlist)
+scripts/build.mjs         ← invarianty + generátor
+docs/decisions.md         ← prečo sú čísla také, aké sú
+docs/technicky-vykres.png ← pôvodný výkres, M 1:10
+app/                      ← vizualizér (zatiaľ prázdny)
+```
 
-**superpowers** — Anthropic's curated methodology library: test-driven
-development, systematic debugging, brainstorming, plan writing and execution,
-subagent-driven development with code review, git worktrees, and skill authoring.
+## Použitie
 
-**mattpocock-skills** — Matt Pocock's engineering skills: spec and ticket flows,
-domain modelling, codebase design, triage, code review, and the `grill-me`
-interview loop.
+```bash
+npm install
+npm run validate     # schéma + aritmetické invarianty + regenerácia derived/
+```
 
-Both are declared at project scope. Claude Code loads plugins at session start,
-so a restart is needed after a fresh clone for the skills to register.
+Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čiel a gola škár nedá 925 mm.
 
-### Installing manually
+## Kľúčové rozmery
 
-If you would rather set this up outside the repo (user scope, available in every
-project), run:
+| | |
+|---|---|
+| Korpus | 1800 × 950 × 782 |
+| Horná doska | 1800 × 800 × 25, presah vpredu 18 |
+| Svetlosť priehradky | 873 × 907 |
+| Čelá | 898 × 190 / 190 / 190 / 270, stredná škára 4 |
+| Gola | J reveal 22 (hore), C reveal 21 (3× medzi radmi) |
+| Zásuvkový box | 847 × 700, bočné plnovýsuvy |
+| Nožičky | 6 × 100 mm nastaviteľné |
+
+Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
+
+## Otvorené
+
+- **`gola-reveal-verify`** — reveal 21/22 mm je zvolený cieľ, nie odčítaný z datasheetu. Over v montážnom návode pri objednávke; ak sa líši, prepočítajú sa výšky čiel.
+- `pad-dimensions` — prebaľovacia podložka sa ešte nekúpila, zóna 800 × 700 je placeholder.
+- `decor-code` — svetlý dub, konkrétny kód podľa vzorkovníka.
+
+## Claude Code
+
+`.claude/settings.json` deklaruje dve plugin marketplace a zapína po jednom plugine z každej, takže po klonovaní repa má každý rovnaké skills bez ručnej inštalácie.
+
+| Plugin | Marketplace |
+|---|---|
+| `superpowers` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) |
+| `mattpocock-skills` | [mattpocock/skills](https://github.com/mattpocock/skills) |
+
+Pluginy sa načítavajú pri štarte session — po čerstvom klonovaní treba reštart.
+
+Ručná inštalácia mimo repa (user scope):
 
 ```
 /plugin marketplace add anthropics/claude-plugins-official
@@ -35,5 +64,6 @@ project), run:
 /plugin install mattpocock-skills@mattpocock
 ```
 
-The marketplace must be added before the install; a plugin cannot be resolved
-from a marketplace that is not yet configured.
+Marketplace musí byť pridaná pred inštaláciou.
+
+Pokyny pre prácu so specom sú v [`.claude/CLAUDE.md`](.claude/CLAUDE.md).
