@@ -57,13 +57,7 @@ Stack: Vite + React + [react-three-fiber](https://github.com/pmndrs/react-three-
 
 Projekt sa importuje z tohto repa. Root Directory zostáva na koreni, aby build videl `spec/`:
 
-| Pole | Hodnota |
-|---|---|
-| Framework Preset | `Other` |
-| Root Directory | `./` |
-| Install Command | `npm install` |
-| Build Command | `npm run build` |
-| Output Directory | `app/dist` |
+Build command a output directory sú v `vercel.json`, takže sa nenastavujú klikaním. V dashboarde stačí Framework Preset `Other` a Root Directory na koreni repa (aby build videl `spec/`).
 
 `npm run build` spúšťa validáciu pred buildom, takže **nekonzistentný spec zhodí deploy** a na produkciu sa nedostane.
 
