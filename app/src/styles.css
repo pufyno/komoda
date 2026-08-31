@@ -347,3 +347,65 @@ body {
 @media (max-width: 900px) {
   .sheet { padding: 74px 16px 90px; }
 }
+
+/* ------------------------------------------------ paleta a otázky */
+
+.segmented { display: flex; gap: 2px; padding: 2px; background: #191f28; border: 1px solid var(--line); border-radius: 7px; }
+.segmented button {
+  flex: 1; background: none; border: 0; border-radius: 5px;
+  color: var(--dim); font: inherit; padding: 5px 8px; cursor: pointer;
+}
+.segmented button:hover { color: var(--ink); }
+.segmented button.on { background: #2a3543; color: var(--ink); }
+
+.check { display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; user-select: none; }
+.check input { accent-color: var(--accent); margin: 0; }
+
+.questions { list-style: none; margin: 0; padding: 0; font-size: 12px; }
+.questions li { display: flex; gap: 8px; margin-bottom: 8px; color: var(--dim); }
+.questions code {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--dim); flex: none; padding-top: 1px;
+}
+.questions li.blocking code { color: #e8a33d; }
+.questions li.blocking span { color: var(--ink); }
+
+.grain line { stroke: #6b4f2c; stroke-width: 1; opacity: 0.75; }
+
+.loading {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  color: var(--dim); font-family: var(--mono); font-size: 12px;
+}
+
+/* ------------------------------------------------------------ banner */
+
+.banner {
+  position: absolute;
+  bottom: 16px; left: 50%;
+  transform: translateX(-50%);
+  max-width: min(620px, calc(100% - 32px));
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 14px;
+  background: rgba(41, 31, 12, 0.93);
+  border: 1px solid #5c4718;
+  border-radius: 9px;
+  backdrop-filter: blur(14px);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.banner .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #e8a33d; flex: none; margin-top: 5px;
+}
+.banner strong { color: #f0c579; font-weight: 600; }
+.banner em { color: var(--dim); font-style: normal; display: block; margin-top: 2px; }
+.banner button {
+  background: none; border: 0; color: var(--dim);
+  font-size: 16px; line-height: 1; cursor: pointer; padding: 0 2px;
+}
+.banner button:hover { color: var(--ink); }
+
+@media print { .banner, .loading { display: none !important; } }

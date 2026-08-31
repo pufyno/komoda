@@ -1,4 +1,4 @@
-import { doc, geometry, ENV, GROUP_COLOR, partById, type Part } from "../data";
+import { doc, geometry, ENV, colorOf, partById, type Palette, type Part } from "../data";
 
 export type ViewId = "front" | "side" | "top";
 
@@ -129,11 +129,13 @@ function DimLine({ dim, ax }: { dim: Dim; ax: Axes }) {
   );
 }
 
-export default function Drawing({ view, visible, selected, onSelect }: {
+export default function Drawing({ view, visible, selected, onSelect, palette, grain }: {
   view: ViewId;
   visible: Set<string>;
   selected: string | null;
   onSelect: (id: string | null) => void;
+  palette: Palette;
+  grain: boolean;
 }) {
   const ax = AXES[view];
 
@@ -179,7 +181,7 @@ export default function Drawing({ view, visible, selected, onSelect }: {
                 y={r.y}
                 width={r.w}
                 height={r.h}
-                fill={GROUP_COLOR[p.group] ?? "#999"}
+                fill={colorOf(p, palette)}
                 className={p.id === selected ? "part sel" : "part"}
                 vectorEffect="non-scaling-stroke"
                 onClick={(e) => {
@@ -190,6 +192,24 @@ export default function Drawing({ view, visible, selected, onSelect }: {
             );
           })}
         </g>
+
+        {grain && view === "front" && (
+          <g className="grain">
+            {parts.filter((p) => p.grain).map((p) => {
+              const r = rectOf(p);
+              return [0.25, 0.5, 0.75].map((f) => (
+                <line
+                  key={`${p.id}-${f}`}
+                  x1={r.x + r.w * 0.06}
+                  x2={r.x + r.w * 0.94}
+                  y1={r.y + r.h * f}
+                  y2={r.y + r.h * f}
+                  vectorEffect="non-scaling-stroke"
+                />
+              ));
+            })}
+          </g>
+        )}
 
         <g className="dims">
           {dimensionsFor(view).map((d, i) => (

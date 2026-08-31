@@ -1,8 +1,8 @@
 import { useMemo, useRef } from "react";
 import { BoxGeometry, Group } from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Grid } from "@react-three/drei";
-import { doc, toScene, MM, ENV, GROUP_COLOR, isMetal, type Part } from "../data";
+import { OrbitControls, Grid, Line } from "@react-three/drei";
+import { doc, toScene, MM, ENV, colorOf, isMetal, type Palette, type Part } from "../data";
 
 interface Props {
   visible: Set<string>;
@@ -12,6 +12,8 @@ interface Props {
   openDrawers: Set<string>;
   toggleDrawer: (id: string) => void;
   explode: number;
+  palette: Palette;
+  grain: boolean;
 }
 
 /** Rozstrel: diel sa odsunie od stredu modelu úmerne svojej vzdialenosti. */
@@ -22,21 +24,46 @@ function explodeOffset(part: Part, explode: number): [number, number, number] {
   return [x * k, (y - (ENV.height * MM) / 2) * k, z * k];
 }
 
-function PartMesh({ part, selected, onSelect, onOpen, explode }: {
+function GrainLines({ part, offset }: { part: Part; offset: [number, number, number] }) {
+  const [x0, y0] = part.position;
+  const [w, h] = part.size;
+  const inset = w * 0.06;
+  const lines = [0.25, 0.5, 0.75].map((f) => {
+    const y = y0 + h * f;
+    const a = toScene([x0 + inset, y, -1]);
+    const b = toScene([x0 + w - inset, y, -1]);
+    return [
+      [a[0] + offset[0], a[1] + offset[1], a[2] + offset[2]],
+      [b[0] + offset[0], b[1] + offset[1], b[2] + offset[2]],
+    ] as [number, number, number][];
+  });
+  return (
+    <>
+      {lines.map((pts, i) => (
+        <Line key={i} points={pts} color="#6b4f2c" lineWidth={1.4} transparent opacity={0.7} />
+      ))}
+    </>
+  );
+}
+
+function PartMesh({ part, selected, onSelect, onOpen, explode, palette, grain }: {
   part: Part;
   selected: boolean;
   onSelect: (id: string | null) => void;
   onOpen: (drawer: string) => void;
   explode: number;
+  palette: Palette;
+  grain: boolean;
 }) {
   const [px, py, pz] = toScene(part.center);
   const [ox, oy, oz] = explodeOffset(part, explode);
   const [sx, sy, sz] = part.size;
-  const color = GROUP_COLOR[part.group] ?? "#999";
+  const color = colorOf(part, palette);
   const metal = isMetal(part.group);
   const r = (part.diameter ?? sx) * MM * 0.5;
 
   return (
+    <>
     <mesh
       position={[px + ox, py + oy, pz + oz]}
       rotation={part.shape === "cylinder" && part.axis === "z" ? [Math.PI / 2, 0, 0] : [0, 0, 0]}
@@ -71,6 +98,8 @@ function PartMesh({ part, selected, onSelect, onOpen, explode }: {
         roughness={metal ? 0.35 : 0.75}
       />
     </mesh>
+    {grain && part.grain && <GrainLines part={part} offset={[ox, oy, oz]} />}
+    </>
   );
 }
 
@@ -83,6 +112,8 @@ function DrawerGroup({ parts, open, travel, ...rest }: {
   onSelect: (id: string | null) => void;
   onOpen: (drawer: string) => void;
   explode: number;
+  palette: Palette;
+  grain: boolean;
 }) {
   const ref = useRef<Group>(null);
   const target = open ? travel * MM : 0;
@@ -104,6 +135,8 @@ function DrawerGroup({ parts, open, travel, ...rest }: {
           onSelect={rest.onSelect}
           onOpen={rest.onOpen}
           explode={rest.explode}
+          palette={rest.palette}
+          grain={rest.grain}
         />
       ))}
     </group>
@@ -122,7 +155,7 @@ function Envelope() {
 }
 
 export default function Komoda({
-  visible, selected, onSelect, showEnvelope, openDrawers, toggleDrawer, explode,
+  visible, selected, onSelect, showEnvelope, openDrawers, toggleDrawer, explode, palette, grain,
 }: Props) {
   const { fixed, byDrawer } = useMemo(() => {
     const shown = doc.parts.filter((p) => visible.has(p.group));
@@ -171,6 +204,8 @@ export default function Komoda({
             onSelect={onSelect}
             onOpen={toggleDrawer}
             explode={explode}
+            palette={palette}
+            grain={grain}
           />
         ))}
         {[...byDrawer].map(([id, parts]) => (
@@ -183,6 +218,8 @@ export default function Komoda({
             onSelect={onSelect}
             onOpen={toggleDrawer}
             explode={explode}
+            palette={palette}
+            grain={grain}
           />
         ))}
         {showEnvelope && <Envelope />}

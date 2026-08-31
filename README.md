@@ -56,6 +56,10 @@ Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — 
 - rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 800
 - **nárys / bokorys / pôdorys** ako čisté SVG s kótami — ortografický priemet sa počíta priamo z `parts.json`, nie cez 3D kameru, takže čiary sú ostré a tlač je presná
 - **cutlist** ako tlačiteľná tabuľka z `spec/derived/cutlist.json`
+- prepínač **schéma / dekor** — schéma odlišuje diely podľa funkcie, dekor ukazuje svetlý dub, čiernu matnú golu a pozinkované výsuvy
+- **smer kresby dubu** (D10) a banner s blokujúcou otvorenou otázkou zo `spec/komoda.json`
+
+three.js sa načítava až pri prepnutí na 3D — kresby a cutlist sa otvárajú z 72 kB bundle.
 
 Stack: Vite + React + [react-three-fiber](https://github.com/pmndrs/react-three-fiber). Výstup je statický, bez servera.
 

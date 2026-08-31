@@ -1,6 +1,7 @@
 import partsJson from "../../spec/derived/parts.json";
 import geometryJson from "../../spec/derived/geometry.json";
 import cutlistJson from "../../spec/derived/cutlist.json";
+import specJson from "../../spec/komoda.json";
 
 /*
  * Jediný vstup vizualizéra sú generované súbory zo spec/derived/.
@@ -92,6 +93,20 @@ export const cutlist = cutlistJson as unknown as {
   hardware: Hardware[];
 };
 
+export interface OpenQuestion {
+  id: string;
+  q: string;
+  impact?: string;
+  blocking?: boolean;
+}
+
+export const spec = specJson as unknown as {
+  revision: string;
+  openQuestions: OpenQuestion[];
+  fronts: { grain: { direction: string; sequentialCut: boolean; note: string } };
+  edging: { material: string; thickness: number; note: string };
+};
+
 export const ENV = doc.envelope;
 
 /** mm → m */
@@ -116,6 +131,34 @@ export const GROUP_ORDER = ["korpus", "čelá", "gola", "zásuvky", "výsuvy", "
 
 export const isMetal = (group: string) =>
   group === "gola" || group === "výsuvy" || group === "nožičky" || group === "kotvenie";
+
+/*
+ * Dve palety. "schéma" odlišuje diely podľa funkcie — na čítanie
+ * konštrukcie. "dekor" ukazuje, ako to bude vyzerať: svetlý dub,
+ * čierna matná gola, pozinkované výsuvy.
+ */
+export type Palette = "scheme" | "decor";
+
+const DECOR_MATERIAL: Record<string, string> = {
+  ldtd25: "#cbaa7e",
+  ldtd18: "#c7a173",
+  ldtd16: "#bd976a",
+  hdf10: "#a68d6d",
+  hdf8: "#93806a",
+};
+
+const DECOR_GROUP: Record<string, string> = {
+  gola: "#1f2227",
+  "výsuvy": "#8d949c",
+  "nožičky": "#34383f",
+  kotvenie: "#a84f3c",
+};
+
+export function colorOf(part: Part, palette: Palette): string {
+  if (palette === "scheme") return GROUP_COLOR[part.group] ?? "#999";
+  if (part.material && DECOR_MATERIAL[part.material]) return DECOR_MATERIAL[part.material];
+  return DECOR_GROUP[part.group] ?? GROUP_COLOR[part.group] ?? "#999";
+}
 
 export const drawerOf = (part: Part): string | null => part.drawer ?? null;
 

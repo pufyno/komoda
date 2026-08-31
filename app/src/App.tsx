@@ -1,11 +1,13 @@
-import { useCallback, useMemo, useState } from "react";
-import Komoda from "./scene/Komoda";
+import { Suspense, lazy, useCallback, useMemo, useState } from "react";
 import Drawing from "./views/Drawing";
 import Cutlist from "./views/Cutlist";
 import Sidebar from "./ui/Sidebar";
 import DetailPanel from "./ui/DetailPanel";
 import Tabs, { type Mode } from "./ui/Tabs";
-import { doc, GROUP_ORDER } from "./data";
+import { doc, spec, GROUP_ORDER, type Palette } from "./data";
+
+// three.js je ~1 MB — načíta sa až keď treba 3D, nie pri kreslení a cutliste.
+const Komoda = lazy(() => import("./scene/Komoda"));
 
 export default function App() {
   const [mode, setMode] = useState<Mode>("3d");
@@ -14,6 +16,9 @@ export default function App() {
   const [showEnvelope, setShowEnvelope] = useState(false);
   const [openDrawers, setOpenDrawers] = useState(() => new Set<string>());
   const [explode, setExplode] = useState(0);
+  const [palette, setPalette] = useState<Palette>("scheme");
+  const [grain, setGrain] = useState(false);
+  const [bannerOpen, setBannerOpen] = useState(true);
 
   const toggle = useCallback((group: string) => {
     setVisible((prev) => {
@@ -42,24 +47,36 @@ export default function App() {
     [selected],
   );
 
+  const blocking = spec.openQuestions.filter((q) => q.blocking);
   const is3d = mode === "3d";
   const isCutlist = mode === "cutlist";
 
   return (
     <div className={`app mode-${mode}`}>
       {is3d && (
-        <Komoda
+        <Suspense fallback={<div className="loading">Načítavam 3D…</div>}>
+          <Komoda
+            visible={visible}
+            selected={selected}
+            onSelect={setSelected}
+            showEnvelope={showEnvelope}
+            openDrawers={openDrawers}
+            toggleDrawer={toggleDrawer}
+            explode={explode}
+            palette={palette}
+            grain={grain}
+          />
+        </Suspense>
+      )}
+      {!is3d && !isCutlist && (
+        <Drawing
+          view={mode}
           visible={visible}
           selected={selected}
           onSelect={setSelected}
-          showEnvelope={showEnvelope}
-          openDrawers={openDrawers}
-          toggleDrawer={toggleDrawer}
-          explode={explode}
+          palette={palette}
+          grain={grain}
         />
-      )}
-      {!is3d && !isCutlist && (
-        <Drawing view={mode} visible={visible} selected={selected} onSelect={setSelected} />
       )}
       {isCutlist && <Cutlist />}
 
@@ -75,6 +92,10 @@ export default function App() {
           setAllDrawers={setAllDrawers}
           explode={explode}
           setExplode={setExplode}
+          palette={palette}
+          setPalette={setPalette}
+          grain={grain}
+          setGrain={setGrain}
           is3d={is3d}
         />
       )}
@@ -92,6 +113,17 @@ export default function App() {
           {is3d && (<><br /><strong>Dvojklik</strong> na zásuvku ju otvorí.</>)}
         </aside>
       ))}
+
+      {bannerOpen && blocking.length > 0 && (
+        <div className="banner">
+          <span className="dot" />
+          <div>
+            <strong>Blokuje výrobu:</strong> {blocking[0].q}
+            {blocking[0].impact && <em> {blocking[0].impact}</em>}
+          </div>
+          <button onClick={() => setBannerOpen(false)} aria-label="Skryť">×</button>
+        </div>
+      )}
     </div>
   );
 }

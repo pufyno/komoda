@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, geometry, GROUP_COLOR, GROUP_ORDER, countByGroup } from "../data";
+import { doc, geometry, spec, GROUP_COLOR, GROUP_ORDER, countByGroup, type Palette } from "../data";
 
 interface Props {
   visible: Set<string>;
@@ -10,12 +10,17 @@ interface Props {
   setAllDrawers: (open: boolean) => void;
   explode: number;
   setExplode: (v: number) => void;
+  palette: Palette;
+  setPalette: (p: Palette) => void;
+  grain: boolean;
+  setGrain: (v: boolean) => void;
   is3d: boolean;
 }
 
 export default function Sidebar({
   visible, toggle, showEnvelope, setShowEnvelope,
-  openCount, setAllDrawers, explode, setExplode, is3d,
+  openCount, setAllDrawers, explode, setExplode,
+  palette, setPalette, grain, setGrain, is3d,
 }: Props) {
   const [openAssumptions, setOpenAssumptions] = useState(false);
   const counts = countByGroup(doc.parts);
@@ -50,6 +55,19 @@ export default function Sidebar({
             </label>
           </li>}
         </ul>
+      </section>
+
+      <section>
+        <h3>Zobrazenie</h3>
+        <div className="segmented">
+          <button className={palette === "scheme" ? "on" : ""} onClick={() => setPalette("scheme")}>Schéma</button>
+          <button className={palette === "decor" ? "on" : ""} onClick={() => setPalette("decor")}>Dekor</button>
+        </div>
+        <label className="check">
+          <input type="checkbox" checked={grain} onChange={(e) => setGrain(e.target.checked)} />
+          smer kresby dubu
+        </label>
+        {grain && <p className="micro">{spec.fronts.grain.note}</p>}
       </section>
 
       {is3d && <section>
@@ -103,6 +121,18 @@ export default function Sidebar({
             {doc.assumptions.map((a) => <li key={a}>{a}</li>)}
           </ul>
         )}
+      </section>
+
+      <section>
+        <h3>Otvorené otázky</h3>
+        <ul className="questions">
+          {spec.openQuestions.map((q) => (
+            <li key={q.id} className={q.blocking ? "blocking" : ""}>
+              <code>{q.id}</code>
+              <span>{q.q}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <footer>
