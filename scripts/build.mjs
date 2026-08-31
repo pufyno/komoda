@@ -162,9 +162,19 @@ add("korpus", "Horná doska", 1, overall.width, carcass.parts.top.depth, T_TOP, 
 add("korpus", "Zadná výstuha", 1, overall.width - 2 * T_BODY, carcass.parts.rearRail.height, T_BODY, "ldtd18", "kotvenie do steny");
 
 const grooveDepth = carcass.parts.back.groove.depth;
+
+// V strednej priečke sú drážky z oboch strán. Pri hĺbke 10 mm v 18 mm
+// priečke by sa stretli, preto je tam drážka plytšia — 2 mm materiálu
+// medzi nimi. Chrbát preto nie je symetrický: hlbšia strana do boku,
+// plytšia do priečky.
+const dividerGrooveDepth = Math.floor((T_BODY - 2) / 2);
+assertTrue("drážky v priečke sa nestretnú", 2 * dividerGrooveDepth < T_BODY,
+  `2 × ${dividerGrooveDepth} mm drážka v ${T_BODY} mm priečke`);
+const backWidth = openingWidth + grooveDepth + dividerGrooveDepth;
+
 add("korpus", "Chrbát", carcass.parts.back.count,
-  clearHeight + grooveDepth, openingWidth + 2 * grooveDepth, T_BACK, "hdf8",
-  `drážka ${carcass.parts.back.groove.width} × ${grooveDepth} mm`);
+  clearHeight + grooveDepth, backWidth, T_BACK, "hdf8",
+  `drážka ${carcass.parts.back.groove.width} mm; ${grooveDepth} do boku, ${dividerGrooveDepth} do priečky`);
 
 const byHeight = {};
 fronts.heights.forEach((h) => { byHeight[h] = (byHeight[h] || 0) + fronts.columns; });
@@ -195,6 +205,244 @@ const hardware = [
 /* výstup                                                             */
 /* ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ */
+/* umiestnenie dielov v priestore (pre vizualizér)                     */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Súradnice: origin na podlahe, vľavo vpredu. X vpravo, Y hore, Z dozadu.
+ * Každý diel má position = minimálny roh kvádra, size = [dx, dy, dz].
+ *
+ * PREDPOKLADY UMIESTNENIA — nie sú v specu, lebo neovplyvňujú výrobu.
+ * Sú to len polohy pre vizualizáciu. Ak sa ukážu ako nesprávne, meň ich
+ * TU, nie v specu.
+ */
+const PLACEMENT = {
+  drawerBoxVerticalAlign: "center",   // box zvislo na stred svojho čela
+  drawerBoxBottomInset: 10,           // dno boxu 10 mm nad spodnou hranou bokov
+  slideHeight: 45,                    // viditeľná výška plnovýsuvu
+  legDiameter: 50,                    // nožička je valec
+  anchorLength: 80,                   // dĺžka hmoždinky (do steny)
+  anchorDiameter: 10,
+  anchorOffsetFromDivider: 40,        // stredná kotva vedľa priečky, nie do jej hrany
+};
+
+const assumptions = [
+  `Zásuvkový box je v otvore vycentrovaný vodorovne (${(openingWidth - boxWidth) / 2} mm na stranu, výsuv potrebuje ${drawers.slide.clearancePerSide}).`,
+  "Zásuvkový box je zvislo vycentrovaný na svoje čelo.",
+  `Predná hrana boxu začína za gola profilom (z = ${gola.between.profileDepth} mm).`,
+  `Gola profil lícuje s rovinou čiel a prekrýva čelnú hranu korpusu o ${gola.between.profileDepth - T_BODY} mm.`,
+  `Stredná kotva je odsadená ${PLACEMENT.anchorOffsetFromDivider} mm od priečky, aby nešla do jej hrany.`,
+  `Gola profil je modelovaný ako viditeľná škára × hĺbka profilu; skutočný prierez je vysoký ${gola.between.profileHeight} mm a schováva sa za čelami.`,
+  "Nožičky sú valce s odsadením cornerInset od hrán korpusu.",
+];
+
+const P = [];
+const place = (id, group, label, pos, size, material, extra = {}) => {
+  const [x, y, z] = pos.map((n) => Math.round(n * 100) / 100);
+  const [sx, sy, sz] = size.map((n) => Math.round(n * 100) / 100);
+  P.push({
+    id, group, label, material,
+    size: [sx, sy, sz],
+    position: [x, y, z],
+    center: [Math.round((x + sx / 2) * 100) / 100, Math.round((y + sy / 2) * 100) / 100, Math.round((z + sz / 2) * 100) / 100],
+    shape: "box",
+    ...extra,
+  });
+};
+
+/* --- referenčné roviny --------------------------------------------- */
+const carcassZ0 = overall.depth - carcassDepth;          // 18 — čelná hrana korpusu
+const carcassZ1 = overall.depth;                          // 800 — zadná hrana
+const bottomY0 = legs.height;                             // 100
+const bottomY1 = bottomY0 + T_BODY;                       // 118
+const backZ1 = carcassZ1 - carcass.parts.back.groove.insetFromRear;
+const backZ0 = backZ1 - T_BACK;
+const railZ1 = backZ0;
+const railZ0 = railZ1 - T_BODY;
+const golaZ0 = 0;                                         // lícuje s rovinou čiel
+const golaZ1 = golaZ0 + gola.between.profileDepth;        // 26 — laps na čelnú hranu korpusu
+const golaLap = golaZ1 - carcassZ0;                       // 8 — prekrytie čelnej hrany
+const boxZ0 = golaZ1;
+const boxZ1 = boxZ0 + drawers.boxDepth;
+const dividerX0 = (overall.width - T_BODY) / 2;
+const openings = [
+  { x0: T_BODY, x1: dividerX0 },
+  { x0: dividerX0 + T_BODY, x1: overall.width - T_BODY },
+];
+
+check("otvor vľavo = svetlosť", openings[0].x1 - openings[0].x0, openingWidth);
+check("otvor vpravo = svetlosť", openings[1].x1 - openings[1].x0, openingWidth);
+assertTrue("box sa zmestí za gola profil", boxZ1 <= backZ0,
+  `box končí na z = ${boxZ1}, chrbát začína na z = ${backZ0}`);
+
+/* --- nožičky -------------------------------------------------------- */
+const legZ = [carcassZ0 + legs.cornerInset, carcassZ1 - legs.cornerInset];
+const legX = [legs.cornerInset, dividerX0 + T_BODY / 2, overall.width - legs.cornerInset];
+let legN = 0;
+for (const lx of legX) {
+  for (const lz of legZ) {
+    legN += 1;
+    place(`leg-${legN}`, "nožičky", "Nastaviteľná nožička",
+      [lx - PLACEMENT.legDiameter / 2, 0, lz - PLACEMENT.legDiameter / 2],
+      [PLACEMENT.legDiameter, legs.height, PLACEMENT.legDiameter],
+      null, { shape: "cylinder", diameter: PLACEMENT.legDiameter, decision: "D8", hardware: true });
+  }
+}
+assertTrue("počet nožičiek", legN === legs.count, `vygenerovaných ${legN}, spec hovorí ${legs.count}`);
+
+/* --- korpus --------------------------------------------------------- */
+place("bottom", "korpus", "Dno", [0, bottomY0, carcassZ0], [overall.width, T_BODY, carcassDepth], "ldtd18",
+  { decision: "D1", note: "nesie nožičky" });
+place("side-left", "korpus", "Bok ľavý", [0, bottomY1, carcassZ0], [T_BODY, sideHeight, carcassDepth], "ldtd18",
+  { decision: "D1" });
+place("side-right", "korpus", "Bok pravý", [overall.width - T_BODY, bottomY1, carcassZ0], [T_BODY, sideHeight, carcassDepth], "ldtd18",
+  { decision: "D1" });
+place("divider", "korpus", "Stredná priečka", [dividerX0, bottomY1, carcassZ0], [T_BODY, sideHeight, carcassDepth], "ldtd18",
+  { note: "výrez 100 × 18 vzadu hore pre zadnú výstuhu" });
+place("top", "korpus", "Horná doska", [0, topUnderside, 0], [overall.width, T_TOP, carcass.parts.top.depth], "ldtd25",
+  { decision: "D1", note: `presah vpredu ${carcass.parts.top.overhang.front} mm` });
+place("rear-rail", "korpus", "Zadná výstuha", [T_BODY, topUnderside - carcass.parts.rearRail.height, railZ0],
+  [overall.width - 2 * T_BODY, carcass.parts.rearRail.height, T_BODY], "ldtd18",
+  { decision: "D7", note: "kotvenie do steny" });
+
+const gd = carcass.parts.back.groove.depth;
+openings.forEach((o, i) => {
+  const leftInset = i === 0 ? gd : dividerGrooveDepth;    // vonkajší bok vs. priečka
+  place(`back-${i + 1}`, "korpus", "Chrbát", [o.x0 - leftInset, bottomY1 - gd, backZ0],
+    [backWidth, clearHeight + gd, T_BACK], "hdf8",
+    { note: `${gd} mm do boku, ${dividerGrooveDepth} mm do priečky` });
+});
+
+/* --- čelá, gola, zásuvky, výsuvy ------------------------------------ */
+place("gola-j", "gola", `Gola profil J (reveal ${gola.top.reveal})`,
+  [0, topUnderside - gola.top.reveal, golaZ0], [overall.width, gola.top.reveal, gola.between.profileDepth], null,
+  { decision: "D2", hardware: true, profileType: gola.top.profileType, profileHeight: gola.between.profileHeight, finish: gola.finish });
+
+rows.forEach((r, i) => {
+  if (i < rows.length - 1) {
+    place(`gola-c-${i + 1}`, "gola", `Gola profil C (reveal ${gola.between.reveal})`,
+      [0, r.frontBottomY - gola.between.reveal, golaZ0],
+      [overall.width, gola.between.reveal, gola.between.profileDepth], null,
+      { decision: "D2", hardware: true, profileType: gola.between.profileType, profileHeight: gola.between.profileHeight, finish: gola.finish });
+  }
+
+  columnsX.forEach((c, j) => {
+    const o = openings[j];
+    const bx0 = o.x0 + (openingWidth - boxWidth) / 2;
+    const bh = drawers.boxSideHeights[i];
+    const by0 = r.frontBottomY + (r.frontHeight - bh) / 2;
+    const tag = `r${i + 1}c${j + 1}`;
+
+    place(`front-${tag}`, "čelá", `Čelo ${r.frontHeight} mm`, [c.x0, r.frontBottomY, 0],
+      [fronts.width, r.frontHeight, T_BODY], "ldtd18",
+      { decision: i === rows.length - 1 ? "D5" : "D4", edging: "ABS 2 mm dookola", grain: fronts.grain.direction });
+
+    place(`box-side-l-${tag}`, "zásuvky", `Bok boxu (rad ${i + 1})`, [bx0, by0, boxZ0],
+      [T_BOX, bh, drawers.boxDepth], "ldtd16", { decision: "D6" });
+    place(`box-side-r-${tag}`, "zásuvky", `Bok boxu (rad ${i + 1})`, [bx0 + boxWidth - T_BOX, by0, boxZ0],
+      [T_BOX, bh, drawers.boxDepth], "ldtd16", { decision: "D6" });
+    place(`box-front-${tag}`, "zásuvky", `Predok boxu (rad ${i + 1})`, [bx0 + T_BOX, by0, boxZ0],
+      [boxWidth - 2 * T_BOX, bh, T_BOX], "ldtd16", { decision: "D6" });
+    place(`box-back-${tag}`, "zásuvky", `Zadok boxu (rad ${i + 1})`, [bx0 + T_BOX, by0, boxZ1 - T_BOX],
+      [boxWidth - 2 * T_BOX, bh, T_BOX], "ldtd16", { decision: "D6" });
+    place(`box-bottom-${tag}`, "zásuvky", `Dno boxu (rad ${i + 1})`,
+      [bx0 + T_BOX - boxGroove, by0 + PLACEMENT.drawerBoxBottomInset, boxZ0 + T_BOX - boxGroove],
+      [boxWidth - 2 * T_BOX + 2 * boxGroove, t("hdf10"), drawers.boxDepth - 2 * T_BOX + 2 * boxGroove], "hdf10",
+      { decision: "D6", note: `v drážke ${boxGroove} mm` });
+
+    const sy = by0 + (bh - PLACEMENT.slideHeight) / 2;
+    place(`slide-l-${tag}`, "výsuvy", "Bočný plnovýsuv", [o.x0, sy, boxZ0],
+      [drawers.slide.clearancePerSide, PLACEMENT.slideHeight, drawers.slide.length], null,
+      { decision: "D6", hardware: true, loadKg: drawers.slide.loadKg });
+    place(`slide-r-${tag}`, "výsuvy", "Bočný plnovýsuv", [o.x1 - drawers.slide.clearancePerSide, sy, boxZ0],
+      [drawers.slide.clearancePerSide, PLACEMENT.slideHeight, drawers.slide.length], null,
+      { decision: "D6", hardware: true, loadKg: drawers.slide.loadKg });
+  });
+});
+
+/* --- kotvenie ------------------------------------------------------- */
+const anchorX = [legs.cornerInset, dividerX0 - PLACEMENT.anchorOffsetFromDivider, overall.width - legs.cornerInset];
+anchorX.forEach((ax, i) => {
+  place(`anchor-${i + 1}`, "kotvenie", "Hmoždinka do steny",
+    [ax - PLACEMENT.anchorDiameter / 2, topUnderside - carcass.parts.rearRail.height / 2, railZ0],
+    [PLACEMENT.anchorDiameter, PLACEMENT.anchorDiameter, T_BODY], null,
+    { shape: "cylinder", axis: "z", decision: "D7", hardware: true,
+      fastener: spec.wallAnchor.fastener,
+      note: `prechádza výstuhou; do steny pokračuje ďalších ${PLACEMENT.anchorLength - T_BODY} mm` });
+});
+assertTrue("počet kotiev", anchorX.length === spec.wallAnchor.count,
+  `vygenerovaných ${anchorX.length}, spec hovorí ${spec.wallAnchor.count}`);
+
+/* ------------------------------------------------------------------ */
+/* kontrola obálky a kolízií                                           */
+/* ------------------------------------------------------------------ */
+
+const EPS = 0.001;
+const outside = P.filter((p) =>
+  p.position[0] < -EPS || p.position[1] < -EPS || p.position[2] < -EPS ||
+  p.position[0] + p.size[0] > overall.width + EPS ||
+  p.position[1] + p.size[1] > overall.height + EPS ||
+  p.position[2] + p.size[2] > overall.depth + EPS);
+
+assertTrue("všetky diely v obálke", outside.length === 0,
+  outside.length ? `mimo 1800 × 1050 × 800: ${outside.map((p) => p.id).join(", ")}` : "");
+
+/*
+ * Povolené prieniky. Každý je stolársky zámer, nie chyba modelu —
+ * drážka alebo výrez. Prienik mimo tohto zoznamu = chyba.
+ */
+const ALLOWED = [
+  { a: /^back-/, b: /^side-/, axis: 0, expect: gd, reason: "chrbát v drážke v boku" },
+  { a: /^back-/, b: /^divider$/, axis: 0, expect: dividerGrooveDepth, reason: "chrbát v plytšej drážke v priečke" },
+  { a: /^gola-/, b: /^(side-|divider$)/, axis: 2, expect: golaLap, reason: "gola profil nalícovaný na čelnú hranu korpusu" },
+  { a: /^anchor-/, b: /^rear-rail$/, axis: 2, expect: T_BODY, reason: "kotva prechádza zadnou výstuhou" },
+  { a: /^back-/, b: /^bottom$/, axis: 1, expect: gd, reason: "chrbát v drážke v dne" },
+  { a: /^rear-rail$/, b: /^divider$/, axis: 0, expect: T_BODY, reason: "výstuha prechádza výrezom v priečke" },
+  { a: /^box-bottom-/, b: /^box-side-/, axis: 0, expect: boxGroove, reason: "dno boxu v drážke boku" },
+  { a: /^box-bottom-/, b: /^box-(front|back)-/, axis: 2, expect: boxGroove, reason: "dno boxu v drážke predku/zadku" },
+];
+
+const overlapOf = (p, q) => [0, 1, 2].map((k) =>
+  Math.min(p.position[k] + p.size[k], q.position[k] + q.size[k]) - Math.max(p.position[k], q.position[k]));
+
+const intersections = [];
+const badIntersections = [];
+for (let i = 0; i < P.length; i++) {
+  for (let j = i + 1; j < P.length; j++) {
+    const ov = overlapOf(P[i], P[j]);
+    if (ov.some((v) => v <= EPS)) continue;   // dotyk alebo medzera, nie prienik
+    const rule = ALLOWED.find((r) =>
+      (r.a.test(P[i].id) && r.b.test(P[j].id)) || (r.a.test(P[j].id) && r.b.test(P[i].id)));
+    const rec = { a: P[i].id, b: P[j].id, overlap: ov.map((v) => Math.round(v * 100) / 100) };
+    if (!rule) { badIntersections.push(rec); continue; }
+    if (Math.abs(ov[rule.axis] - rule.expect) > EPS) {
+      badIntersections.push({ ...rec, rule: rule.reason, expected: rule.expect, got: ov[rule.axis] });
+      continue;
+    }
+    intersections.push({ ...rec, reason: rule.reason });
+  }
+}
+
+assertTrue("žiadne nechcené prieniky dielov", badIntersections.length === 0,
+  badIntersections.length
+    ? badIntersections.slice(0, 6).map((b) => `${b.a} × ${b.b} [${b.overlap.join(", ")}]${b.rule ? ` (${b.rule}: čakalo sa ${b.expected}, je ${b.got})` : ""}`).join("; ")
+    : "");
+
+const partsDoc = {
+  generated: geometry.generated,
+  source: "spec/komoda.json",
+  warning: geometry.warning,
+  units: spec.units,
+  axes: { origin: "podlaha, vľavo vpredu", x: "vpravo", y: "hore", z: "dozadu" },
+  envelope: { width: overall.width, height: overall.height, depth: overall.depth },
+  note: "position = minimálny roh kvádra, size = [dx, dy, dz], center = stred (pre BoxGeometry).",
+  assumptions,
+  groups: [...new Set(P.map((p) => p.group))],
+  parts: P,
+  intendedIntersections: intersections,
+};
+
 mkdirSync(resolve(ROOT, "spec/derived"), { recursive: true });
 writeFileSync(resolve(ROOT, "spec/derived/geometry.json"), JSON.stringify(geometry, null, 2) + "\n");
 writeFileSync(resolve(ROOT, "spec/derived/cutlist.json"), JSON.stringify({
@@ -204,6 +452,7 @@ writeFileSync(resolve(ROOT, "spec/derived/cutlist.json"), JSON.stringify({
   parts,
   hardware,
 }, null, 2) + "\n");
+writeFileSync(resolve(ROOT, "spec/derived/parts.json"), JSON.stringify(partsDoc, null, 2) + "\n");
 
 const pad = (s, n) => String(s).padEnd(n);
 console.log("\nINVARIANTY");
@@ -227,5 +476,7 @@ console.log(`  čelo              ${fronts.width} × [${fronts.heights.join(", "
 console.log(`  box               ${boxWidth} × ${drawers.boxDepth}`);
 console.log(`  hĺbka na výsuv    ${usableDepth} (potreba ${drawers.boxDepth})`);
 console.log(`\n  ${parts.reduce((a, p) => a + p.qty, 0)} dielov v cutliste`);
+console.log(`  ${P.length} dielov umiestnených v priestore`);
 console.log("  → spec/derived/geometry.json");
-console.log("  → spec/derived/cutlist.json\n");
+console.log("  → spec/derived/cutlist.json");
+console.log("  → spec/derived/parts.json\n");

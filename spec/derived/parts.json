@@ -1,0 +1,2634 @@
+{
+  "generated": "2026-08-31",
+  "source": "spec/komoda.json",
+  "warning": "GENEROVANÉ — needituj ručne. Zmeň spec a spusti npm run build.",
+  "units": "mm",
+  "axes": {
+    "origin": "podlaha, vľavo vpredu",
+    "x": "vpravo",
+    "y": "hore",
+    "z": "dozadu"
+  },
+  "envelope": {
+    "width": 1800,
+    "height": 1050,
+    "depth": 800
+  },
+  "note": "position = minimálny roh kvádra, size = [dx, dy, dz], center = stred (pre BoxGeometry).",
+  "assumptions": [
+    "Zásuvkový box je v otvore vycentrovaný vodorovne (13 mm na stranu, výsuv potrebuje 12.7).",
+    "Zásuvkový box je zvislo vycentrovaný na svoje čelo.",
+    "Predná hrana boxu začína za gola profilom (z = 26 mm).",
+    "Gola profil lícuje s rovinou čiel a prekrýva čelnú hranu korpusu o 8 mm.",
+    "Stredná kotva je odsadená 40 mm od priečky, aby nešla do jej hrany.",
+    "Gola profil je modelovaný ako viditeľná škára × hĺbka profilu; skutočný prierez je vysoký 73.5 mm a schováva sa za čelami.",
+    "Nožičky sú valce s odsadením cornerInset od hrán korpusu."
+  ],
+  "groups": [
+    "nožičky",
+    "korpus",
+    "gola",
+    "čelá",
+    "zásuvky",
+    "výsuvy",
+    "kotvenie"
+  ],
+  "parts": [
+    {
+      "id": "leg-1",
+      "group": "nožičky",
+      "label": "Nastaviteľná nožička",
+      "material": null,
+      "size": [
+        50,
+        100,
+        50
+      ],
+      "position": [
+        35,
+        0,
+        53
+      ],
+      "center": [
+        60,
+        50,
+        78
+      ],
+      "shape": "cylinder",
+      "diameter": 50,
+      "decision": "D8",
+      "hardware": true
+    },
+    {
+      "id": "leg-2",
+      "group": "nožičky",
+      "label": "Nastaviteľná nožička",
+      "material": null,
+      "size": [
+        50,
+        100,
+        50
+      ],
+      "position": [
+        35,
+        0,
+        715
+      ],
+      "center": [
+        60,
+        50,
+        740
+      ],
+      "shape": "cylinder",
+      "diameter": 50,
+      "decision": "D8",
+      "hardware": true
+    },
+    {
+      "id": "leg-3",
+      "group": "nožičky",
+      "label": "Nastaviteľná nožička",
+      "material": null,
+      "size": [
+        50,
+        100,
+        50
+      ],
+      "position": [
+        875,
+        0,
+        53
+      ],
+      "center": [
+        900,
+        50,
+        78
+      ],
+      "shape": "cylinder",
+      "diameter": 50,
+      "decision": "D8",
+      "hardware": true
+    },
+    {
+      "id": "leg-4",
+      "group": "nožičky",
+      "label": "Nastaviteľná nožička",
+      "material": null,
+      "size": [
+        50,
+        100,
+        50
+      ],
+      "position": [
+        875,
+        0,
+        715
+      ],
+      "center": [
+        900,
+        50,
+        740
+      ],
+      "shape": "cylinder",
+      "diameter": 50,
+      "decision": "D8",
+      "hardware": true
+    },
+    {
+      "id": "leg-5",
+      "group": "nožičky",
+      "label": "Nastaviteľná nožička",
+      "material": null,
+      "size": [
+        50,
+        100,
+        50
+      ],
+      "position": [
+        1715,
+        0,
+        53
+      ],
+      "center": [
+        1740,
+        50,
+        78
+      ],
+      "shape": "cylinder",
+      "diameter": 50,
+      "decision": "D8",
+      "hardware": true
+    },
+    {
+      "id": "leg-6",
+      "group": "nožičky",
+      "label": "Nastaviteľná nožička",
+      "material": null,
+      "size": [
+        50,
+        100,
+        50
+      ],
+      "position": [
+        1715,
+        0,
+        715
+      ],
+      "center": [
+        1740,
+        50,
+        740
+      ],
+      "shape": "cylinder",
+      "diameter": 50,
+      "decision": "D8",
+      "hardware": true
+    },
+    {
+      "id": "bottom",
+      "group": "korpus",
+      "label": "Dno",
+      "material": "ldtd18",
+      "size": [
+        1800,
+        18,
+        782
+      ],
+      "position": [
+        0,
+        100,
+        18
+      ],
+      "center": [
+        900,
+        109,
+        409
+      ],
+      "shape": "box",
+      "decision": "D1",
+      "note": "nesie nožičky"
+    },
+    {
+      "id": "side-left",
+      "group": "korpus",
+      "label": "Bok ľavý",
+      "material": "ldtd18",
+      "size": [
+        18,
+        907,
+        782
+      ],
+      "position": [
+        0,
+        118,
+        18
+      ],
+      "center": [
+        9,
+        571.5,
+        409
+      ],
+      "shape": "box",
+      "decision": "D1"
+    },
+    {
+      "id": "side-right",
+      "group": "korpus",
+      "label": "Bok pravý",
+      "material": "ldtd18",
+      "size": [
+        18,
+        907,
+        782
+      ],
+      "position": [
+        1782,
+        118,
+        18
+      ],
+      "center": [
+        1791,
+        571.5,
+        409
+      ],
+      "shape": "box",
+      "decision": "D1"
+    },
+    {
+      "id": "divider",
+      "group": "korpus",
+      "label": "Stredná priečka",
+      "material": "ldtd18",
+      "size": [
+        18,
+        907,
+        782
+      ],
+      "position": [
+        891,
+        118,
+        18
+      ],
+      "center": [
+        900,
+        571.5,
+        409
+      ],
+      "shape": "box",
+      "note": "výrez 100 × 18 vzadu hore pre zadnú výstuhu"
+    },
+    {
+      "id": "top",
+      "group": "korpus",
+      "label": "Horná doska",
+      "material": "ldtd25",
+      "size": [
+        1800,
+        25,
+        800
+      ],
+      "position": [
+        0,
+        1025,
+        0
+      ],
+      "center": [
+        900,
+        1037.5,
+        400
+      ],
+      "shape": "box",
+      "decision": "D1",
+      "note": "presah vpredu 18 mm"
+    },
+    {
+      "id": "rear-rail",
+      "group": "korpus",
+      "label": "Zadná výstuha",
+      "material": "ldtd18",
+      "size": [
+        1764,
+        100,
+        18
+      ],
+      "position": [
+        18,
+        925,
+        759
+      ],
+      "center": [
+        900,
+        975,
+        768
+      ],
+      "shape": "box",
+      "decision": "D7",
+      "note": "kotvenie do steny"
+    },
+    {
+      "id": "back-1",
+      "group": "korpus",
+      "label": "Chrbát",
+      "material": "hdf8",
+      "size": [
+        891,
+        917,
+        8
+      ],
+      "position": [
+        8,
+        108,
+        777
+      ],
+      "center": [
+        453.5,
+        566.5,
+        781
+      ],
+      "shape": "box",
+      "note": "10 mm do boku, 8 mm do priečky"
+    },
+    {
+      "id": "back-2",
+      "group": "korpus",
+      "label": "Chrbát",
+      "material": "hdf8",
+      "size": [
+        891,
+        917,
+        8
+      ],
+      "position": [
+        901,
+        108,
+        777
+      ],
+      "center": [
+        1346.5,
+        566.5,
+        781
+      ],
+      "shape": "box",
+      "note": "10 mm do boku, 8 mm do priečky"
+    },
+    {
+      "id": "gola-j",
+      "group": "gola",
+      "label": "Gola profil J (reveal 22)",
+      "material": null,
+      "size": [
+        1800,
+        22,
+        26
+      ],
+      "position": [
+        0,
+        1003,
+        0
+      ],
+      "center": [
+        900,
+        1014,
+        13
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "J",
+      "profileHeight": 73.5,
+      "finish": "black-matt"
+    },
+    {
+      "id": "gola-c-1",
+      "group": "gola",
+      "label": "Gola profil C (reveal 21)",
+      "material": null,
+      "size": [
+        1800,
+        21,
+        26
+      ],
+      "position": [
+        0,
+        792,
+        0
+      ],
+      "center": [
+        900,
+        802.5,
+        13
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "C",
+      "profileHeight": 73.5,
+      "finish": "black-matt"
+    },
+    {
+      "id": "front-r1c1",
+      "group": "čelá",
+      "label": "Čelo 190 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        190,
+        18
+      ],
+      "position": [
+        0,
+        813,
+        0
+      ],
+      "center": [
+        449,
+        908,
+        9
+      ],
+      "shape": "box",
+      "decision": "D4",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r1c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        31,
+        833,
+        26
+      ],
+      "center": [
+        39,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r1c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        862,
+        833,
+        26
+      ],
+      "center": [
+        870,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r1c1",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        47,
+        833,
+        26
+      ],
+      "center": [
+        454.5,
+        908,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r1c1",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        47,
+        833,
+        710
+      ],
+      "center": [
+        454.5,
+        908,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r1c1",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 1)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        39,
+        843,
+        34
+      ],
+      "center": [
+        454.5,
+        848,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r1c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        18,
+        885.5,
+        26
+      ],
+      "center": [
+        24.35,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r1c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        878.3,
+        885.5,
+        26
+      ],
+      "center": [
+        884.65,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "front-r1c2",
+      "group": "čelá",
+      "label": "Čelo 190 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        190,
+        18
+      ],
+      "position": [
+        902,
+        813,
+        0
+      ],
+      "center": [
+        1351,
+        908,
+        9
+      ],
+      "shape": "box",
+      "decision": "D4",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r1c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        922,
+        833,
+        26
+      ],
+      "center": [
+        930,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r1c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        1753,
+        833,
+        26
+      ],
+      "center": [
+        1761,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r1c2",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        938,
+        833,
+        26
+      ],
+      "center": [
+        1345.5,
+        908,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r1c2",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 1)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        938,
+        833,
+        710
+      ],
+      "center": [
+        1345.5,
+        908,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r1c2",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 1)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        930,
+        843,
+        34
+      ],
+      "center": [
+        1345.5,
+        848,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r1c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        909,
+        885.5,
+        26
+      ],
+      "center": [
+        915.35,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r1c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        1769.3,
+        885.5,
+        26
+      ],
+      "center": [
+        1775.65,
+        908,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "gola-c-2",
+      "group": "gola",
+      "label": "Gola profil C (reveal 21)",
+      "material": null,
+      "size": [
+        1800,
+        21,
+        26
+      ],
+      "position": [
+        0,
+        581,
+        0
+      ],
+      "center": [
+        900,
+        591.5,
+        13
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "C",
+      "profileHeight": 73.5,
+      "finish": "black-matt"
+    },
+    {
+      "id": "front-r2c1",
+      "group": "čelá",
+      "label": "Čelo 190 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        190,
+        18
+      ],
+      "position": [
+        0,
+        602,
+        0
+      ],
+      "center": [
+        449,
+        697,
+        9
+      ],
+      "shape": "box",
+      "decision": "D4",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r2c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        31,
+        622,
+        26
+      ],
+      "center": [
+        39,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r2c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        862,
+        622,
+        26
+      ],
+      "center": [
+        870,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r2c1",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        47,
+        622,
+        26
+      ],
+      "center": [
+        454.5,
+        697,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r2c1",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        47,
+        622,
+        710
+      ],
+      "center": [
+        454.5,
+        697,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r2c1",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 2)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        39,
+        632,
+        34
+      ],
+      "center": [
+        454.5,
+        637,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r2c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        18,
+        674.5,
+        26
+      ],
+      "center": [
+        24.35,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r2c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        878.3,
+        674.5,
+        26
+      ],
+      "center": [
+        884.65,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "front-r2c2",
+      "group": "čelá",
+      "label": "Čelo 190 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        190,
+        18
+      ],
+      "position": [
+        902,
+        602,
+        0
+      ],
+      "center": [
+        1351,
+        697,
+        9
+      ],
+      "shape": "box",
+      "decision": "D4",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r2c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        922,
+        622,
+        26
+      ],
+      "center": [
+        930,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r2c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        1753,
+        622,
+        26
+      ],
+      "center": [
+        1761,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r2c2",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        938,
+        622,
+        26
+      ],
+      "center": [
+        1345.5,
+        697,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r2c2",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 2)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        938,
+        622,
+        710
+      ],
+      "center": [
+        1345.5,
+        697,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r2c2",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 2)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        930,
+        632,
+        34
+      ],
+      "center": [
+        1345.5,
+        637,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r2c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        909,
+        674.5,
+        26
+      ],
+      "center": [
+        915.35,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r2c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        1769.3,
+        674.5,
+        26
+      ],
+      "center": [
+        1775.65,
+        697,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "gola-c-3",
+      "group": "gola",
+      "label": "Gola profil C (reveal 21)",
+      "material": null,
+      "size": [
+        1800,
+        21,
+        26
+      ],
+      "position": [
+        0,
+        370,
+        0
+      ],
+      "center": [
+        900,
+        380.5,
+        13
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "C",
+      "profileHeight": 73.5,
+      "finish": "black-matt"
+    },
+    {
+      "id": "front-r3c1",
+      "group": "čelá",
+      "label": "Čelo 190 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        190,
+        18
+      ],
+      "position": [
+        0,
+        391,
+        0
+      ],
+      "center": [
+        449,
+        486,
+        9
+      ],
+      "shape": "box",
+      "decision": "D4",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r3c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        31,
+        411,
+        26
+      ],
+      "center": [
+        39,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r3c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        862,
+        411,
+        26
+      ],
+      "center": [
+        870,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r3c1",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        47,
+        411,
+        26
+      ],
+      "center": [
+        454.5,
+        486,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r3c1",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        47,
+        411,
+        710
+      ],
+      "center": [
+        454.5,
+        486,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r3c1",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 3)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        39,
+        421,
+        34
+      ],
+      "center": [
+        454.5,
+        426,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r3c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        18,
+        463.5,
+        26
+      ],
+      "center": [
+        24.35,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r3c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        878.3,
+        463.5,
+        26
+      ],
+      "center": [
+        884.65,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "front-r3c2",
+      "group": "čelá",
+      "label": "Čelo 190 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        190,
+        18
+      ],
+      "position": [
+        902,
+        391,
+        0
+      ],
+      "center": [
+        1351,
+        486,
+        9
+      ],
+      "shape": "box",
+      "decision": "D4",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r3c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        922,
+        411,
+        26
+      ],
+      "center": [
+        930,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r3c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        150,
+        700
+      ],
+      "position": [
+        1753,
+        411,
+        26
+      ],
+      "center": [
+        1761,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r3c2",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        938,
+        411,
+        26
+      ],
+      "center": [
+        1345.5,
+        486,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r3c2",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 3)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        150,
+        16
+      ],
+      "position": [
+        938,
+        411,
+        710
+      ],
+      "center": [
+        1345.5,
+        486,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r3c2",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 3)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        930,
+        421,
+        34
+      ],
+      "center": [
+        1345.5,
+        426,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r3c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        909,
+        463.5,
+        26
+      ],
+      "center": [
+        915.35,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r3c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        1769.3,
+        463.5,
+        26
+      ],
+      "center": [
+        1775.65,
+        486,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "front-r4c1",
+      "group": "čelá",
+      "label": "Čelo 270 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        270,
+        18
+      ],
+      "position": [
+        0,
+        100,
+        0
+      ],
+      "center": [
+        449,
+        235,
+        9
+      ],
+      "shape": "box",
+      "decision": "D5",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r4c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        200,
+        700
+      ],
+      "position": [
+        31,
+        135,
+        26
+      ],
+      "center": [
+        39,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r4c1",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        200,
+        700
+      ],
+      "position": [
+        862,
+        135,
+        26
+      ],
+      "center": [
+        870,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r4c1",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        200,
+        16
+      ],
+      "position": [
+        47,
+        135,
+        26
+      ],
+      "center": [
+        454.5,
+        235,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r4c1",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        200,
+        16
+      ],
+      "position": [
+        47,
+        135,
+        710
+      ],
+      "center": [
+        454.5,
+        235,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r4c1",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 4)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        39,
+        145,
+        34
+      ],
+      "center": [
+        454.5,
+        150,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r4c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        18,
+        212.5,
+        26
+      ],
+      "center": [
+        24.35,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r4c1",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        878.3,
+        212.5,
+        26
+      ],
+      "center": [
+        884.65,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "front-r4c2",
+      "group": "čelá",
+      "label": "Čelo 270 mm",
+      "material": "ldtd18",
+      "size": [
+        898,
+        270,
+        18
+      ],
+      "position": [
+        902,
+        100,
+        0
+      ],
+      "center": [
+        1351,
+        235,
+        9
+      ],
+      "shape": "box",
+      "decision": "D5",
+      "edging": "ABS 2 mm dookola",
+      "grain": "horizontal"
+    },
+    {
+      "id": "box-side-l-r4c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        200,
+        700
+      ],
+      "position": [
+        922,
+        135,
+        26
+      ],
+      "center": [
+        930,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-side-r-r4c2",
+      "group": "zásuvky",
+      "label": "Bok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        16,
+        200,
+        700
+      ],
+      "position": [
+        1753,
+        135,
+        26
+      ],
+      "center": [
+        1761,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-front-r4c2",
+      "group": "zásuvky",
+      "label": "Predok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        200,
+        16
+      ],
+      "position": [
+        938,
+        135,
+        26
+      ],
+      "center": [
+        1345.5,
+        235,
+        34
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-back-r4c2",
+      "group": "zásuvky",
+      "label": "Zadok boxu (rad 4)",
+      "material": "ldtd16",
+      "size": [
+        815,
+        200,
+        16
+      ],
+      "position": [
+        938,
+        135,
+        710
+      ],
+      "center": [
+        1345.5,
+        235,
+        718
+      ],
+      "shape": "box",
+      "decision": "D6"
+    },
+    {
+      "id": "box-bottom-r4c2",
+      "group": "zásuvky",
+      "label": "Dno boxu (rad 4)",
+      "material": "hdf10",
+      "size": [
+        831,
+        10,
+        684
+      ],
+      "position": [
+        930,
+        145,
+        34
+      ],
+      "center": [
+        1345.5,
+        150,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "note": "v drážke 8 mm"
+    },
+    {
+      "id": "slide-l-r4c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        909,
+        212.5,
+        26
+      ],
+      "center": [
+        915.35,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "slide-r-r4c2",
+      "group": "výsuvy",
+      "label": "Bočný plnovýsuv",
+      "material": null,
+      "size": [
+        12.7,
+        45,
+        700
+      ],
+      "position": [
+        1769.3,
+        212.5,
+        26
+      ],
+      "center": [
+        1775.65,
+        235,
+        376
+      ],
+      "shape": "box",
+      "decision": "D6",
+      "hardware": true,
+      "loadKg": 40
+    },
+    {
+      "id": "anchor-1",
+      "group": "kotvenie",
+      "label": "Hmoždinka do steny",
+      "material": null,
+      "size": [
+        10,
+        10,
+        18
+      ],
+      "position": [
+        55,
+        975,
+        759
+      ],
+      "center": [
+        60,
+        980,
+        768
+      ],
+      "shape": "cylinder",
+      "axis": "z",
+      "decision": "D7",
+      "hardware": true,
+      "fastener": "nylonová hmoždinka 10 × 80",
+      "note": "prechádza výstuhou; do steny pokračuje ďalších 62 mm"
+    },
+    {
+      "id": "anchor-2",
+      "group": "kotvenie",
+      "label": "Hmoždinka do steny",
+      "material": null,
+      "size": [
+        10,
+        10,
+        18
+      ],
+      "position": [
+        846,
+        975,
+        759
+      ],
+      "center": [
+        851,
+        980,
+        768
+      ],
+      "shape": "cylinder",
+      "axis": "z",
+      "decision": "D7",
+      "hardware": true,
+      "fastener": "nylonová hmoždinka 10 × 80",
+      "note": "prechádza výstuhou; do steny pokračuje ďalších 62 mm"
+    },
+    {
+      "id": "anchor-3",
+      "group": "kotvenie",
+      "label": "Hmoždinka do steny",
+      "material": null,
+      "size": [
+        10,
+        10,
+        18
+      ],
+      "position": [
+        1735,
+        975,
+        759
+      ],
+      "center": [
+        1740,
+        980,
+        768
+      ],
+      "shape": "cylinder",
+      "axis": "z",
+      "decision": "D7",
+      "hardware": true,
+      "fastener": "nylonová hmoždinka 10 × 80",
+      "note": "prechádza výstuhou; do steny pokračuje ďalších 62 mm"
+    }
+  ],
+  "intendedIntersections": [
+    {
+      "a": "bottom",
+      "b": "back-1",
+      "overlap": [
+        891,
+        10,
+        8
+      ],
+      "reason": "chrbát v drážke v dne"
+    },
+    {
+      "a": "bottom",
+      "b": "back-2",
+      "overlap": [
+        891,
+        10,
+        8
+      ],
+      "reason": "chrbát v drážke v dne"
+    },
+    {
+      "a": "side-left",
+      "b": "back-1",
+      "overlap": [
+        10,
+        907,
+        8
+      ],
+      "reason": "chrbát v drážke v boku"
+    },
+    {
+      "a": "side-left",
+      "b": "gola-j",
+      "overlap": [
+        18,
+        22,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "side-left",
+      "b": "gola-c-1",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "side-left",
+      "b": "gola-c-2",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "side-left",
+      "b": "gola-c-3",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "side-right",
+      "b": "back-2",
+      "overlap": [
+        10,
+        907,
+        8
+      ],
+      "reason": "chrbát v drážke v boku"
+    },
+    {
+      "a": "side-right",
+      "b": "gola-j",
+      "overlap": [
+        18,
+        22,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "side-right",
+      "b": "gola-c-1",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "side-right",
+      "b": "gola-c-2",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "side-right",
+      "b": "gola-c-3",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "divider",
+      "b": "rear-rail",
+      "overlap": [
+        18,
+        100,
+        18
+      ],
+      "reason": "výstuha prechádza výrezom v priečke"
+    },
+    {
+      "a": "divider",
+      "b": "back-1",
+      "overlap": [
+        8,
+        907,
+        8
+      ],
+      "reason": "chrbát v plytšej drážke v priečke"
+    },
+    {
+      "a": "divider",
+      "b": "back-2",
+      "overlap": [
+        8,
+        907,
+        8
+      ],
+      "reason": "chrbát v plytšej drážke v priečke"
+    },
+    {
+      "a": "divider",
+      "b": "gola-j",
+      "overlap": [
+        18,
+        22,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "divider",
+      "b": "gola-c-1",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "divider",
+      "b": "gola-c-2",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "divider",
+      "b": "gola-c-3",
+      "overlap": [
+        18,
+        21,
+        8
+      ],
+      "reason": "gola profil nalícovaný na čelnú hranu korpusu"
+    },
+    {
+      "a": "rear-rail",
+      "b": "anchor-1",
+      "overlap": [
+        10,
+        10,
+        18
+      ],
+      "reason": "kotva prechádza zadnou výstuhou"
+    },
+    {
+      "a": "rear-rail",
+      "b": "anchor-2",
+      "overlap": [
+        10,
+        10,
+        18
+      ],
+      "reason": "kotva prechádza zadnou výstuhou"
+    },
+    {
+      "a": "rear-rail",
+      "b": "anchor-3",
+      "overlap": [
+        10,
+        10,
+        18
+      ],
+      "reason": "kotva prechádza zadnou výstuhou"
+    },
+    {
+      "a": "box-side-l-r1c1",
+      "b": "box-bottom-r1c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r1c1",
+      "b": "box-bottom-r1c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r1c1",
+      "b": "box-bottom-r1c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r1c1",
+      "b": "box-bottom-r1c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-side-l-r1c2",
+      "b": "box-bottom-r1c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r1c2",
+      "b": "box-bottom-r1c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r1c2",
+      "b": "box-bottom-r1c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r1c2",
+      "b": "box-bottom-r1c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-side-l-r2c1",
+      "b": "box-bottom-r2c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r2c1",
+      "b": "box-bottom-r2c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r2c1",
+      "b": "box-bottom-r2c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r2c1",
+      "b": "box-bottom-r2c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-side-l-r2c2",
+      "b": "box-bottom-r2c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r2c2",
+      "b": "box-bottom-r2c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r2c2",
+      "b": "box-bottom-r2c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r2c2",
+      "b": "box-bottom-r2c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-side-l-r3c1",
+      "b": "box-bottom-r3c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r3c1",
+      "b": "box-bottom-r3c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r3c1",
+      "b": "box-bottom-r3c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r3c1",
+      "b": "box-bottom-r3c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-side-l-r3c2",
+      "b": "box-bottom-r3c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r3c2",
+      "b": "box-bottom-r3c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r3c2",
+      "b": "box-bottom-r3c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r3c2",
+      "b": "box-bottom-r3c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-side-l-r4c1",
+      "b": "box-bottom-r4c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r4c1",
+      "b": "box-bottom-r4c1",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r4c1",
+      "b": "box-bottom-r4c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r4c1",
+      "b": "box-bottom-r4c1",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-side-l-r4c2",
+      "b": "box-bottom-r4c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-side-r-r4c2",
+      "b": "box-bottom-r4c2",
+      "overlap": [
+        8,
+        10,
+        684
+      ],
+      "reason": "dno boxu v drážke boku"
+    },
+    {
+      "a": "box-front-r4c2",
+      "b": "box-bottom-r4c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    },
+    {
+      "a": "box-back-r4c2",
+      "b": "box-bottom-r4c2",
+      "overlap": [
+        815,
+        10,
+        8
+      ],
+      "reason": "dno boxu v drážke predku/zadku"
+    }
+  ]
+}

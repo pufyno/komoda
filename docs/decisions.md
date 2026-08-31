@@ -129,6 +129,18 @@ Horné tri majú vnútri ~130 mm, čo je na detské oblečenie viac než dosť.
 
 ---
 
+## D11 — Chrbát 891 mm, drážka v priečke plytšia
+
+**Rozhodnutie:** drážka pre chrbát je 10 mm hlboká v bokoch a v dne, ale len **8 mm v strednej priečke**. Chrbát je preto 891 mm široký, nie 893.
+
+**Prečo:** priečka je 18 mm a chrbty do nej idú z oboch strán. Pri 10 mm z každej strany by sa drážky stretli a priečka by bola v tej línii prerezaná. Pri 8 mm ostávajú medzi nimi 2 mm materiálu.
+
+**Ako sa to našlo:** kontrolou kolízií v `scripts/build.mjs` pri stavbe vizualizéra. Pôvodný výpočet `873 + 2 × 10 = 893` platí len pre diel, ktorý má na oboch stranách vonkajší bok — pri strednej priečke nie je vyrobiteľný.
+
+**Dôsledok pre montáž:** chrbát nie je symetrický. Hlbšia strana ide do vonkajšieho boku, plytšia do priečky. Oba chrbty sú rovnaké, len sa vkladajú zrkadlovo.
+
+---
+
 ## Čo zostáva otvorené
 
 Sledované v `spec/komoda.json` → `openQuestions`:

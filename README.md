@@ -7,7 +7,7 @@ Repo je zdroj dát pre vizualizér, nie len archív výkresu. Obrázok je refere
 ```
 spec/komoda.json          ← jediný zdroj pravdy
 spec/komoda.schema.json   ← štruktúra
-spec/derived/             ← GENEROVANÉ (geometria + cutlist)
+spec/derived/             ← GENEROVANÉ (geometria + cutlist + diely v priestore)
 scripts/build.mjs         ← invarianty + generátor
 docs/decisions.md         ← prečo sú čísla také, aké sú
 docs/technicky-vykres.png ← pôvodný výkres, M 1:10
@@ -21,7 +21,9 @@ npm install
 npm run validate     # schéma + aritmetické invarianty + regenerácia derived/
 ```
 
-Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čiel a gola škár nedá 925 mm.
+Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čiel a gola škár nedá 925 mm, keď diel vytŕča z obálky 1800 × 1050 × 800, alebo keď sa dva diely prekrývajú mimo drážky.
+
+`spec/derived/parts.json` obsahuje všetkých 85 dielov s pozíciou a rozmermi v priestore — to je vstup pre vizualizér v `app/`.
 
 ## Kľúčové rozmery
 

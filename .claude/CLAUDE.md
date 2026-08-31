@@ -31,6 +31,9 @@ Spustí kontrolu schémy aj aritmetických invariantov a pregeneruje `spec/deriv
 | svetlá výška korpusu | 950 − 25 − 18 = 907 |
 | spodná hrana posledného čela = spodok korpusu | 100 |
 | hĺbka na výsuv ≥ hĺbka boxu | 748 ≥ 700 |
+| drážky v priečke sa nestretnú | 2 × 8 < 18 |
+| všetky diely v obálke | 1800 × 1050 × 800 |
+| žiadne nechcené prieniky dielov | 54 zamýšľaných, 0 iných |
 
 ## Než niečo „opravíš"
 
@@ -44,7 +47,19 @@ Typické chybné „opravy":
 
 ## Konvencie súradníc
 
-Origin na podlahe, vľavo vpredu. **X** vpravo, **Y** hore, **Z** dozadu. Všetko v milimetroch. Táto konvencia platí v `spec/derived/geometry.json` aj vo vizualizéri.
+Origin na podlahe, vľavo vpredu. **X** vpravo, **Y** hore, **Z** dozadu. Všetko v milimetroch. Táto konvencia platí v `spec/derived/geometry.json`, `parts.json` aj vo vizualizéri.
+
+Referenčné roviny: čelá sú v z 0–18, gola profily lícujú s nimi (z 0–26), korpus začína na z 18, chrbát je na z 777–785, zadná hrana na z 800.
+
+## `parts.json` — čo kreslí vizualizér
+
+`spec/derived/parts.json` je zoznam všetkých 85 dielov s umiestnením v priestore: `position` je minimálny roh kvádra, `size` je `[dx, dy, dz]`, `center` je stred (priamo pre `BoxGeometry`). Každý diel má `group`, `material` a väčšina aj `decision` — odkaz na D1–D11 v `docs/decisions.md`.
+
+**Aplikácia nič nepočíta, len kreslí.** Ak potrebuješ v `app/` nový rozmer alebo pozíciu, pridaj ho do generátora v `build.mjs`, nie do komponentu.
+
+Polohy, ktoré nevyplývajú zo specu (vycentrovanie boxu v otvore, výška výsuvu, odsadenie kotvy od priečky), sú v konštante `PLACEMENT` v `build.mjs` a vypisujú sa do `parts.json` → `assumptions`. Meň ich tam — do specu nepatria, lebo neovplyvňujú výrobu.
+
+Generátor kontroluje kolízie: každý prienik dvoch dielov musí byť v zozname `ALLOWED` (drážka, výrez) a musí mať očakávanú hĺbku. Čokoľvek iné build zhodí. Vďaka tomu sa chyba v modeli nájde pri validácii, nie až očami v 3D.
 
 ## Stav
 
