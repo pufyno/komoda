@@ -1,5 +1,6 @@
 import partsJson from "../../spec/derived/parts.json";
 import geometryJson from "../../spec/derived/geometry.json";
+import cutlistJson from "../../spec/derived/cutlist.json";
 
 /*
  * Jediný vstup vizualizéra sú generované súbory zo spec/derived/.
@@ -57,9 +58,38 @@ export interface PartsDoc {
 
 export const doc = partsJson as unknown as PartsDoc;
 export const geometry = geometryJson as unknown as {
-  carcass: { openingWidth: number; clearHeight: number; depth: number };
+  carcass: { openingWidth: number; clearHeight: number; depth: number; dividerX: number };
+  top: { y0: number; y1: number; depth: number; frontOverhang: number };
   drawerBox: { width: number; depth: number; usableDepth: number };
   rows: { row: number; frontHeight: number; frontTopY: number; frontBottomY: number }[];
+  columnsX: { col: number; x0: number; x1: number }[];
+};
+
+/** Diel podľa id — pre rozmery, ktoré sa nemajú písať do kódu ručne. */
+export const partById = (id: string): Part | undefined => doc.parts.find((p) => p.id === id);
+
+export interface CutPart {
+  group: string;
+  name: string;
+  qty: number;
+  length: number;
+  width: number;
+  thickness: number;
+  material: string;
+  note: string;
+}
+
+export interface Hardware {
+  item: string;
+  qty: number | string;
+  length: number | null;
+  note: string;
+}
+
+export const cutlist = cutlistJson as unknown as {
+  generated: string;
+  parts: CutPart[];
+  hardware: Hardware[];
 };
 
 export const ENV = doc.envelope;

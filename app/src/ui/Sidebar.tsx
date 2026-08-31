@@ -10,11 +10,12 @@ interface Props {
   setAllDrawers: (open: boolean) => void;
   explode: number;
   setExplode: (v: number) => void;
+  is3d: boolean;
 }
 
 export default function Sidebar({
   visible, toggle, showEnvelope, setShowEnvelope,
-  openCount, setAllDrawers, explode, setExplode,
+  openCount, setAllDrawers, explode, setExplode, is3d,
 }: Props) {
   const [openAssumptions, setOpenAssumptions] = useState(false);
   const counts = countByGroup(doc.parts);
@@ -41,17 +42,17 @@ export default function Sidebar({
               </label>
             </li>
           ))}
-          <li className="sep">
+          {is3d && <li className="sep">
             <label>
               <input type="checkbox" checked={showEnvelope} onChange={(e) => setShowEnvelope(e.target.checked)} />
               <span className="swatch outline" />
               obálka
             </label>
-          </li>
+          </li>}
         </ul>
       </section>
 
-      <section>
+      {is3d && <section>
         <h3>Zásuvky</h3>
         <div className="controls">
           <button
@@ -63,9 +64,9 @@ export default function Sidebar({
           <span className="counter">{openCount} / {doc.drawers.length}</span>
         </div>
         <p className="micro">Dvojklik na zásuvku ju otvorí samostatne.</p>
-      </section>
+      </section>}
 
-      <section>
+      {is3d && <section>
         <h3>Rozstrel</h3>
         <input
           className="slider"
@@ -77,7 +78,7 @@ export default function Sidebar({
           onChange={(e) => setExplode(Number(e.target.value))}
         />
         <p className="micro">Odsunie diely od stredu, aby bolo vidieť skladbu.</p>
-      </section>
+      </section>}
 
       <section>
         <h3>Kľúčové rozmery</h3>

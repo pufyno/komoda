@@ -54,6 +54,8 @@ Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — 
 - **klik** na diel → rozmer, materiál, hrana a rozhodnutie z `docs/decisions.md`, ktoré ten rozmer vysvetľuje
 - **dvojklik** na zásuvku → vysunie sa na plný výsuv 700 mm a ukáže svetlosť boxu (815 × 130 × 668, spodný rad 815 × 180 × 668)
 - rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 800
+- **nárys / bokorys / pôdorys** ako čisté SVG s kótami — ortografický priemet sa počíta priamo z `parts.json`, nie cez 3D kameru, takže čiary sú ostré a tlač je presná
+- **cutlist** ako tlačiteľná tabuľka z `spec/derived/cutlist.json`
 
 Stack: Vite + React + [react-three-fiber](https://github.com/pmndrs/react-three-fiber). Výstup je statický, bez servera.
 
