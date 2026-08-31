@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { doc, geometry, spec, GROUP_COLOR, GROUP_ORDER, countByGroup, type Palette } from "../data";
+import { SECTION, VIEW_LABEL, type SectionId } from "../views/Drawing";
 
 interface Props {
   visible: Set<string>;
@@ -15,12 +16,16 @@ interface Props {
   grain: boolean;
   setGrain: (v: boolean) => void;
   is3d: boolean;
+  section: SectionId | null;
+  sectionAt: Record<SectionId, number>;
+  moveSection: (id: SectionId, v: number) => void;
 }
 
 export default function Sidebar({
   visible, toggle, showEnvelope, setShowEnvelope,
   openCount, setAllDrawers, explode, setExplode,
   palette, setPalette, grain, setGrain, is3d,
+  section, sectionAt, moveSection,
 }: Props) {
   const [openAssumptions, setOpenAssumptions] = useState(false);
   const counts = countByGroup(doc.parts);
@@ -82,6 +87,23 @@ export default function Sidebar({
           <span className="counter">{openCount} / {doc.drawers.length}</span>
         </div>
         <p className="micro">Dvojklik na zásuvku ju otvorí samostatne.</p>
+      </section>}
+
+      {section && <section>
+        <h3>{VIEW_LABEL[section]}</h3>
+        <input
+          className="slider"
+          type="range"
+          min={0}
+          max={SECTION[section].max}
+          step={1}
+          value={sectionAt[section]}
+          onChange={(e) => moveSection(section, Number(e.target.value))}
+        />
+        <p className="micro">
+          {SECTION[section].label} = <span className="num">{sectionAt[section]}</span> mm.
+          Šrafované diely rovina pretína, tenké sú za ňou.
+        </p>
       </section>}
 
       {is3d && <section>

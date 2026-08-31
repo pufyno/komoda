@@ -1,5 +1,5 @@
 import { Suspense, lazy, useCallback, useMemo, useState } from "react";
-import Drawing from "./views/Drawing";
+import Drawing, { SECTION_DEFAULT, isSection, type SectionId } from "./views/Drawing";
 import Cutlist from "./views/Cutlist";
 import Sidebar from "./ui/Sidebar";
 import DetailPanel from "./ui/DetailPanel";
@@ -19,6 +19,11 @@ export default function App() {
   const [palette, setPalette] = useState<Palette>("scheme");
   const [grain, setGrain] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(true);
+  const [sectionAt, setSectionAt] = useState(SECTION_DEFAULT);
+
+  const moveSection = useCallback((id: SectionId, v: number) => {
+    setSectionAt((prev) => ({ ...prev, [id]: v }));
+  }, []);
 
   const toggle = useCallback((group: string) => {
     setVisible((prev) => {
@@ -76,6 +81,7 @@ export default function App() {
           onSelect={setSelected}
           palette={palette}
           grain={grain}
+          sectionAt={sectionAt}
         />
       )}
       {isCutlist && <Cutlist />}
@@ -97,6 +103,9 @@ export default function App() {
           grain={grain}
           setGrain={setGrain}
           is3d={is3d}
+          section={!is3d && !isCutlist && isSection(mode) ? mode : null}
+          sectionAt={sectionAt}
+          moveSection={moveSection}
         />
       )}
 
@@ -111,6 +120,7 @@ export default function App() {
         <aside className="panel hint">
           <strong>Klik</strong> na diel ukáže jeho rozmery a dôvod, prečo je taký.
           {is3d && (<><br /><strong>Dvojklik</strong> na zásuvku ju otvorí.</>)}
+          {!is3d && isSection(mode) && (<><br />Šrafované diely sú prerezané rovinou, tenké sú za ňou.</>)}
         </aside>
       ))}
 

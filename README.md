@@ -56,6 +56,7 @@ Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — 
 - **dvojklik** na zásuvku → vysunie sa na plný výsuv 700 mm a ukáže svetlosť boxu (815 × 130 × 668, spodný rad 815 × 180 × 668)
 - rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 800
 - **nárys / bokorys / pôdorys** ako čisté SVG s kótami — ortografický priemet sa počíta priamo z `parts.json`, nie cez 3D kameru, takže čiary sú ostré a tlač je presná
+- **rez A–A / B–B** s posuvnou rovinou. Šrafované diely rovina pretína, tenké sú za ňou, materiál pred ňou sa nekreslí. Stopa roviny je čiarkovane vyznačená v náryse. Rez A–A rozpisuje hĺbkovú skladbu 18 + 8 + 700 + 33 + 18 + 8 + 15 = 800 a svetlo 733 mm pre box; rez B–B šírkovú 18 + 873 + 18 + 873 + 18 = 1800
 - **cutlist** ako tlačiteľná tabuľka z `spec/derived/cutlist.json`
 - prepínač **schéma / dekor** — schéma odlišuje diely podľa funkcie, dekor ukazuje svetlý dub, čiernu matnú golu a pozinkované výsuvy
 - **smer kresby dubu** (D10) a banner s blokujúcou otvorenou otázkou zo `spec/komoda.json`

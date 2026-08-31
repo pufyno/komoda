@@ -77,4 +77,4 @@ Generátor kontroluje kolízie: každý prienik dvoch dielov musí byť v zoznam
 
 Spec je kompletný a validuje. Otvorené položky sú v `spec/komoda.json` → `openQuestions`; blokujúca je len `gola-reveal-verify`.
 
-`app/` je zatiaľ prázdny. Pri stavbe vizualizéra: 2D pohľady sú na technický výkres presnejšie a lacnejšie ako 3D. Ak 3D, čítaj `spec/derived/geometry.json`, nie `komoda.json`.
+Vizualizér stojí. 2D pohľady aj rezy sú čisté SVG počítané z `parts.json` — všetky diely sú kvádre zarovnané s osami, takže priemet je výber dvoch osí a rez je klasifikácia dielov voči jednej rovine (`placementOf` v `app/src/views/Drawing.tsx`). Žiadna projekčná matica, žiadna CSG. Nový pohľad alebo rez sa pridáva do `AXES` / `SECTION`, kóty do `dimensionsFor`.

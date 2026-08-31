@@ -7,6 +7,8 @@ const TABS: { id: Mode; label: string }[] = [
   { id: "front", label: VIEW_LABEL.front },
   { id: "side", label: VIEW_LABEL.side },
   { id: "top", label: VIEW_LABEL.top },
+  { id: "sectionV", label: VIEW_LABEL.sectionV },
+  { id: "sectionH", label: VIEW_LABEL.sectionH },
   { id: "cutlist", label: "Cutlist" },
 ];
 
