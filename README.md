@@ -11,7 +11,7 @@ spec/derived/             ← GENEROVANÉ (geometria + cutlist + diely v priesto
 scripts/build.mjs         ← invarianty + generátor
 docs/decisions.md         ← prečo sú čísla také, aké sú
 docs/technicky-vykres.png ← pôvodný výkres, M 1:10
-app/                      ← vizualizér (zatiaľ prázdny)
+app/                      ← vizualizér (Vite + react-three-fiber)
 ```
 
 ## Použitie
@@ -19,6 +19,8 @@ app/                      ← vizualizér (zatiaľ prázdny)
 ```bash
 npm install
 npm run validate     # schéma + aritmetické invarianty + regenerácia derived/
+npm run dev          # vizualizér na http://localhost:5173
+npm run build        # validácia + produkčný build do app/dist
 ```
 
 Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čiel a gola škár nedá 925 mm, keď diel vytŕča z obálky 1800 × 1050 × 800, alebo keď sa dva diely prekrývajú mimo drážky.
@@ -44,6 +46,26 @@ Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
 - **`gola-reveal-verify`** — reveal 21/22 mm je zvolený cieľ, nie odčítaný z datasheetu. Over v montážnom návode pri objednávke; ak sa líši, prepočítajú sa výšky čiel.
 - `pad-dimensions` — prebaľovacia podložka sa ešte nekúpila, zóna 800 × 700 je placeholder.
 - `decor-code` — svetlý dub, konkrétny kód podľa vzorkovníka.
+
+## Vizualizér
+
+Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — **nepočíta žiadnu geometriu**. Klik na diel ukáže jeho rozmer, materiál a rozhodnutie z `docs/decisions.md`, ktoré ten rozmer vysvetľuje.
+
+Stack: Vite + React + [react-three-fiber](https://github.com/pmndrs/react-three-fiber). Výstup je statický, bez servera.
+
+### Nasadenie na Vercel
+
+Projekt sa importuje z tohto repa. Root Directory zostáva na koreni, aby build videl `spec/`:
+
+| Pole | Hodnota |
+|---|---|
+| Framework Preset | `Other` |
+| Root Directory | `./` |
+| Install Command | `npm install` |
+| Build Command | `npm run build` |
+| Output Directory | `app/dist` |
+
+`npm run build` spúšťa validáciu pred buildom, takže **nekonzistentný spec zhodí deploy** a na produkciu sa nedostane.
 
 ## Claude Code
 

@@ -1,0 +1,101 @@
+import partsJson from "../../spec/derived/parts.json";
+import geometryJson from "../../spec/derived/geometry.json";
+
+/*
+ * Jediný vstup vizualizéra sú generované súbory zo spec/derived/.
+ * Tu sa NEPOČÍTA žiadna geometria — len sa prevádza z milimetrov
+ * do metrov a z konvencie specu (Z dozadu) do konvencie three.js
+ * (Z k divákovi). Ak treba nový rozmer, patrí do scripts/build.mjs.
+ */
+
+export type Vec3 = [number, number, number];
+
+export interface Part {
+  id: string;
+  group: string;
+  label: string;
+  material: string | null;
+  size: Vec3;
+  position: Vec3;
+  center: Vec3;
+  shape: "box" | "cylinder";
+  decision?: string;
+  note?: string;
+  edging?: string;
+  grain?: string;
+  hardware?: boolean;
+  diameter?: number;
+  axis?: "z";
+  profileType?: string;
+  profileHeight?: number;
+  finish?: string;
+  loadKg?: number;
+}
+
+export interface PartsDoc {
+  generated: string;
+  units: string;
+  envelope: { width: number; height: number; depth: number };
+  axes: Record<string, string>;
+  assumptions: string[];
+  groups: string[];
+  parts: Part[];
+  intendedIntersections: { a: string; b: string; overlap: Vec3; reason: string }[];
+}
+
+export const doc = partsJson as unknown as PartsDoc;
+export const geometry = geometryJson as unknown as {
+  carcass: { openingWidth: number; clearHeight: number; depth: number };
+  drawerBox: { width: number; depth: number; usableDepth: number };
+  rows: { row: number; frontHeight: number; frontTopY: number; frontBottomY: number }[];
+};
+
+export const ENV = doc.envelope;
+
+/** mm → m */
+export const MM = 0.001;
+
+/** Spec: origin vľavo vpredu na podlahe, Z dozadu. three.js: model vycentrovaný, Z k divákovi. */
+export function toScene([x, y, z]: Vec3): Vec3 {
+  return [(x - ENV.width / 2) * MM, y * MM, -(z - ENV.depth / 2) * MM];
+}
+
+export const GROUP_COLOR: Record<string, string> = {
+  korpus: "#8ea3b8",
+  "čelá": "#d3a05e",
+  "zásuvky": "#7fae9f",
+  gola: "#2b2f36",
+  "výsuvy": "#9aa1a8",
+  "nožičky": "#4a505a",
+  kotvenie: "#c05a44",
+};
+
+export const GROUP_ORDER = ["korpus", "čelá", "gola", "zásuvky", "výsuvy", "nožičky", "kotvenie"];
+
+export const isMetal = (group: string) =>
+  group === "gola" || group === "výsuvy" || group === "nožičky" || group === "kotvenie";
+
+export function countByGroup(parts: Part[]): Record<string, number> {
+  return parts.reduce<Record<string, number>>((acc, p) => {
+    acc[p.group] = (acc[p.group] ?? 0) + 1;
+    return acc;
+  }, {});
+}
+
+/** Odkazy na docs/decisions.md — vysvetlenie, prečo má diel taký rozmer. */
+export const DECISION_TITLE: Record<string, string> = {
+  D1: "Full overlay čelá → korpus 782 mm",
+  D2: "Gola namiesto frézovaného úchytu",
+  D3: "Reveal 21/22 mm je zvolený, nie odčítaný",
+  D4: "Čelo 898 mm, stredná škára 4 mm",
+  D5: "Odstupňované výšky čiel 190/190/190/270",
+  D6: "Bočné výsuvy, box 847 mm",
+  D7: "Zadná výstuha je povinná",
+  D8: "Pracovná výška 1050 mm ponechaná",
+  D9: "Podložka: zóna je placeholder",
+  D10: "Dekor svetlý dub, dôsledky pre nárez",
+  D11: "Chrbát 891 mm, drážka v priečke plytšia",
+};
+
+export const DECISIONS_URL =
+  "https://github.com/pufyno/komoda/blob/main/docs/decisions.md";

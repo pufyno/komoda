@@ -4,9 +4,14 @@
   "description": "Parametrický spec komody / prebaľovacieho pultu 1800 × 1050 × 800 mm",
   "type": "module",
   "private": true,
+  "workspaces": [
+    "app"
+  ],
   "scripts": {
+    "dev": "npm -w app run dev",
     "validate": "node scripts/validate-schema.mjs && node scripts/build.mjs",
-    "build": "npm run validate"
+    "build": "npm run validate && npm -w app run build",
+    "typecheck": "npm -w app run typecheck"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
