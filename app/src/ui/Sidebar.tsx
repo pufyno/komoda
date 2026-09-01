@@ -34,6 +34,7 @@ export default function Sidebar({
 }: Props) {
   const [openAssumptions, setOpenAssumptions] = useState(false);
   const counts = countByGroup(doc.parts);
+  const blockingCount = spec.openQuestions.filter((q) => q.blocking).length;
   const groups = GROUP_ORDER.filter((g) => counts[g]);
 
   return (
@@ -182,15 +183,25 @@ export default function Sidebar({
       </section>
 
       <section>
-        <h3>Otvorené otázky</h3>
+        <h3>
+          Otvorené otázky
+          {blockingCount > 0 && <span className="tag">{blockingCount} blokuje výrobu</span>}
+        </h3>
         <ul className="questions">
           {spec.openQuestions.map((q) => (
             <li key={q.id} className={q.blocking ? "blocking" : ""}>
               <code>{q.id}</code>
-              <span>{q.q}</span>
+              <div>
+                <span>{q.q}</span>
+                {q.impact && <em>{q.impact}</em>}
+              </div>
             </li>
           ))}
         </ul>
+        <p className="micro">
+          Blokujúca otázka nebráni pozerať model — bráni rezať. To isté
+          upozornenie je v poznámkach pod cutlistom.
+        </p>
       </section>
 
       <footer>

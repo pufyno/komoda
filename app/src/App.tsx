@@ -4,7 +4,7 @@ import Cutlist from "./views/Cutlist";
 import Sidebar from "./ui/Sidebar";
 import DetailPanel from "./ui/DetailPanel";
 import Tabs, { type Mode } from "./ui/Tabs";
-import { doc, spec, GROUP_ORDER, HARDWARE_GROUPS, type Palette } from "./data";
+import { doc, GROUP_ORDER, HARDWARE_GROUPS, type Palette } from "./data";
 
 // Na dotykovom zariadení sa dvojklik chová nespoľahlivo — nápoveda tam musí
 // posielať na tlačidlo v detaile, nie na gesto, ktoré nemusí zabrať.
@@ -23,7 +23,6 @@ export default function App() {
   const [explode, setExplode] = useState(0);
   const [palette, setPalette] = useState<Palette>("scheme");
   const [grain, setGrain] = useState(false);
-  const [bannerOpen, setBannerOpen] = useState(true);
   const [sectionAt, setSectionAt] = useState(SECTION_DEFAULT);
   const [xray, setXray] = useState(false);
   // Na mobile je bočný panel spodná plachta; na desktope je vždy otvorený
@@ -76,7 +75,6 @@ export default function App() {
     [selected],
   );
 
-  const blocking = spec.openQuestions.filter((q) => q.blocking);
   const is3d = mode === "3d";
   const isCutlist = mode === "cutlist";
 
@@ -156,17 +154,6 @@ export default function App() {
           <br />Rozmery sa vypíšu priamo k dielu.
         </aside>
       ))}
-
-      {bannerOpen && blocking.length > 0 && (
-        <div className="banner">
-          <span className="dot" />
-          <div>
-            <strong>Blokuje výrobu:</strong> {blocking[0].q}
-            {blocking[0].impact && <em> {blocking[0].impact}</em>}
-          </div>
-          <button onClick={() => setBannerOpen(false)} aria-label="Skryť">×</button>
-        </div>
-      )}
     </div>
   );
 }

@@ -393,7 +393,27 @@ body {
 .check input { accent-color: var(--accent); margin: 0; }
 
 .questions { list-style: none; margin: 0; padding: 0; font-size: 12px; }
-.questions li { display: flex; gap: 8px; margin-bottom: 8px; color: var(--dim); }
+.questions li { display: flex; gap: 8px; margin-bottom: 9px; color: var(--dim); }
+.questions em {
+  display: block; margin-top: 2px;
+  font-style: normal; font-size: 11px; color: var(--dim); opacity: 0.85;
+}
+
+/* Diskrétna značka namiesto plávajúcej hlášky — informácia zostáva,
+   len sa nevnucuje pri načítaní stránky. */
+.tag {
+  margin-left: 8px;
+  padding: 1px 6px;
+  border: 1px solid #5c4718;
+  border-radius: 999px;
+  background: rgba(232, 163, 61, 0.12);
+  color: #e8a33d;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  vertical-align: middle;
+}
 .questions code {
   font-family: var(--mono); font-size: 10px;
   color: var(--dim); flex: none; padding-top: 1px;
@@ -430,35 +450,6 @@ body {
   color: var(--dim); font-family: var(--mono); font-size: 12px;
 }
 
-/* ------------------------------------------------------------ banner */
-
-.banner {
-  position: absolute;
-  bottom: 16px; left: 50%;
-  transform: translateX(-50%);
-  max-width: min(620px, calc(100% - 32px));
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 11px 14px;
-  background: rgba(41, 31, 12, 0.93);
-  border: 1px solid #5c4718;
-  border-radius: 9px;
-  backdrop-filter: blur(14px);
-  font-size: 12px;
-  line-height: 1.45;
-}
-.banner .dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #e8a33d; flex: none; margin-top: 5px;
-}
-.banner strong { color: #f0c579; font-weight: 600; }
-.banner em { color: var(--dim); font-style: normal; display: block; margin-top: 2px; }
-.banner button {
-  background: none; border: 0; color: var(--dim);
-  font-size: 16px; line-height: 1; cursor: pointer; padding: 0 2px;
-}
-.banner button:hover { color: var(--ink); }
 
 /* ----------------------------------------------------------- mobil */
 /* Až na konci súboru — inak by neskoršie základné pravidlá tieto prebili. */
@@ -533,7 +524,6 @@ body {
   .slider { height: 30px; }
   .segmented button { min-height: 38px; }
 
-  .banner { bottom: auto; top: calc(52px + env(safe-area-inset-top, 0px)); }
 }
 
 @media (max-width: 900px) and (orientation: landscape) {
@@ -566,4 +556,4 @@ body {
   .cutlist section { break-inside: avoid; }
 }
 
-@media print { .banner, .loading { display: none !important; } }
+@media print { .loading { display: none !important; } }
