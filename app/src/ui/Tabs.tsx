@@ -12,14 +12,29 @@ const TABS: { id: Mode; label: string }[] = [
   { id: "cutlist", label: "Cutlist" },
 ];
 
-export default function Tabs({ mode, setMode }: { mode: Mode; setMode: (m: Mode) => void }) {
+export default function Tabs({ mode, setMode, panelOpen, togglePanel }: {
+  mode: Mode;
+  setMode: (m: Mode) => void;
+  panelOpen: boolean;
+  togglePanel: () => void;
+}) {
   return (
     <nav className="tabs">
+      {/* na mobile je bočný panel spodná plachta, otvára sa odtiaľto */}
+      <button
+        className={panelOpen ? "menu on" : "menu"}
+        onClick={togglePanel}
+        aria-label="Nastavenia a vrstvy"
+        aria-expanded={panelOpen}
+      >
+        ☰
+      </button>
       {TABS.map((t) => (
         <button
           key={t.id}
           className={t.id === mode ? "active" : ""}
           onClick={() => setMode(t.id)}
+          title={t.label}
         >
           {t.label}
         </button>

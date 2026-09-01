@@ -11,6 +11,12 @@
 * { box-sizing: border-box; }
 
 html, body, #root { height: 100%; margin: 0; }
+/* Na mobile sa adresný riadok skrýva a 100 % vyjde krivo. */
+@supports (height: 100dvh) {
+  html, body, #root { height: 100dvh; }
+}
+
+body { overscroll-behavior: none; }
 
 body {
   background: var(--bg);
@@ -19,8 +25,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.app { position: relative; height: 100%; }
-.app canvas { display: block; }
+/* overflow: hidden — zavretá spodná plachta je odsunutá pod okraj a bez
+   orezania by na mobile natiahla stránku o svoju výšku. */
+.app { position: relative; height: 100%; overflow: hidden; }
+/* gestá patria OrbitControls, nie rolovaniu stránky */
+.app canvas { display: block; touch-action: none; }
 
 .panel {
   position: absolute;
@@ -170,16 +179,13 @@ body {
 
 /* ----------------------------------------------------------- mobil */
 
-@media (max-width: 780px) {
-  .sidebar, .detail, .hint {
-    position: absolute;
-    left: 12px; right: 12px;
-    width: auto;
-  }
-  .sidebar { top: 12px; max-height: 44%; }
-  .detail, .hint { top: auto; bottom: 12px; }
-}
-
+/*
+ * Pod 900 px sa layout mení z "panely plávajú nad scénou" na "panely sú
+ * spodné plachty". Dôvod: na 375 px širokej obrazovke by bočný panel zabral
+ * celú šírku a model by nebolo vidieť. Plachta sa otvára ☰ v pásme tabov
+ * a výber dielu ju zavrie — detail je v tej chvíli dôležitejší.
+ */
+/* na výšku telefónu je plachta väčšia, na šírku menšia */
 /* ------------------------------------------------------- ovládanie */
 
 .controls { display: flex; align-items: center; gap: 10px; }
@@ -247,6 +253,17 @@ body {
 .tabs button:hover { color: var(--ink); }
 .tabs button.active { background: #2a3543; color: var(--ink); }
 .tabs button.print { margin-left: 6px; border-left: 1px solid var(--line); border-radius: 0 6px 6px 0; }
+.tabs .menu { display: none; }              /* len na mobile */
+.tabs .menu.on { background: #2a3543; color: var(--ink); }
+
+.sheet-close {
+  display: none;                            /* len na mobile */
+  position: absolute; top: 10px; right: 10px;
+  width: 34px; height: 34px;
+  background: none; border: 0;
+  color: var(--dim); font-size: 22px; line-height: 1;
+  cursor: pointer;
+}
 
 /* ------------------------------------------------------ 2D pohľady */
 
@@ -362,46 +379,6 @@ body {
 .cutlist code { font-family: var(--mono); font-size: 11px; }
 
 /* ------------------------------------------------------------ tlač */
-
-@media print {
-  body { background: #fff; color: #000; }
-  .tabs, .panel { display: none !important; }
-  .sheet { position: static; inset: auto; padding: 0; overflow: visible; }
-  .sheet > svg { height: auto; color: #000; }
-  .sheet .part { stroke: #000; fill-opacity: 0.14; }
-  .sheet .part.cut { fill-opacity: 0.1; stroke-width: 2; }
-  .sheet .part.beyond { fill-opacity: 0; stroke-opacity: 0.5; }
-  .sheet .hatch { stroke: #000; opacity: 0.85; }
-  .sheet .partdims line { stroke: #000; }
-  .sheet .partdims text { fill: #000; }
-  .sheet .secmark line { stroke: #000; opacity: 1; }
-  .sheet .partdims line {
-  stroke: var(--accent);
-  stroke-width: 1.6;
-  vector-effect: non-scaling-stroke;
-}
-.sheet .partdims line.ext { stroke-width: 1; opacity: 0.5; }
-.sheet .partdims text {
-  fill: var(--accent);
-  font-size: 32px;
-  font-family: var(--mono);
-}
-.sheet .partdims text.away { font-size: 26px; opacity: 0.7; }
-
-.sheet .secmark text { fill: #000; }
-  .sheet .dim line { opacity: 1; }
-  .sheet .caption { fill: #444; }
-  .cutlist { max-width: none; }
-  .cutlist th { color: #444; border-bottom-color: #000; }
-  .cutlist td { border-bottom-color: #ccc; }
-  .cutlist .note-cell, .cutlist .src, .cutlist header p { color: #444; }
-  .cutlist section { break-inside: avoid; }
-}
-
-@media (max-width: 900px) {
-  .sheet { padding: 74px 16px 90px; }
-}
-
 /* ------------------------------------------------ paleta a otázky */
 
 .segmented { display: flex; gap: 2px; padding: 2px; background: #191f28; border: 1px solid var(--line); border-radius: 7px; }
@@ -482,5 +459,111 @@ body {
   font-size: 16px; line-height: 1; cursor: pointer; padding: 0 2px;
 }
 .banner button:hover { color: var(--ink); }
+
+/* ----------------------------------------------------------- mobil */
+/* Až na konci súboru — inak by neskoršie základné pravidlá tieto prebili. */
+
+@media (max-width: 900px) {
+  /* pásmo tabov cez celú šírku, vodorovne rolovateľné (je ich osem) */
+  .tabs {
+    top: 0; left: 0; right: 0;
+    transform: none;
+    border-radius: 0;
+    border-width: 0 0 1px;
+    padding: 6px 8px;
+    padding-top: calc(6px + env(safe-area-inset-top, 0px));
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button { flex: 0 0 auto; min-height: 38px; padding: 8px 12px; }
+  /* ☰ zostáva na mieste, aj keď sa taby odrolujú */
+  .tabs .menu {
+    display: inline-flex; align-items: center; font-size: 15px;
+    position: sticky; left: 0;
+    background: #1a212b;
+    box-shadow: 6px 0 8px -6px rgba(0, 0, 0, 0.6);
+  }
+
+  /* panely ako spodné plachty */
+  .sidebar, .detail, .hint {
+    position: absolute;
+    left: 0; right: 0; width: auto;
+    top: auto; bottom: 0;
+    border-radius: 14px 14px 0 0;
+    border-width: 1px 0 0;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .sidebar {
+    z-index: 3;
+    max-height: 76%;
+    overflow-y: auto;
+    transform: translateY(101%);
+    transition: transform 0.22s ease;
+  }
+  .sidebar.open { transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar { transition: none; }
+  }
+  .sidebar h1 { padding-right: 40px; }
+  .sheet-close { display: block; }
+
+  .detail { z-index: 2; max-height: 62%; overflow-y: auto; }
+  .hint {
+    z-index: 1;
+    font-size: 11px;
+    padding: 10px 14px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* výkres sa na šírku telefónu nezmestí čitateľne — radšej nech roluje */
+  .sheet { padding: 56px 10px 130px; }
+  .sheet > svg { width: 100%; height: auto; min-width: 820px; }
+  .cutlist { padding: 56px 14px 130px; }
+  .cutlist section { overflow-x: auto; }
+  .cutlist table { min-width: 520px; }
+
+  /* dotykové ciele */
+  .action { min-height: 40px; }
+  .layers li { margin-bottom: 2px; }
+  .layers label { padding: 6px 0; }
+  .check { padding: 6px 0; }
+  .slider { height: 30px; }
+  .segmented button { min-height: 38px; }
+
+  .banner { bottom: auto; top: calc(52px + env(safe-area-inset-top, 0px)); }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .sidebar { max-height: 88%; }
+  .detail { max-height: 72%; }
+}
+
+/* ------------------------------------------------------------ tlač */
+/* Posledné v poradí, aby tlač prebila aj mobilný layout. */
+
+@media print {
+  body { background: #fff; color: #000; }
+  .tabs, .panel { display: none !important; }
+  .sheet { position: static; inset: auto; padding: 0; overflow: visible; }
+  .sheet > svg { height: auto; color: #000; }
+  .sheet .part { stroke: #000; fill-opacity: 0.14; }
+  .sheet .part.cut { fill-opacity: 0.1; stroke-width: 2; }
+  .sheet .part.beyond { fill-opacity: 0; stroke-opacity: 0.5; }
+  .sheet .hatch { stroke: #000; opacity: 0.85; }
+  .sheet .partdims line { stroke: #000; }
+  .sheet .partdims text { fill: #000; }
+  .sheet .secmark line { stroke: #000; opacity: 1; }
+  .sheet .secmark text { fill: #000; }
+  .sheet .dim line { opacity: 1; }
+  .sheet .caption { fill: #444; }
+  .cutlist { max-width: none; }
+  .cutlist th { color: #444; border-bottom-color: #000; }
+  .cutlist td { border-bottom-color: #ccc; }
+  .cutlist .note-cell, .cutlist .src, .cutlist header p { color: #444; }
+  .cutlist section { break-inside: avoid; }
+}
 
 @media print { .banner, .loading { display: none !important; } }

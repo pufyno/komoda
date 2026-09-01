@@ -3,6 +3,8 @@ import { doc, geometry, spec, cutlist, GROUP_COLOR, GROUP_ORDER, countByGroup, t
 import { SECTION, VIEW_LABEL, type SectionId } from "../views/Drawing";
 
 interface Props {
+  open: boolean;
+  onClose: () => void;
   visible: Set<string>;
   toggle: (group: string) => void;
   showEnvelope: boolean;
@@ -25,7 +27,7 @@ interface Props {
 }
 
 export default function Sidebar({
-  visible, toggle, showEnvelope, setShowEnvelope,
+  open, onClose, visible, toggle, showEnvelope, setShowEnvelope,
   openCount, setAllDrawers, explode, setExplode,
   palette, setPalette, grain, setGrain, is3d,
   xray, setXray, isolateHardware, section, sectionAt, moveSection,
@@ -35,8 +37,11 @@ export default function Sidebar({
   const groups = GROUP_ORDER.filter((g) => counts[g]);
 
   return (
-    <aside className="panel sidebar">
-      <h1>Komoda<span>prebaľovací pult</span></h1>
+    <aside className={open ? "panel sidebar open" : "panel sidebar"}>
+      <h1>
+        Komoda<span>prebaľovací pult</span>
+        <button className="sheet-close" onClick={onClose} aria-label="Zavrieť">×</button>
+      </h1>
 
       <p className="dims">
         1800 × 1050 × 800 mm · 8 zásuviek · gola

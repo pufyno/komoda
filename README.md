@@ -63,6 +63,8 @@ Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — 
 - prepínač **schéma / dekor** — schéma odlišuje diely podľa funkcie, dekor ukazuje svetlý dub, čiernu matnú golu a pozinkované výsuvy
 - **smer kresby dubu** (D10) a banner s blokujúcou otvorenou otázkou zo `spec/komoda.json`
 
+Pod 900 px sa layout prepne na mobilný: taby sú vodorovne rolovateľný pás s ☰ vľavo, bočný panel a detail sú spodné plachty, výkres sa dá rolovať v plnej čitateľnej veľkosti namiesto zmenšenia na šírku telefónu. Gestá v 3D patria OrbitControls, zásuvka sa otvára tlačidlom v detaile (dvojklik je na dotyk nespoľahlivý).
+
 three.js sa načítava až pri prepnutí na 3D — kresby a cutlist sa otvárajú z 72 kB bundle.
 
 Stack: Vite + React + [react-three-fiber](https://github.com/pmndrs/react-three-fiber). Výstup je statický, bez servera.

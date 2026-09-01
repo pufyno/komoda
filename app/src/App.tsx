@@ -6,6 +6,11 @@ import DetailPanel from "./ui/DetailPanel";
 import Tabs, { type Mode } from "./ui/Tabs";
 import { doc, spec, GROUP_ORDER, HARDWARE_GROUPS, type Palette } from "./data";
 
+// Na dotykovom zariadení sa dvojklik chová nespoľahlivo — nápoveda tam musí
+// posielať na tlačidlo v detaile, nie na gesto, ktoré nemusí zabrať.
+const COARSE_POINTER =
+  typeof window !== "undefined" && window.matchMedia?.("(hover: none)").matches === true;
+
 // three.js je ~1 MB — načíta sa až keď treba 3D, nie pri kreslení a cutliste.
 const Komoda = lazy(() => import("./scene/Komoda"));
 
@@ -21,6 +26,9 @@ export default function App() {
   const [bannerOpen, setBannerOpen] = useState(true);
   const [sectionAt, setSectionAt] = useState(SECTION_DEFAULT);
   const [xray, setXray] = useState(false);
+  // Na mobile je bočný panel spodná plachta; na desktope je vždy otvorený
+  // a táto hodnota sa nepoužíva (CSS ju ignoruje nad 900 px).
+  const [panelOpen, setPanelOpen] = useState(false);
 
   // Kovanie je zamurované medzi bokom a boxom — bez izolácie alebo röntgenu
   // ho z modelu vidieť nie je.
@@ -42,6 +50,12 @@ export default function App() {
       else next.add(group);
       return next;
     });
+  }, []);
+
+  // Výber dielu na mobile plachtu zavrie — detail je dôležitejší.
+  const select = useCallback((id: string | null) => {
+    setSelected(id);
+    if (id) setPanelOpen(false);
   }, []);
 
   const toggleDrawer = useCallback((id: string) => {
@@ -73,7 +87,7 @@ export default function App() {
           <Komoda
             visible={visible}
             selected={selected}
-            onSelect={setSelected}
+            onSelect={select}
             showEnvelope={showEnvelope}
             openDrawers={openDrawers}
             toggleDrawer={toggleDrawer}
@@ -89,7 +103,7 @@ export default function App() {
           view={mode}
           visible={visible}
           selected={selected}
-          onSelect={setSelected}
+          onSelect={select}
           palette={palette}
           grain={grain}
           sectionAt={sectionAt}
@@ -97,10 +111,12 @@ export default function App() {
       )}
       {isCutlist && <Cutlist />}
 
-      <Tabs mode={mode} setMode={setMode} />
+      <Tabs mode={mode} setMode={setMode} panelOpen={panelOpen} togglePanel={() => setPanelOpen((v) => !v)} />
 
       {!isCutlist && (
         <Sidebar
+          open={panelOpen}
+          onClose={() => setPanelOpen(false)}
           visible={visible}
           toggle={toggle}
           showEnvelope={showEnvelope}
@@ -132,8 +148,10 @@ export default function App() {
         />
       ) : (
         <aside className="panel hint">
-          <strong>Klik</strong> na diel ukáže jeho rozmery a dôvod, prečo je taký.
-          {is3d && (<><br /><strong>Dvojklik</strong> na zásuvku ju otvorí.</>)}
+          <strong>{COARSE_POINTER ? "Ťuknutie" : "Klik"}</strong> na diel ukáže jeho rozmery a dôvod, prečo je taký.
+          {is3d && (COARSE_POINTER
+            ? <><br />Zásuvku otvoríš tlačidlom v jej detaile.</>
+            : <><br /><strong>Dvojklik</strong> na zásuvku ju otvorí.</>)}
           {!is3d && isSection(mode) && (<><br />Šrafované diely sú prerezané rovinou, tenké sú za ňou.</>)}
           <br />Rozmery sa vypíšu priamo k dielu.
         </aside>
