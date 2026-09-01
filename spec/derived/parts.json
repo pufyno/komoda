@@ -21,7 +21,9 @@
     "Predná hrana boxu začína za gola profilom (z = 26 mm).",
     "Gola profil lícuje s rovinou čiel a prekrýva čelnú hranu korpusu o 8 mm.",
     "Stredná kotva je odsadená 40 mm od priečky, aby nešla do jej hrany.",
-    "Gola profil je modelovaný ako viditeľná škára × hĺbka profilu; skutočný prierez je vysoký 73.5 mm a schováva sa za čelami.",
+    "Gola profil je rozdelený na lištu v škáre (z 0..18) a montážnu stenu za čelami (z 18..26); prierez 73.5 mm je zo specu, tvar J/C je zjednodušený na dva kvádre.",
+    "C profil je zvislo vycentrovaný na svoju škáru (center); presné rozdelenie nad/pod škáru datasheet neuvádza.",
+    "Plnovýsuv je kreslený jedným dielom za stredný člen a ide 50 % dráhy zásuvky; skriňový a zásuvkový člen model nemá.",
     "Nožičky sú valce s odsadením cornerInset od hrán korpusu."
   ],
   "groups": [
@@ -520,12 +522,12 @@
     {
       "id": "gola-j",
       "group": "gola",
-      "label": "Gola profil J (reveal 22)",
+      "label": "Gola profil J — lišta v škáre (reveal 22)",
       "material": null,
       "size": [
         1800,
         22,
-        26
+        18
       ],
       "position": [
         0,
@@ -535,24 +537,54 @@
       "center": [
         900,
         1014,
-        13
+        9
       ],
       "shape": "box",
       "decision": "D2",
       "hardware": true,
       "profileType": "J",
       "profileHeight": 73.5,
+      "reveal": 22,
       "finish": "black-matt"
+    },
+    {
+      "id": "gola-j-web",
+      "group": "gola",
+      "label": "Gola profil J — montážna stena",
+      "material": null,
+      "size": [
+        1800,
+        73.5,
+        8
+      ],
+      "position": [
+        0,
+        951.5,
+        18
+      ],
+      "center": [
+        900,
+        988.25,
+        22
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "J",
+      "profileHeight": 73.5,
+      "reveal": 22,
+      "finish": "black-matt",
+      "note": "za čelami, na čelnej hrane korpusu"
     },
     {
       "id": "gola-c-1",
       "group": "gola",
-      "label": "Gola profil C (reveal 21)",
+      "label": "Gola profil C — lišta v škáre (reveal 21)",
       "material": null,
       "size": [
         1800,
         21,
-        26
+        18
       ],
       "position": [
         0,
@@ -562,14 +594,44 @@
       "center": [
         900,
         802.5,
-        13
+        9
       ],
       "shape": "box",
       "decision": "D2",
       "hardware": true,
       "profileType": "C",
       "profileHeight": 73.5,
+      "reveal": 21,
       "finish": "black-matt"
+    },
+    {
+      "id": "gola-c-1-web",
+      "group": "gola",
+      "label": "Gola profil C — montážna stena",
+      "material": null,
+      "size": [
+        1800,
+        73.5,
+        8
+      ],
+      "position": [
+        0,
+        765.75,
+        18
+      ],
+      "center": [
+        900,
+        802.5,
+        22
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "C",
+      "profileHeight": 73.5,
+      "reveal": 21,
+      "finish": "black-matt",
+      "note": "za čelami, na čelnej hrane korpusu"
     },
     {
       "id": "front-r1c1",
@@ -741,7 +803,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r1c1",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r1c1",
@@ -766,7 +830,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r1c1",
+      "travelFactor": 0.5
     },
     {
       "id": "front-r1c2",
@@ -938,7 +1004,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r1c2",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r1c2",
@@ -963,17 +1031,19 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r1c2",
+      "travelFactor": 0.5
     },
     {
       "id": "gola-c-2",
       "group": "gola",
-      "label": "Gola profil C (reveal 21)",
+      "label": "Gola profil C — lišta v škáre (reveal 21)",
       "material": null,
       "size": [
         1800,
         21,
-        26
+        18
       ],
       "position": [
         0,
@@ -983,14 +1053,44 @@
       "center": [
         900,
         591.5,
-        13
+        9
       ],
       "shape": "box",
       "decision": "D2",
       "hardware": true,
       "profileType": "C",
       "profileHeight": 73.5,
+      "reveal": 21,
       "finish": "black-matt"
+    },
+    {
+      "id": "gola-c-2-web",
+      "group": "gola",
+      "label": "Gola profil C — montážna stena",
+      "material": null,
+      "size": [
+        1800,
+        73.5,
+        8
+      ],
+      "position": [
+        0,
+        554.75,
+        18
+      ],
+      "center": [
+        900,
+        591.5,
+        22
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "C",
+      "profileHeight": 73.5,
+      "reveal": 21,
+      "finish": "black-matt",
+      "note": "za čelami, na čelnej hrane korpusu"
     },
     {
       "id": "front-r2c1",
@@ -1162,7 +1262,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r2c1",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r2c1",
@@ -1187,7 +1289,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r2c1",
+      "travelFactor": 0.5
     },
     {
       "id": "front-r2c2",
@@ -1359,7 +1463,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r2c2",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r2c2",
@@ -1384,17 +1490,19 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r2c2",
+      "travelFactor": 0.5
     },
     {
       "id": "gola-c-3",
       "group": "gola",
-      "label": "Gola profil C (reveal 21)",
+      "label": "Gola profil C — lišta v škáre (reveal 21)",
       "material": null,
       "size": [
         1800,
         21,
-        26
+        18
       ],
       "position": [
         0,
@@ -1404,14 +1512,44 @@
       "center": [
         900,
         380.5,
-        13
+        9
       ],
       "shape": "box",
       "decision": "D2",
       "hardware": true,
       "profileType": "C",
       "profileHeight": 73.5,
+      "reveal": 21,
       "finish": "black-matt"
+    },
+    {
+      "id": "gola-c-3-web",
+      "group": "gola",
+      "label": "Gola profil C — montážna stena",
+      "material": null,
+      "size": [
+        1800,
+        73.5,
+        8
+      ],
+      "position": [
+        0,
+        343.75,
+        18
+      ],
+      "center": [
+        900,
+        380.5,
+        22
+      ],
+      "shape": "box",
+      "decision": "D2",
+      "hardware": true,
+      "profileType": "C",
+      "profileHeight": 73.5,
+      "reveal": 21,
+      "finish": "black-matt",
+      "note": "za čelami, na čelnej hrane korpusu"
     },
     {
       "id": "front-r3c1",
@@ -1583,7 +1721,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r3c1",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r3c1",
@@ -1608,7 +1748,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r3c1",
+      "travelFactor": 0.5
     },
     {
       "id": "front-r3c2",
@@ -1780,7 +1922,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r3c2",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r3c2",
@@ -1805,7 +1949,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r3c2",
+      "travelFactor": 0.5
     },
     {
       "id": "front-r4c1",
@@ -1977,7 +2123,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r4c1",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r4c1",
@@ -2002,7 +2150,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r4c1",
+      "travelFactor": 0.5
     },
     {
       "id": "front-r4c2",
@@ -2174,7 +2324,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r4c2",
+      "travelFactor": 0.5
     },
     {
       "id": "slide-r-r4c2",
@@ -2199,7 +2351,9 @@
       "shape": "box",
       "decision": "D6",
       "hardware": true,
-      "loadKg": 40
+      "loadKg": 40,
+      "drawer": "r4c2",
+      "travelFactor": 0.5
     },
     {
       "id": "anchor-1",
@@ -2316,40 +2470,40 @@
     },
     {
       "a": "side-left",
-      "b": "gola-j",
+      "b": "gola-j-web",
       "overlap": [
         18,
-        22,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "side-left",
-      "b": "gola-c-1",
+      "b": "gola-c-1-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "side-left",
-      "b": "gola-c-2",
+      "b": "gola-c-2-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "side-left",
-      "b": "gola-c-3",
+      "b": "gola-c-3-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
@@ -2366,40 +2520,40 @@
     },
     {
       "a": "side-right",
-      "b": "gola-j",
+      "b": "gola-j-web",
       "overlap": [
         18,
-        22,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "side-right",
-      "b": "gola-c-1",
+      "b": "gola-c-1-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "side-right",
-      "b": "gola-c-2",
+      "b": "gola-c-2-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "side-right",
-      "b": "gola-c-3",
+      "b": "gola-c-3-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
@@ -2436,40 +2590,40 @@
     },
     {
       "a": "divider",
-      "b": "gola-j",
+      "b": "gola-j-web",
       "overlap": [
         18,
-        22,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "divider",
-      "b": "gola-c-1",
+      "b": "gola-c-1-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "divider",
-      "b": "gola-c-2",
+      "b": "gola-c-2-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"
     },
     {
       "a": "divider",
-      "b": "gola-c-3",
+      "b": "gola-c-3-web",
       "overlap": [
         18,
-        21,
+        73.5,
         8
       ],
       "reason": "gola profil nalícovaný na čelnú hranu korpusu"

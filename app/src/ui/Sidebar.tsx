@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, geometry, spec, GROUP_COLOR, GROUP_ORDER, countByGroup, type Palette } from "../data";
+import { doc, geometry, spec, cutlist, GROUP_COLOR, GROUP_ORDER, countByGroup, type Palette } from "../data";
 import { SECTION, VIEW_LABEL, type SectionId } from "../views/Drawing";
 
 interface Props {
@@ -16,6 +16,9 @@ interface Props {
   grain: boolean;
   setGrain: (v: boolean) => void;
   is3d: boolean;
+  xray: boolean;
+  setXray: (v: boolean) => void;
+  isolateHardware: () => void;
   section: SectionId | null;
   sectionAt: Record<SectionId, number>;
   moveSection: (id: SectionId, v: number) => void;
@@ -25,7 +28,7 @@ export default function Sidebar({
   visible, toggle, showEnvelope, setShowEnvelope,
   openCount, setAllDrawers, explode, setExplode,
   palette, setPalette, grain, setGrain, is3d,
-  section, sectionAt, moveSection,
+  xray, setXray, isolateHardware, section, sectionAt, moveSection,
 }: Props) {
   const [openAssumptions, setOpenAssumptions] = useState(false);
   const counts = countByGroup(doc.parts);
@@ -73,6 +76,32 @@ export default function Sidebar({
           smer kresby dubu
         </label>
         {grain && <p className="micro">{spec.fronts.grain.note}</p>}
+      </section>
+
+      <section>
+        <h3>Kovanie</h3>
+        <ul className="hw">
+          {cutlist.hardware.map((h) => (
+            <li key={h.item}>
+              <span>{h.item}</span>
+              <em>{h.qty}{h.length ? ` · ${h.length} mm` : ""}</em>
+            </li>
+          ))}
+        </ul>
+        <div className="controls">
+          <button className="action" onClick={isolateHardware}>Len kovanie</button>
+        </div>
+        {is3d && (
+          <label className="check">
+            <input type="checkbox" checked={xray} onChange={(e) => setXray(e.target.checked)} />
+            röntgen — drevo zpriehľadní a nedá sa naň klikať
+          </label>
+        )}
+        <p className="micro">
+          Výsuvy sú medzi bokom a boxom, kotvy za chrbtom — bez röntgenu alebo
+          izolácie ich v modeli vidieť nie je. Kolíky a excentre model nemá:
+          spec ich necháva na technológiu zhotoviteľa.
+        </p>
       </section>
 
       {is3d && <section>

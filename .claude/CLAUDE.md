@@ -61,11 +61,11 @@ Typické chybné „opravy":
 
 Origin na podlahe, vľavo vpredu. **X** vpravo, **Y** hore, **Z** dozadu. Všetko v milimetroch. Táto konvencia platí v `spec/derived/geometry.json`, `parts.json` aj vo vizualizéri.
 
-Referenčné roviny: čelá sú v z 0–18, gola profily lícujú s nimi (z 0–26), korpus začína na z 18, chrbát je na z 777–785, zadná hrana na z 800.
+Referenčné roviny: čelá sú v z 0–18, korpus začína na z 18, chrbát je na z 777–785, zadná hrana na z 800. Gola profil je rozdelený: lišta v škáre lícuje s čelami (z 0–18), montážna stena je za nimi (z 18–26) a prekrýva čelnú hranu korpusu o 8 mm.
 
 ## `parts.json` — čo kreslí vizualizér
 
-`spec/derived/parts.json` je zoznam všetkých 85 dielov s umiestnením v priestore: `position` je minimálny roh kvádra, `size` je `[dx, dy, dz]`, `center` je stred (priamo pre `BoxGeometry`). Každý diel má `group`, `material` a väčšina aj `decision` — odkaz na D1–D11 v `docs/decisions.md`.
+`spec/derived/parts.json` je zoznam všetkých 89 dielov s umiestnením v priestore: `position` je minimálny roh kvádra, `size` je `[dx, dy, dz]`, `center` je stred (priamo pre `BoxGeometry`). Každý diel má `group`, `material` a väčšina aj `decision` — odkaz na D1–D11 v `docs/decisions.md`.
 
 **Aplikácia nič nepočíta, len kreslí.** Ak potrebuješ v `app/` nový rozmer alebo pozíciu, pridaj ho do generátora v `build.mjs`, nie do komponentu.
 

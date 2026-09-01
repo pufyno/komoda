@@ -151,6 +151,40 @@ describe("kolízie a obálka", () => {
   });
 });
 
+describe("kovanie vychádza zo specu", () => {
+  /** Vráti parts.json vygenerovaný z upraveného specu. */
+  function partsOf(mutate) {
+    const r = run(BUILD, mutate);
+    assert.equal(r.code, 0, r.out + r.err);
+    return JSON.parse(readFileSync(join(r.outDir, "parts.json"), "utf8")).parts;
+  }
+
+  test("výška gola profilu ide zo specu, nie z konštanty v kóde", () => {
+    // Montážna stena je jediné miesto, kde je profileHeight vidieť. Keby ju
+    // niekto zahardcodoval, zmena specu by sa v modeli neprejavila.
+    const web = (h) => partsOf((s) => { s.gola.between.profileHeight = h; })
+      .find((p) => p.id === "gola-c-1-web").size[1];
+    assert.equal(web(73.5), 73.5);
+    assert.equal(web(60), 60);
+  });
+
+  test("lišta v škáre lícuje s čelami, stena je za nimi", () => {
+    const parts = partsOf(null);
+    const tongue = parts.find((p) => p.id === "gola-c-1");
+    const web = parts.find((p) => p.id === "gola-c-1-web");
+    const frontT = parts.find((p) => p.id === "front-r1c1").size[2];
+    assert.equal(tongue.position[2], 0, "lišta musí začínať v rovine čiel");
+    assert.equal(tongue.size[2], frontT, "lišta musí byť hlboká ako čelo");
+    assert.equal(web.position[2], frontT, "stena musí začínať tam, kde čelo končí");
+  });
+
+  test("výsuv sa hýbe so zásuvkou polovičnou dráhou", () => {
+    const slide = partsOf(null).find((p) => p.id === "slide-l-r1c1");
+    assert.equal(slide.drawer, "r1c1");
+    assert.equal(slide.travelFactor, 0.5);
+  });
+});
+
 describe("nekonzistentný spec nezanechá odvodené súbory", () => {
   test("pri páde sa nič nezapíše", () => {
     const r = run(BUILD, (s) => { s.carcass.height = 900; });

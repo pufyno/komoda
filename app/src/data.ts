@@ -33,6 +33,8 @@ export interface Part {
   finish?: string;
   loadKg?: number;
   drawer?: string;
+  reveal?: number;
+  travelFactor?: number;
 }
 
 export interface Drawer {
@@ -167,6 +169,11 @@ export function colorOf(part: Part, palette: Palette): string {
 }
 
 export const drawerOf = (part: Part): string | null => part.drawer ?? null;
+
+/** Skupiny, ktoré sú kovanie — nie materiál z píly. */
+export const HARDWARE_GROUPS = GROUP_ORDER.filter((g) =>
+  doc.parts.some((p) => p.group === g && p.hardware),
+);
 
 export function countByGroup(parts: Part[]): Record<string, number> {
   return parts.reduce<Record<string, number>>((acc, p) => {

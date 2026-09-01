@@ -287,6 +287,19 @@ body {
   vector-effect: non-scaling-stroke;
   opacity: 0.75;
 }
+.sheet .partdims line {
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+.sheet .partdims line.ext { stroke-width: 1; opacity: 0.5; }
+.sheet .partdims text {
+  fill: var(--accent);
+  font-size: 32px;
+  font-family: var(--mono);
+}
+.sheet .partdims text.away { font-size: 26px; opacity: 0.7; }
+
 .sheet .secmark text {
   fill: var(--accent);
   font-size: 34px;
@@ -359,8 +372,23 @@ body {
   .sheet .part.cut { fill-opacity: 0.1; stroke-width: 2; }
   .sheet .part.beyond { fill-opacity: 0; stroke-opacity: 0.5; }
   .sheet .hatch { stroke: #000; opacity: 0.85; }
+  .sheet .partdims line { stroke: #000; }
+  .sheet .partdims text { fill: #000; }
   .sheet .secmark line { stroke: #000; opacity: 1; }
-  .sheet .secmark text { fill: #000; }
+  .sheet .partdims line {
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+.sheet .partdims line.ext { stroke-width: 1; opacity: 0.5; }
+.sheet .partdims text {
+  fill: var(--accent);
+  font-size: 32px;
+  font-family: var(--mono);
+}
+.sheet .partdims text.away { font-size: 26px; opacity: 0.7; }
+
+.sheet .secmark text { fill: #000; }
   .sheet .dim line { opacity: 1; }
   .sheet .caption { fill: #444; }
   .cutlist { max-width: none; }
@@ -396,7 +424,28 @@ body {
 .questions li.blocking code { color: #e8a33d; }
 .questions li.blocking span { color: var(--ink); }
 
+.hw { list-style: none; margin: 0 0 10px; padding: 0; font-size: 12px; }
+.hw li {
+  display: flex; justify-content: space-between; gap: 10px;
+  padding: 3px 0; border-bottom: 1px solid var(--line);
+}
+.hw li:last-child { border-bottom: 0; }
+.hw em { font-style: normal; font-family: var(--mono); color: var(--dim); white-space: nowrap; }
+
 .grain line { stroke: #6b4f2c; stroke-width: 1; opacity: 0.75; }
+
+/* kóta vybraného dielu priamo v 3D scéne */
+.dim3d {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: #0b1016;
+  background: #7dd3fc;
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  user-select: none;
+}
 
 .loading {
   position: absolute; inset: 0;

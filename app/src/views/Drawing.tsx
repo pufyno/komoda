@@ -221,6 +221,44 @@ function DimLine({ dim, ax }: { dim: Dim; ax: Axes }) {
   );
 }
 
+/*
+ * Kóty vybraného dielu priamo pri ňom. V pohľade sú v pláne len dva jeho
+ * rozmery — ten tretí ide do hĺbky a nedá sa okótovať bez skreslenia, preto
+ * ho vypisuje popiska. Kóty sa lepia na diel, nie na okraj listu, takže je
+ * hneď vidieť, čoho sa týkajú.
+ */
+function PartDims({ part, ax, rect }: {
+  part: Part; ax: Axes; rect: { x: number; y: number; w: number; h: number };
+}) {
+  const g = 40;                        // mm, odsadenie kóty od hrany dielu
+  const round = (v: number) => Math.round(v * 10) / 10;
+  const hSize = round(part.size[ax.h]);
+  const vSize = round(part.size[ax.v]);
+  const depth = round(part.size[ax.toward]);
+  const { x, y, w, h } = rect;
+
+  return (
+    <g className="partdims">
+      {/* vodorovný rozmer — nad dielom */}
+      <line x1={x} y1={y} x2={x} y2={y - g - 10} className="ext" />
+      <line x1={x + w} y1={y} x2={x + w} y2={y - g - 10} className="ext" />
+      <line x1={x} y1={y - g} x2={x + w} y2={y - g} markerStart="url(#tick)" markerEnd="url(#tick)" />
+      <text x={x + w / 2} y={y - g - 16} textAnchor="middle">{hSize}</text>
+
+      {/* zvislý rozmer — vpravo od dielu */}
+      <line x1={x + w} y1={y} x2={x + w + g + 10} y2={y} className="ext" />
+      <line x1={x + w} y1={y + h} x2={x + w + g + 10} y2={y + h} className="ext" />
+      <line x1={x + w + g} y1={y} x2={x + w + g} y2={y + h} markerStart="url(#tick)" markerEnd="url(#tick)" />
+      <text x={x + w + g + 16} y={y + h / 2} textAnchor="start" dominantBaseline="middle">{vSize}</text>
+
+      {/* tretí rozmer sa v tomto pohľade okótovať nedá */}
+      <text className="away" x={x + w / 2} y={y + h + g} textAnchor="middle">
+        do hĺbky {depth}
+      </text>
+    </g>
+  );
+}
+
 /** Čiarkovaná stopa roviny rezu v pohľade, z ktorého sa rez odvodzuje. */
 function SectionMark({ ax, vertical, at, label }: {
   ax: Axes; vertical: boolean; at: number; label: string;
@@ -271,6 +309,8 @@ export default function Drawing({ view, visible, selected, onSelect, palette, gr
   const ordered = at === null
     ? shown
     : [...shown.filter((x) => x.where === "beyond"), ...shown.filter((x) => x.where === "cut")];
+
+  const selectedPart = selected ? (ordered.find((x) => x.p.id === selected)?.p ?? null) : null;
 
   const rectOf = (p: Part) => {
     const x = p.position[ax.h];
@@ -369,6 +409,8 @@ export default function Drawing({ view, visible, selected, onSelect, palette, gr
             <DimLine key={i} dim={d} ax={ax} />
           ))}
         </g>
+
+        {selectedPart && <PartDims part={selectedPart} ax={ax} rect={rectOf(selectedPart)} />}
 
         <text className="caption" x={0} y={ax.height + MARGIN * 0.95}>
           {VIEW_LABEL[view]}

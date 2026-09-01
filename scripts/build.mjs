@@ -277,6 +277,8 @@ const PLACEMENT = {
   anchorLength: 80,                   // dĺžka hmoždinky (do steny)
   anchorDiameter: 10,
   anchorOffsetFromDivider: 40,        // stredná kotva vedľa priečky, nie do jej hrany
+  golaWebAlign: "center",             // C profil je zvislo vycentrovaný na svoju škáru
+  slideTravelFactor: 0.5,             // stredný člen plnovýsuvu ide polovičnou dráhou
 };
 
 const assumptions = [
@@ -285,7 +287,9 @@ const assumptions = [
   `Predná hrana boxu začína za gola profilom (z = ${gola.between.profileDepth} mm).`,
   `Gola profil lícuje s rovinou čiel a prekrýva čelnú hranu korpusu o ${gola.between.profileDepth - T_BODY} mm.`,
   `Stredná kotva je odsadená ${PLACEMENT.anchorOffsetFromDivider} mm od priečky, aby nešla do jej hrany.`,
-  `Gola profil je modelovaný ako viditeľná škára × hĺbka profilu; skutočný prierez je vysoký ${gola.between.profileHeight} mm a schováva sa za čelami.`,
+  `Gola profil je rozdelený na lištu v škáre (z 0..${T_BODY}) a montážnu stenu za čelami (z ${T_BODY}..${gola.between.profileDepth}); prierez ${gola.between.profileHeight} mm je zo specu, tvar J/C je zjednodušený na dva kvádre.`,
+  `C profil je zvislo vycentrovaný na svoju škáru (${PLACEMENT.golaWebAlign}); presné rozdelenie nad/pod škáru datasheet neuvádza.`,
+  `Plnovýsuv je kreslený jedným dielom za stredný člen a ide ${PLACEMENT.slideTravelFactor * 100} % dráhy zásuvky; skriňový a zásuvkový člen model nemá.`,
   "Nožičky sú valce s odsadením cornerInset od hrán korpusu.",
 ];
 
@@ -343,16 +347,44 @@ openings.forEach((o, i) => {
 });
 
 /* --- čelá, gola, zásuvky, výsuvy ------------------------------------ */
-place("gola-j", "gola", `Gola profil J (reveal ${gola.top.reveal})`,
-  [0, topUnderside - gola.top.reveal, golaZ0], [overall.width, gola.top.reveal, gola.between.profileDepth], null,
-  { decision: "D2", hardware: true, profileType: gola.top.profileType, profileHeight: gola.between.profileHeight, finish: gola.finish });
+/*
+ * Gola profil nie je kváder. Je to lišta v tvare J/C: v škáre medzi čelami
+ * vidno len jazyk lícujúci s čelami (z 0..18), zvyšok profilu je montážna
+ * stena schovaná za čelami (z 18..26), ktorá sa priskrutkuje na čelnú hranu
+ * korpusu. Doteraz sa kreslila len tá viditeľná časť a profil vyzeral ako
+ * plný blok vysoký 22 mm namiesto skutočných 73,5.
+ *
+ * Obe časti sú samostatné kvádre, nie jeden profil s polygónom — kolízna
+ * kontrola tak zostáva presná a nepotrebuje výnimky.
+ */
+const golaTongueZ1 = T_BODY;                    // 18 — lícuje s rovinou čiel
+const golaWebH = gola.between.profileHeight;    // 73,5 zo specu
+const golaMeta = (type, reveal) => ({
+  decision: "D2", hardware: true, profileType: type, profileHeight: golaWebH,
+  reveal, finish: gola.finish,
+});
+
+place("gola-j", "gola", `Gola profil J — lišta v škáre (reveal ${gola.top.reveal})`,
+  [0, topUnderside - gola.top.reveal, golaZ0],
+  [overall.width, gola.top.reveal, golaTongueZ1], null,
+  golaMeta(gola.top.profileType, gola.top.reveal));
+// J je pod doskou, takže sa neceruje na stred — visí od spodnej hrany dosky.
+place("gola-j-web", "gola", "Gola profil J — montážna stena",
+  [0, topUnderside - golaWebH, golaTongueZ1],
+  [overall.width, golaWebH, golaZ1 - golaTongueZ1], null,
+  { ...golaMeta(gola.top.profileType, gola.top.reveal), note: "za čelami, na čelnej hrane korpusu" });
 
 rows.forEach((r, i) => {
   if (i < rows.length - 1) {
-    place(`gola-c-${i + 1}`, "gola", `Gola profil C (reveal ${gola.between.reveal})`,
-      [0, r.frontBottomY - gola.between.reveal, golaZ0],
-      [overall.width, gola.between.reveal, gola.between.profileDepth], null,
-      { decision: "D2", hardware: true, profileType: gola.between.profileType, profileHeight: gola.between.profileHeight, finish: gola.finish });
+    const revealY0 = r.frontBottomY - gola.between.reveal;
+    place(`gola-c-${i + 1}`, "gola", `Gola profil C — lišta v škáre (reveal ${gola.between.reveal})`,
+      [0, revealY0, golaZ0],
+      [overall.width, gola.between.reveal, golaTongueZ1], null,
+      golaMeta(gola.between.profileType, gola.between.reveal));
+    place(`gola-c-${i + 1}-web`, "gola", "Gola profil C — montážna stena",
+      [0, revealY0 - (golaWebH - gola.between.reveal) / 2, golaTongueZ1],
+      [overall.width, golaWebH, golaZ1 - golaTongueZ1], null,
+      { ...golaMeta(gola.between.profileType, gola.between.reveal), note: "za čelami, na čelnej hrane korpusu" });
   }
 
   columnsX.forEach((c, j) => {
@@ -398,12 +430,17 @@ rows.forEach((r, i) => {
       { decision: "D6", drawer: tag, note: `v drážke ${boxGroove} mm` });
 
     const sy = by0 + (bh - PLACEMENT.slideHeight) / 2;
+    // Plnovýsuv má tri členy: skriňový stojí, zásuvkový ide celú dráhu,
+    // stredný polovičnú. Kreslíme jeden diel za ten stredný — pri otvorení
+    // premostí medzeru medzi korpusom a boxom, ako to robí naozaj.
+    const slideMeta = {
+      decision: "D6", hardware: true, loadKg: drawers.slide.loadKg,
+      drawer: tag, travelFactor: PLACEMENT.slideTravelFactor,
+    };
     place(`slide-l-${tag}`, "výsuvy", "Bočný plnovýsuv", [o.x0, sy, boxZ0],
-      [drawers.slide.clearancePerSide, PLACEMENT.slideHeight, drawers.slide.length], null,
-      { decision: "D6", hardware: true, loadKg: drawers.slide.loadKg });
+      [drawers.slide.clearancePerSide, PLACEMENT.slideHeight, drawers.slide.length], null, slideMeta);
     place(`slide-r-${tag}`, "výsuvy", "Bočný plnovýsuv", [o.x1 - drawers.slide.clearancePerSide, sy, boxZ0],
-      [drawers.slide.clearancePerSide, PLACEMENT.slideHeight, drawers.slide.length], null,
-      { decision: "D6", hardware: true, loadKg: drawers.slide.loadKg });
+      [drawers.slide.clearancePerSide, PLACEMENT.slideHeight, drawers.slide.length], null, slideMeta);
   });
 });
 

@@ -26,7 +26,7 @@ npm run build        # validácia + produkčný build do app/dist
 
 Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čiel a gola škár nedá 925 mm, keď diel vytŕča z obálky 1800 × 1050 × 800, alebo keď sa dva diely prekrývajú mimo drážky.
 
-`spec/derived/parts.json` obsahuje všetkých 85 dielov s pozíciou a rozmermi v priestore — to je vstup pre vizualizér v `app/`.
+`spec/derived/parts.json` obsahuje všetkých 89 dielov s pozíciou a rozmermi v priestore — to je vstup pre vizualizér v `app/`.
 
 ## Kľúčové rozmery
 
@@ -53,10 +53,12 @@ Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
 Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — **nepočíta žiadnu geometriu**.
 
 - **klik** na diel → rozmer, materiál, hrana a rozhodnutie z `docs/decisions.md`, ktoré ten rozmer vysvetľuje
-- **dvojklik** na zásuvku → vysunie sa na plný výsuv 700 mm a ukáže svetlosť boxu (815 × 130 × 668, spodný rad 815 × 180 × 668)
+- **dvojklik** na zásuvku → vysunie sa na plný výsuv 700 mm a ukáže svetlosť boxu (815 × 130 × 668, spodný rad 815 × 180 × 668). Výsuv ide s ňou polovičnou dráhou, ako stredný člen naozaj — pri plnom otvorení trčí 342 mm pred korpus
 - rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 800
 - **nárys / bokorys / pôdorys** ako čisté SVG s kótami — ortografický priemet sa počíta priamo z `parts.json`, nie cez 3D kameru, takže čiary sú ostré a tlač je presná
 - **rez A–A / B–B** s posuvnou rovinou. Šrafované diely rovina pretína, tenké sú za ňou, materiál pred ňou sa nekreslí. Stopa roviny je čiarkovane vyznačená v náryse. Rez A–A rozpisuje hĺbkovú skladbu 18 + 8 + 700 + 33 + 18 + 8 + 15 = 800 a svetlo 733 mm pre box; rez B–B šírkovú 18 + 873 + 18 + 873 + 18 = 1800
+- **kovanie** — panel so zoznamom z `cutlist.json`, tlačidlo *len kovanie* a **röntgen**, v ktorom drevo zpriehľadní a kliká sa priamo na výsuvy a kotvy. Bez toho ich vidieť nie je: výsuv je medzi bokom a boxom, kotva za chrbtom
+- **rozmery pri dieli** — po kliknutí sa okótuje priamo v scéne aj vo výkrese, nielen v tabuľke
 - **cutlist** ako tlačiteľná tabuľka z `spec/derived/cutlist.json`
 - prepínač **schéma / dekor** — schéma odlišuje diely podľa funkcie, dekor ukazuje svetlý dub, čiernu matnú golu a pozinkované výsuvy
 - **smer kresby dubu** (D10) a banner s blokujúcou otvorenou otázkou zo `spec/komoda.json`
