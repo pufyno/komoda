@@ -65,8 +65,8 @@
     "type": "frame",
     "height": 60,
     "material": "ldtd18",
-    "inset": { "front": 50, "left": 50, "right": 50, "rear": 30 },
-    "insetNote": "front sa meria od roviny čiel (z 0), nie od čelnej hrany korpusu. rear je odsadenie od steny, aby pod komodu vošla soklová lišta — over jej hrúbku.",
+    "inset": { "front": 18, "left": 0, "right": 0, "rear": 30 },
+    "insetNote": "Rám je zarovno s korpusom. front sa meria od roviny čiel (z 0), takže 18 = čelná hrana korpusu (full overlay čelá ju prekrývajú). rear je odsadenie od steny, aby pod komodu vošla soklová lišta — over jej hrúbku.",
     "floorGap": 15,
     "middleBoard": true,
     "levelers": {

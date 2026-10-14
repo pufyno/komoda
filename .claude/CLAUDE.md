@@ -65,7 +65,7 @@ Typické chybné „opravy":
 
 Origin na podlahe, vľavo vpredu. **X** vpravo, **Y** hore, **Z** dozadu. Všetko v milimetroch. Táto konvencia platí v `spec/derived/geometry.json`, `parts.json` aj vo vizualizéri.
 
-Referenčné roviny: čelá sú v z 0–18, korpus začína na z 18, zadná výstuha na z 609–627, chrbát na z 627–635, zadná hrana na z 650. Gola profil je rozdelený: lišta v škáre lícuje s čelami (z 0–18), montážna stena je za nimi (z 18–26) a prekrýva čelnú hranu korpusu o 8 mm. Rám sokla je v x 50–1750, z 50–620, y 15–60 a stojí na pätkách — zapustený za čelá aj boky a 30 mm od steny kvôli soklovej lište.
+Referenčné roviny: čelá sú v z 0–18, korpus začína na z 18, zadná výstuha na z 609–627, chrbát na z 627–635, zadná hrana na z 650. Gola profil je rozdelený: lišta v škáre lícuje s čelami (z 0–18), montážna stena je za nimi (z 18–26) a prekrýva čelnú hranu korpusu o 8 mm. Rám sokla je v x 0–1800, z 18–620, y 15–60 a stojí na pätkách — zarovno s korpusom (bokmi aj čelnou hranou), 30 mm od steny kvôli soklovej lište.
 
 ## `parts.json` — čo kreslí vizualizér
 

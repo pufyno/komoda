@@ -170,36 +170,27 @@ Horné tri majú vnútri ~130 mm, čo je na detské oblečenie viac než dosť.
 
 ## D13 — Sokel 60 mm ako rám na rektifikačných pätkách
 
-**Rozhodnutie:** namiesto viditeľných nožičiek samostatný rám z LDTD 18 pod korpusom, vysoký 60 mm. Predná a zadná doska idú cez celú dĺžku (1700 mm), bočné a stredná sú medzi nimi (534 mm). Výška dosiek 45 mm, pod nimi 6 rektifikačných pätiek zaskrutkovaných do spodnej hrany (2 rohy a 1 pod priečkou v prednej aj zadnej doske). Rám nesie korpus.
+**Rozhodnutie:** namiesto viditeľných nožičiek samostatný rám z LDTD 18 pod korpusom, vysoký 60 mm a zarovno s korpusom. Predná a zadná doska idú cez celú šírku (1800 mm), bočné a stredná sú medzi nimi (566 mm). Výška dosiek 45 mm, pod nimi 6 rektifikačných pätiek zaskrutkovaných do spodnej hrany (2 rohy a 1 pod priečkou v prednej aj zadnej doske). Rám nesie korpus.
 
-**Zapustenie:**
+**Odsadenie:**
 
 | strana | mm | prečo |
 |---|---|---|
-| vpredu | 50 | meria sa od roviny čiel; miesto na špičky nôh pri prebaľovaní, tieňová škára |
-| vľavo / vpravo | 50 | rovnaká tieňová škára na viditeľných bokoch |
-| vzadu | 30 | pri stene je soklová lišta; rám zarovno dozadu by sa o ňu oprel a komoda by nedosadla k stene, kotva by korpus k stene ťahala |
+| vpredu | 18 | meria sa od roviny čiel; 18 = čelná hrana korpusu. Čelá full overlay korpus prekrývajú, takže pod spodným čelom ostane schodík 18 mm |
+| vľavo / vpravo | 0 | zarovno s bokmi korpusu |
+| vzadu | 30 | pri stene je soklová lišta; rám zarovno dozadu by sa o ňu oprel a komoda by nedosadla k stene, kotva by korpus k stene ťahala. Zozadu to nevidno |
+
+**Prečo zarovno a nie zapustený:** rozhodnutie používateľa. Prvá verzia mala 50 mm zapustenie vpredu aj po bokoch (tieňová škára, miesto na špičky nôh). Pri zarovnaní je miesto na špičky len 18 mm.
 
 **Prečo rám a nie boky po zem:** korpus má rovnakú konštrukciu (boky stoja na dne, dno cez celú šírku), takže D1, D7 a D11 platia ďalej. Pätky zachovajú vyrovnanie podlahy ±15 mm, čo by pri bokoch až po zem riešili len klzáky a podložky.
 
 **Prečo 60 a nie 100:** 100 mm bola výška nožičiek, sokel ju nepotrebuje. Kuchynské nožičky do sokla sa bežne predávajú od ~80–100 mm, preto pri 60 mm nie sú nožičky vnútri rámu, ale pätky v jeho hrane a rám nesie korpus sám. Ušetrených 40 mm dostalo spodné čelo (D5, D8).
 
-**Stredná doska:** keď nožičky stáli vnútri rámu, dve z nich podopierali priečku. Pri pätkách v ráme by priečka — a s ňou polovica zásuviek — visela na dne korpusu s rozponom 1700 mm. Stredná doska je presne pod priečkou; test to stráži.
+**Stredná doska:** priečka nesie polovicu zásuviek. Pri pätkách v ráme by bez opory visela na dne korpusu s rozponom cez celú šírku. Stredná doska je presne pod priečkou; test to stráži.
 
-**Vôľa 15 mm pod rámom:** je to vysunutie pätiek v strednej polohe. Musí byť aspoň taká ako rozsah rektifikácie, inak pri znížení pätiek dosadne rám na podlahu. Stráži to invariant „vôľa pod soklom ≥ rektifikácia". Za 50 mm zapustením ju nevidno.
+**Vôľa 15 mm pod rámom:** je to vysunutie pätiek v strednej polohe. Musí byť aspoň taká ako rozsah rektifikácie, inak pri znížení pätiek dosadne rám na podlahu. Stráži to invariant „vôľa pod soklom ≥ rektifikácia". **Pri zarovnanom ráme je medzera vidieť** zboku aj spredu — ako pri nábytku na kĺzačoch. Kto ju nechce, môže ju po vyrovnaní zakryť soklovým tesnením (kuchynský PVC profil do drážky), alebo zapustiť rám.
 
-**Lišta:** smie byť najviac 30 mm hrubá (zadné odsadenie, odhad) a **najviac 60 mm vysoká** — vyššie už je dno korpusu. Pri sokli 100 mm bola hranica 100. Ak je lišta vyššia, treba ju za komodou odrezať. Sledované v `openQuestions` → `skirting`.
-
----|---|---|
-| vpredu | 50 | meria sa od roviny čiel; miesto na špičky nôh pri prebaľovaní, tieňová škára |
-| vľavo / vpravo | 50 | rovnaká tieňová škára na viditeľných bokoch |
-| vzadu | 30 | pri stene je soklová lišta; rám zarovno dozadu by sa o ňu oprel a komoda by nedosadla k stene, kotva by korpus k stene ťahala |
-
-**Prečo rám a nie boky po zem:** korpus zostáva bez zmeny (boky stoja na dne, dno cez celú šírku), takže D1, D5, D7 a D11 platia ďalej. Rektifikačné nožičky zachovajú vyrovnanie podlahy ±15 mm, čo by pri bokoch až po zem riešili len klzáky a podložky.
-
-**Vôľa 15 mm pod rámom:** rám visí na dne a k podlahe nedosadá. Vôľa musí byť aspoň taká ako rozsah rektifikácie, inak pri znížení nožičiek dosadne rám skôr než ony a komoda bude stáť na ráme, nie na nožičkách. Stráži to invariant „vôľa pod soklom ≥ rektifikácia". Za 50 mm zapustením vôľu nevidno.
-
-**Lišta:** zadné odsadenie 30 mm je odhad. Lišta smie byť vysoká najviac 100 mm — vyššie už je dno korpusu. Hrúbka aj výška lišty sú v `openQuestions` → `skirting`.
+**Lišta:** smie byť najviac 30 mm hrubá (zadné odsadenie, odhad) a **najviac 60 mm vysoká** — vyššie už je dno korpusu. Ak je lišta vyššia, treba ju za komodou odrezať. Sledované v `openQuestions` → `skirting`.
 
 ---
 

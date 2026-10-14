@@ -38,7 +38,7 @@ Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čie
 | Čelá | 898 × 190 / 190 / 190 / 310, stredná škára 4 |
 | Gola | J reveal 22 (hore), C reveal 21 (3× medzi radmi) |
 | Zásuvkový box | 847 × 550, bočné plnovýsuvy 550 |
-| Sokel | rám LDTD 18, výška 60, zapustený 50 vpredu a po bokoch, 30 vzadu; stojí na 6 rektifikačných pätkách |
+| Sokel | rám LDTD 18, výška 60, zarovno s korpusom, 30 od steny; stojí na 6 rektifikačných pätkách |
 
 Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
 
