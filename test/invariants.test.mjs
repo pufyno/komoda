@@ -98,10 +98,10 @@ describe("typické chybné opravy (.claude/CLAUDE.md)", () => {
     expectFail((s) => { s.gola.top.reveal = 21; }, /zóna čiel/);
   });
 
-  test("zrovnanie čiel na 4 × 220 zoberie jedinú hlbokú zásuvku", () => {
-    // Súčet 880 + 85 = 965 sedí, takže sumu to prejde — chytiť to musí
-    // invariant o odstupňovaní (D5).
-    expectFail((s) => { s.fronts.heights = [220, 220, 220, 220]; }, /spodný rad je najvyšší/);
+  test("zväčšenie jedného čela bez zmenšenia ostatných rozbije zónu čiel", () => {
+    // Čelá sú 4 × 220 (D5). Kto vráti hlbšiu spodnú zásuvku a ostatné
+    // nezmenší, súčet prestane sedieť na 965.
+    expectFail((s) => { s.fronts.heights = [220, 220, 220, 260]; }, /zóna čiel/);
   });
 
   test("predĺženie boxu za zadnú výstuhu prekročí využiteľnú hĺbku", () => {
@@ -230,6 +230,30 @@ describe("kovanie vychádza zo specu", () => {
     const slide = partsOf(null).find((p) => p.id === "slide-l-r1c1");
     assert.equal(slide.drawer, "r1c1");
     assert.equal(slide.travelFactor, 0.5);
+  });
+});
+
+describe("cutlist", () => {
+  /** Riadky cutlistu pre boky boxov. */
+  const boxSides = (mutate) => {
+    const r = run(BUILD, mutate);
+    assert.equal(r.code, 0, r.out + r.err);
+    return JSON.parse(readFileSync(join(r.outDir, "cutlist.json"), "utf8")).parts
+      .filter((p) => p.name.startsWith("Bok boxu"));
+  };
+
+  test("rovnaké boxy sú jeden riadok so všetkými kusmi", () => {
+    const rows = boxSides(null);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].qty, 16);
+  });
+
+  test("rôzne vysoké boxy sa rozdelia podľa výšky, kusy sedia", () => {
+    const rows = boxSides((s) => { s.drawers.boxSideHeights = [160, 150, 160, 150]; });
+    assert.deepEqual(rows.map((r) => [r.name, r.qty, r.width]), [
+      ["Bok boxu (rady 2, 4)", 8, 150],
+      ["Bok boxu (rady 1, 3)", 8, 160],
+    ]);
   });
 });
 

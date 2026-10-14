@@ -47,17 +47,16 @@ Keď pridáš invariant, pridaj k nemu prípad — inak nevieš, či vôbec fung
 | výsuv = hĺbka boxu | 550 = 550 |
 | podložka sa zmestí na dosku | 600 ≤ 650 |
 | drážka v priečke udrží chrbát | 8 ≥ 8 |
-| spodný rad je najvyšší | 310 > 190 |
 | všetky diely v obálke | 1800 × 1050 × 650 |
 | žiadne nechcené prieniky dielov | 54 zamýšľaných, 0 iných |
 
 ## Než niečo „opravíš"
 
-Čísla v specu vyzerajú miestami nepravidelne (gola reveal 22 hore vs 21 medzi radmi; čelá 190/190/190/310; box 847 a nie 850). **Všetky sú zámerné.** Dôvod ku každému je v `docs/decisions.md`. Prečítaj si to, než niečo zaokrúhliš.
+Čísla v specu vyzerajú miestami nepravidelne (gola reveal 22 hore vs 21 medzi radmi; box 847 a nie 850; sokel 60 a nie 100). **Všetky sú zámerné.** Dôvod ku každému je v `docs/decisions.md`. Prečítaj si to, než niečo zaokrúhliš.
 
 Typické chybné „opravy":
 - zjednotiť gola reveal na 21 → výška čela prestane vyjsť na celé číslo
-- zrovnať čelá na 4× 220 → stratí sa jediná hlboká zásuvka (súčet 965 sedí, chytá to až invariant „spodný rad je najvyšší")
+- vrátiť hlbšiu spodnú zásuvku zväčšením jedného čela → súčet prestane sedieť na 965. Čelá 4 × 220 sú rozhodnutie používateľa (D5); ak treba odstupňovať, musia sa zmenšiť ostatné
 - zaokrúhliť box na 850 → zásuvka sa zasekne
 - nastaviť `wallAnchor.required: false` → komoda sa preklopí
 
@@ -96,7 +95,7 @@ Kovanie, ktoré model zjednodušuje (všetko vypísané v `parts.json` → `assu
 
 Spec je kompletný a validuje. Vizualizér je hotový a nasadený na <https://komoda-olive.vercel.app>.
 
-Hotové: 3D scéna s otváraním zásuviek, rozstrelom a röntgenom kovania; nárys, bokorys, pôdorys; rez A–A a B–B s posuvnou rovinou; kóty vybraného dielu priamo v scéne aj vo výkrese; tlačiteľný cutlist; mobilný layout pod 900 px; 27 testov validátora a CI na každý push.
+Hotové: 3D scéna s otváraním zásuviek, rozstrelom a röntgenom kovania; nárys, bokorys, pôdorys; rez A–A a B–B s posuvnou rovinou; kóty vybraného dielu priamo v scéne aj vo výkrese; tlačiteľný cutlist; mobilný layout pod 900 px; 29 testov validátora a CI na každý push.
 
 Otvorené položky sú v `spec/komoda.json` → `openQuestions`. Blokujúca je len `gola-reveal-verify` — reveal gola profilu treba overiť v montážnom návode. Nie je to úloha pre kód: kým nie je datasheet, nedá sa potvrdiť, že 21/22 mm je správne. V UI je označená štítkom v sekcii *Otvorené otázky*, to isté upozornenie nesie cutlist.
 

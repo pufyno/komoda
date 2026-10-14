@@ -35,7 +35,7 @@ Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čie
 | Korpus | 1800 × 990 × 632 |
 | Horná doska | 1800 × 650 × 25, presah vpredu 18 |
 | Svetlosť priehradky | 873 × 947 |
-| Čelá | 898 × 190 / 190 / 190 / 310, stredná škára 4 |
+| Čelá | 8 × 898 × 220, stredná škára 4 |
 | Gola | J reveal 22 (hore), C reveal 21 (3× medzi radmi) |
 | Zásuvkový box | 847 × 550, bočné plnovýsuvy 550 |
 | Sokel | rám LDTD 18, výška 60, zarovno s korpusom, 30 od steny; stojí na 6 rektifikačných pätkách |
@@ -54,7 +54,7 @@ Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
 Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — **nepočíta žiadnu geometriu**.
 
 - **klik** na diel → rozmer, materiál, hrana a rozhodnutie z `docs/decisions.md`, ktoré ten rozmer vysvetľuje
-- **dvojklik** na zásuvku → vysunie sa na plný výsuv 550 mm a ukáže svetlosť boxu (815 × 130 × 518, spodný rad 815 × 230 × 518). Výsuv ide s ňou polovičnou dráhou, ako stredný člen naozaj — pri plnom otvorení trčí 267 mm pred korpus
+- **dvojklik** na zásuvku → vysunie sa na plný výsuv 550 mm a ukáže svetlosť boxu (815 × 140 × 518, všetky rovnaké). Výsuv ide s ňou polovičnou dráhou, ako stredný člen naozaj — pri plnom otvorení trčí 267 mm pred korpus
 - rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 650
 - **nárys / bokorys / pôdorys** ako čisté SVG s kótami — ortografický priemet sa počíta priamo z `parts.json`, nie cez 3D kameru, takže čiary sú ostré a tlač je presná
 - **rez A–A / B–B** s posuvnou rovinou. Šrafované diely rovina pretína, tenké sú za ňou, materiál pred ňou sa nekreslí. Stopa roviny je čiarkovane vyznačená v náryse. Rez A–A rozpisuje hĺbkovú skladbu 18 + 8 + 550 + 33 + 18 + 8 + 15 = 650 a svetlo 583 mm pre box; rez B–B šírkovú 18 + 873 + 18 + 873 + 18 = 1800

@@ -61,17 +61,27 @@ Pri škáre 3 mm dookola vychádza čelo 895,5 mm. Pri 3 mm len v strede 898,5 m
 
 ---
 
-## D5 — Odstupňované výšky čiel 190/190/190/310
+## D5 — Rovnaké čelá 4 × 220 mm
 
-**Rozhodnutie:** horné tri rady po 190 mm, spodný 310 mm.
+**Rozhodnutie:** všetky štyri rady rovnaké — čelo 898 × 220 mm, box 847 × 160 × 550 mm, vnútri 815 × 140 × 518 mm (~59 l). Rozhodnutie používateľa 2026-10-14.
 
-**Prečo:** pri rovnakých čelách vychádza 220 mm na rad. Balík plienok má 250–300 mm — do žiadnej z ôsmich zásuviek by sa nezmestil. Spodná zásuvka má box 250 mm a vnútri 230 mm, čo pokryje plienky naležato, deky aj náhradné posteľné prádlo.
+**Výpočet:** zóna čiel 965 mm − gola škáry (22 + 3 × 21 = 85) = 880 mm, 880 / 4 = 220 — vychádza na celé mm, reveal 21/22 (D3) netreba meniť.
 
-**História:** pôvodne 270 mm čelo s boxom 200 mm. Dokument tvrdil vnútornú výšku ~227 mm, model ale dával 180 (box 200 − 10 vôľa pod dnom − 10 dno). Pri znížení sokla na 60 mm (D13) dostalo spodné čelo uvoľnených 40 mm a box sa zväčšil na 250 mm — od dna korpusu je 12 mm, od hornej hrany čela 30 mm. Kolízia by nastala až pri 274 mm.
+**Box 160:** je zvislo vycentrovaný na čelo. Väzbou je spodný rad: dno korpusu končí na y 78, box začína na y 90 — 12 mm vôle ako predtým. Box 180 by sa ešte zmestil, ale nad dnom by ostali 2 mm. Nad každým boxom ostáva 30 mm pod hornou hranou čela.
 
-Horné tri majú vnútri ~130 mm, čo je na detské oblečenie viac než dosť.
+**Čo sa tým stratilo** (vedome):
 
-**Kontrola:** `22 + 190 + 21 + 190 + 21 + 190 + 21 + 310 = 965` ✓
+| | odstupňované 190/190/190/310 | 4 × 220 |
+|---|---|---|
+| vnútorná výška | 6 × 130 + 2 × 230 | 8 × 140 |
+| objem spolu | ~523 l | ~473 l |
+| balík plienok 250–300 mm | do spodných dvoch | do žiadnej |
+
+Rovnaké boxy sa ale režú z jedného rozmeru a sú navzájom zameniteľné. Cutlist ich zlučuje do jedného riadku.
+
+**História:** pôvodne 190/190/190/270 s jedinou hlbokou zásuvkou na plienky. Dokument vtedy tvrdil vnútornú výšku ~227 mm, model dával 180 (box 200 − 10 vôľa pod dnom − 10 dno). Po znížení sokla (D13) 190/190/190/310 s boxom 250, potom zjednotené. Invariant „spodný rad je najvyšší", ktorý odstupňovanie strážil, bol odstránený.
+
+**Kontrola:** `22 + 220 + 21 + 220 + 21 + 220 + 21 + 220 = 965` ✓
 
 ---
 
@@ -111,7 +121,7 @@ Horné tri majú vnútri ~130 mm, čo je na detské oblečenie viac než dosť.
 
 **Vedomé rozhodnutie používateľa.** Rektifikačné pätky majú rozsah len ±15 mm — na vyrovnanie podlahy, nie na zmenu ergonómie.
 
-**Zvážené znovu pri sokli (D13):** zníženie sokla zo 100 na 60 mm uvoľnilo 40 mm. Dali sa použiť na nižšiu komodu (1010 mm, s podložkou ~1050) alebo na hlbšiu spodnú zásuvku pri zachovaní 1050. Používateľ zvolil zásuvku — výška a tým aj tento kompromis ostáva.
+**Zvážené znovu pri sokli (D13):** zníženie sokla zo 100 na 60 mm uvoľnilo 40 mm. Dali sa použiť na nižšiu komodu (1010 mm, s podložkou ~1050) alebo na hlbšiu spodnú zásuvku pri zachovaní 1050. Používateľ zvolil zásuvky (dnes 4 × 220, D5) — výška a tým aj tento kompromis ostáva.
 
 ---
 
@@ -184,7 +194,7 @@ Horné tri majú vnútri ~130 mm, čo je na detské oblečenie viac než dosť.
 
 **Prečo rám a nie boky po zem:** korpus má rovnakú konštrukciu (boky stoja na dne, dno cez celú šírku), takže D1, D7 a D11 platia ďalej. Pätky zachovajú vyrovnanie podlahy ±15 mm, čo by pri bokoch až po zem riešili len klzáky a podložky.
 
-**Prečo 60 a nie 100:** 100 mm bola výška nožičiek, sokel ju nepotrebuje. Kuchynské nožičky do sokla sa bežne predávajú od ~80–100 mm, preto pri 60 mm nie sú nožičky vnútri rámu, ale pätky v jeho hrane a rám nesie korpus sám. Ušetrených 40 mm dostalo spodné čelo (D5, D8).
+**Prečo 60 a nie 100:** 100 mm bola výška nožičiek, sokel ju nepotrebuje. Kuchynské nožičky do sokla sa bežne predávajú od ~80–100 mm, preto pri 60 mm nie sú nožičky vnútri rámu, ale pätky v jeho hrane a rám nesie korpus sám. Ušetrených 40 mm dostali zásuvky (D5, D8).
 
 **Stredná doska:** priečka nesie polovicu zásuviek. Pri pätkách v ráme by bez opory visela na dne korpusu s rozponom cez celú šírku. Stredná doska je presne pod priečkou; test to stráži.
 

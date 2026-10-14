@@ -74,9 +74,6 @@ assertTrue("počet gola C profilov", gola.between.count === fronts.rows - 1,
   `pri ${fronts.rows} radoch musí byť ${fronts.rows - 1} profilov medzi radmi, je ${gola.between.count}`);
 assertTrue("počet výšok čiel", fronts.heights.length === fronts.rows,
   `${fronts.heights.length} výšok pre ${fronts.rows} radov`);
-assertTrue("spodný rad je najvyšší", 
-  fronts.heights[fronts.rows - 1] > Math.max(...fronts.heights.slice(0, -1)),
-  `spodné čelo ${fronts.heights[fronts.rows - 1]} mm nie je vyššie než ostatné (${fronts.heights.slice(0, -1).join(", ")}) — stratí sa jediná hlboká zásuvka, pozri D5`);
 assertTrue("počet výšok boxov", drawers.boxSideHeights.length === fronts.rows,
   `${drawers.boxSideHeights.length} výšok pre ${fronts.rows} radov`);
 
@@ -278,14 +275,20 @@ for (const [h, qty] of Object.entries(byHeight)) {
 }
 
 const boxGroove = 8;
-fronts.heights.forEach((_, i) => {
-  const h = drawers.boxSideHeights[i];
-  const qty = fronts.columns;
-  add("zásuvky", `Bok boxu (rad ${i + 1})`, qty * 2, drawers.boxDepth, h, T_BOX, "ldtd16");
-  add("zásuvky", `Predok/zadok boxu (rad ${i + 1})`, qty * 2, boxWidth - 2 * T_BOX, h, T_BOX, "ldtd16");
-  add("zásuvky", `Dno boxu (rad ${i + 1})`, qty,
+// Rady s rovnako vysokým boxom sa v cutliste zlúčia — stolár reže podľa
+// rozmeru, nie podľa radu.
+const rowsByBoxH = {};
+drawers.boxSideHeights.forEach((h, i) => { (rowsByBoxH[h] ??= []).push(i + 1); });
+const rowsLabel = (r) => r.length === fronts.rows ? "všetky rady" : r.length === 1 ? `rad ${r[0]}` : `rady ${r.join(", ")}`;
+for (const [hs, rowNums] of Object.entries(rowsByBoxH)) {
+  const h = Number(hs);
+  const qty = fronts.columns * rowNums.length;
+  const tag = rowsLabel(rowNums);
+  add("zásuvky", `Bok boxu (${tag})`, qty * 2, drawers.boxDepth, h, T_BOX, "ldtd16");
+  add("zásuvky", `Predok/zadok boxu (${tag})`, qty * 2, boxWidth - 2 * T_BOX, h, T_BOX, "ldtd16");
+  add("zásuvky", `Dno boxu (${tag})`, qty,
     boxWidth - 2 * T_BOX + 2 * boxGroove, drawers.boxDepth - 2 * T_BOX + 2 * boxGroove, t("hdf10"), "hdf10");
-});
+}
 
 const hardware = [
   { item: "Gola profil J (pod dosku)", qty: 1, length: gola.top.lengthEach, note: `reveal ${gola.top.reveal} mm, ${gola.finish}` },

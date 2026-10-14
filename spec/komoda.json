@@ -141,8 +141,8 @@
     "width": 898,
     "centerGap": 4,
     "sideGap": 0,
-    "heights": [190, 190, 190, 310],
-    "heightsNote": "Odstupňované — spodný rad vyšší na objemné veci (plienky, deky). Vnútorná výška spodného boxu 230 mm, horných 130 mm (počíta build).",
+    "heights": [220, 220, 220, 220],
+    "heightsNote": "Všetky rady rovnaké — rozhodnutie používateľa, pozri D5. (965 − 85) / 4 = 220 vychádza na celé mm.",
     "grain": {
       "direction": "horizontal",
       "sequentialCut": true,
@@ -155,7 +155,7 @@
     "boxDepth": 550,
     "boxSideMaterial": "ldtd16",
     "boxBottomMaterial": "hdf10",
-    "boxSideHeights": [150, 150, 150, 250],
+    "boxSideHeights": [160, 160, 160, 160],
     "slide": {
       "mount": "side",
       "extension": "full",

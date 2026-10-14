@@ -47,31 +47,31 @@
   "rows": [
     {
       "row": 0,
-      "frontHeight": 190,
+      "frontHeight": 220,
       "frontTopY": 1003,
-      "frontBottomY": 813,
-      "boxSideHeight": 150
+      "frontBottomY": 783,
+      "boxSideHeight": 160
     },
     {
       "row": 1,
-      "frontHeight": 190,
-      "frontTopY": 792,
-      "frontBottomY": 602,
-      "boxSideHeight": 150
+      "frontHeight": 220,
+      "frontTopY": 762,
+      "frontBottomY": 542,
+      "boxSideHeight": 160
     },
     {
       "row": 2,
-      "frontHeight": 190,
-      "frontTopY": 581,
-      "frontBottomY": 391,
-      "boxSideHeight": 150
+      "frontHeight": 220,
+      "frontTopY": 521,
+      "frontBottomY": 301,
+      "boxSideHeight": 160
     },
     {
       "row": 3,
-      "frontHeight": 310,
-      "frontTopY": 370,
+      "frontHeight": 220,
+      "frontTopY": 280,
       "frontBottomY": 60,
-      "boxSideHeight": 250
+      "boxSideHeight": 160
     }
   ],
   "columnsX": [

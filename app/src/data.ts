@@ -189,7 +189,7 @@ export const DECISION_TITLE: Record<string, string> = {
   D2: "Gola namiesto frézovaného úchytu",
   D3: "Reveal 21/22 mm je zvolený, nie odčítaný",
   D4: "Čelo 898 mm, stredná škára 4 mm",
-  D5: "Odstupňované výšky čiel 190/190/190/310",
+  D5: "Rovnaké čelá 4 × 220 mm",
   D6: "Bočné výsuvy, box 847 × 550 mm",
   D7: "Zadná výstuha je povinná",
   D8: "Pracovná výška 1050 mm ponechaná",
