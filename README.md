@@ -71,6 +71,8 @@ Stack: Vite + React + [react-three-fiber](https://github.com/pmndrs/react-three-
 
 ### Nasadenie na Vercel
 
+Beží na **<https://komoda-olive.vercel.app>** (Vercel projekt `komoda`, deploy z `main`).
+
 Projekt sa importuje z tohto repa. Root Directory zostáva na koreni, aby build videl `spec/`:
 
 Build command a output directory sú v `vercel.json`, takže sa nenastavujú klikaním. V dashboarde stačí Framework Preset `Other` a Root Directory na koreni repa (aby build videl `spec/`).
