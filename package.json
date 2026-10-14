@@ -1,7 +1,7 @@
 {
   "name": "komoda",
   "version": "1.0.0",
-  "description": "Parametrický spec komody / prebaľovacieho pultu 1800 × 1050 × 800 mm",
+  "description": "Parametrický spec komody / prebaľovacieho pultu 1800 × 1050 × 650 mm",
   "type": "module",
   "private": true,
   "workspaces": [

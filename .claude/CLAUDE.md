@@ -1,6 +1,6 @@
 # komoda — pokyny pre prácu s projektom
 
-Projekt je **parametrický spec kusu nábytku** (komoda / prebaľovací pult, 1800 × 1050 × 800 mm) a nad ním sa stavia vizualizér.
+Projekt je **parametrický spec kusu nábytku** (komoda / prebaľovací pult, 1800 × 1050 × 650 mm) a nad ním sa stavia vizualizér.
 
 ## Zdroj pravdy
 
@@ -35,25 +35,29 @@ Keď pridáš invariant, pridaj k nemu prípad — inak nevieš, či vôbec fung
 
 | Invariant | Hodnota |
 |---|---|
-| celková výška = nožičky + korpus | 100 + 950 = 1050 |
-| zóna čiel = súčet čiel + gola škáry | 925 |
+| doska = obálka | 1800 × 650 |
+| celková výška = sokel + korpus | 60 + 990 = 1050 |
+| vôľa pod soklom ≥ rektifikácia | 15 ≥ 15 |
+| zóna čiel = súčet čiel + gola škáry | 965 |
 | šírka = čelá + škáry | 898 + 4 + 898 = 1800 |
 | svetlosť priehradky | (1800 − 3 × 18) / 2 = 873 |
-| svetlá výška korpusu | 950 − 25 − 18 = 907 |
-| spodná hrana posledného čela = spodok korpusu | 100 |
-| hĺbka na výsuv ≥ hĺbka boxu | 733 ≥ 700 |
+| svetlá výška korpusu | 990 − 25 − 18 = 947 |
+| spodná hrana posledného čela = spodok korpusu | 60 |
+| hĺbka na výsuv ≥ hĺbka boxu | 583 ≥ 550 |
+| výsuv = hĺbka boxu | 550 = 550 |
+| podložka sa zmestí na dosku | 600 ≤ 650 |
 | drážka v priečke udrží chrbát | 8 ≥ 8 |
-| spodný rad je najvyšší | 270 > 190 |
-| všetky diely v obálke | 1800 × 1050 × 800 |
+| spodný rad je najvyšší | 310 > 190 |
+| všetky diely v obálke | 1800 × 1050 × 650 |
 | žiadne nechcené prieniky dielov | 54 zamýšľaných, 0 iných |
 
 ## Než niečo „opravíš"
 
-Čísla v specu vyzerajú miestami nepravidelne (gola reveal 22 hore vs 21 medzi radmi; čelá 190/190/190/270; box 847 a nie 850). **Všetky sú zámerné.** Dôvod ku každému je v `docs/decisions.md`. Prečítaj si to, než niečo zaokrúhliš.
+Čísla v specu vyzerajú miestami nepravidelne (gola reveal 22 hore vs 21 medzi radmi; čelá 190/190/190/310; box 847 a nie 850). **Všetky sú zámerné.** Dôvod ku každému je v `docs/decisions.md`. Prečítaj si to, než niečo zaokrúhliš.
 
 Typické chybné „opravy":
 - zjednotiť gola reveal na 21 → výška čela prestane vyjsť na celé číslo
-- zrovnať čelá na 4× 210 → stratí sa jediná hlboká zásuvka (súčet 925 sedí, chytá to až invariant „spodný rad je najvyšší")
+- zrovnať čelá na 4× 220 → stratí sa jediná hlboká zásuvka (súčet 965 sedí, chytá to až invariant „spodný rad je najvyšší")
 - zaokrúhliť box na 850 → zásuvka sa zasekne
 - nastaviť `wallAnchor.required: false` → komoda sa preklopí
 
@@ -61,11 +65,11 @@ Typické chybné „opravy":
 
 Origin na podlahe, vľavo vpredu. **X** vpravo, **Y** hore, **Z** dozadu. Všetko v milimetroch. Táto konvencia platí v `spec/derived/geometry.json`, `parts.json` aj vo vizualizéri.
 
-Referenčné roviny: čelá sú v z 0–18, korpus začína na z 18, chrbát je na z 777–785, zadná hrana na z 800. Gola profil je rozdelený: lišta v škáre lícuje s čelami (z 0–18), montážna stena je za nimi (z 18–26) a prekrýva čelnú hranu korpusu o 8 mm.
+Referenčné roviny: čelá sú v z 0–18, korpus začína na z 18, zadná výstuha na z 609–627, chrbát na z 627–635, zadná hrana na z 650. Gola profil je rozdelený: lišta v škáre lícuje s čelami (z 0–18), montážna stena je za nimi (z 18–26) a prekrýva čelnú hranu korpusu o 8 mm. Rám sokla je v x 50–1750, z 50–620, y 15–60 a stojí na pätkách — zapustený za čelá aj boky a 30 mm od steny kvôli soklovej lište.
 
 ## `parts.json` — čo kreslí vizualizér
 
-`spec/derived/parts.json` je zoznam všetkých 89 dielov s umiestnením v priestore: `position` je minimálny roh kvádra, `size` je `[dx, dy, dz]`, `center` je stred (priamo pre `BoxGeometry`). Každý diel má `group`, `material` a väčšina aj `decision` — odkaz na D1–D11 v `docs/decisions.md`.
+`spec/derived/parts.json` je zoznam všetkých 94 dielov s umiestnením v priestore: `position` je minimálny roh kvádra, `size` je `[dx, dy, dz]`, `center` je stred (priamo pre `BoxGeometry`). Každý diel má `group`, `material` a väčšina aj `decision` — odkaz na D1–D13 v `docs/decisions.md`.
 
 **Aplikácia nič nepočíta, len kreslí.** Ak potrebuješ v `app/` nový rozmer alebo pozíciu, pridaj ho do generátora v `build.mjs`, nie do komponentu.
 
@@ -92,7 +96,7 @@ Kovanie, ktoré model zjednodušuje (všetko vypísané v `parts.json` → `assu
 
 Spec je kompletný a validuje. Vizualizér je hotový a nasadený na <https://komoda-olive.vercel.app>.
 
-Hotové: 3D scéna s otváraním zásuviek, rozstrelom a röntgenom kovania; nárys, bokorys, pôdorys; rez A–A a B–B s posuvnou rovinou; kóty vybraného dielu priamo v scéne aj vo výkrese; tlačiteľný cutlist; mobilný layout pod 900 px; 20 testov validátora a CI na každý push.
+Hotové: 3D scéna s otváraním zásuviek, rozstrelom a röntgenom kovania; nárys, bokorys, pôdorys; rez A–A a B–B s posuvnou rovinou; kóty vybraného dielu priamo v scéne aj vo výkrese; tlačiteľný cutlist; mobilný layout pod 900 px; 27 testov validátora a CI na každý push.
 
 Otvorené položky sú v `spec/komoda.json` → `openQuestions`. Blokujúca je len `gola-reveal-verify` — reveal gola profilu treba overiť v montážnom návode. Nie je to úloha pre kód: kým nie je datasheet, nedá sa potvrdiť, že 21/22 mm je správne. V UI je označená štítkom v sekcii *Otvorené otázky*, to isté upozornenie nesie cutlist.
 

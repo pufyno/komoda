@@ -1,6 +1,6 @@
 # komoda
 
-Parametrický spec komody / prebaľovacieho pultu **1800 × 1050 × 800 mm**, 8 zásuviek (2 × 4), bezúchytkové otváranie cez gola profil.
+Parametrický spec komody / prebaľovacieho pultu **1800 × 1050 × 650 mm**, 8 zásuviek (2 × 4), bezúchytkové otváranie cez gola profil.
 
 Repo je zdroj dát pre vizualizér, nie len archív výkresu. Obrázok je referencia — čísla žijú v `spec/komoda.json`.
 
@@ -24,28 +24,29 @@ npm run dev          # vizualizér na http://localhost:5173
 npm run build        # validácia + produkčný build do app/dist
 ```
 
-Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čiel a gola škár nedá 925 mm, keď diel vytŕča z obálky 1800 × 1050 × 800, alebo keď sa dva diely prekrývajú mimo drážky.
+Validácia zlyhá pri každej nekonzistencii — napr. keď súčet výšok čiel a gola škár nedá 965 mm, keď diel vytŕča z obálky 1800 × 1050 × 650, alebo keď sa dva diely prekrývajú mimo drážky.
 
-`spec/derived/parts.json` obsahuje všetkých 89 dielov s pozíciou a rozmermi v priestore — to je vstup pre vizualizér v `app/`.
+`spec/derived/parts.json` obsahuje všetkých 94 dielov s pozíciou a rozmermi v priestore — to je vstup pre vizualizér v `app/`.
 
 ## Kľúčové rozmery
 
 | | |
 |---|---|
-| Korpus | 1800 × 950 × 782 |
-| Horná doska | 1800 × 800 × 25, presah vpredu 18 |
-| Svetlosť priehradky | 873 × 907 |
-| Čelá | 898 × 190 / 190 / 190 / 270, stredná škára 4 |
+| Korpus | 1800 × 990 × 632 |
+| Horná doska | 1800 × 650 × 25, presah vpredu 18 |
+| Svetlosť priehradky | 873 × 947 |
+| Čelá | 898 × 190 / 190 / 190 / 310, stredná škára 4 |
 | Gola | J reveal 22 (hore), C reveal 21 (3× medzi radmi) |
-| Zásuvkový box | 847 × 700, bočné plnovýsuvy |
-| Nožičky | 6 × 100 mm nastaviteľné |
+| Zásuvkový box | 847 × 550, bočné plnovýsuvy 550 |
+| Sokel | rám LDTD 18, výška 60, zapustený 50 vpredu a po bokoch, 30 vzadu; stojí na 6 rektifikačných pätkách |
 
 Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
 
 ## Otvorené
 
 - **`gola-reveal-verify`** — reveal 21/22 mm je zvolený cieľ, nie odčítaný z datasheetu. Over v montážnom návode pri objednávke; ak sa líši, prepočítajú sa výšky čiel.
-- `pad-dimensions` — prebaľovacia podložka sa ešte nekúpila, zóna 800 × 700 je placeholder.
+- `pad-dimensions` — prebaľovacia podložka sa ešte nekúpila, zóna 800 × 600 je placeholder (hĺbka najviac 650).
+- `skirting` — soklová lišta na stene smie mať najviac 30 mm hrúbky a 60 mm výšky.
 - `decor-code` — svetlý dub, konkrétny kód podľa vzorkovníka.
 
 ## Vizualizér
@@ -53,10 +54,10 @@ Odôvodnenie ku každému číslu je v [`docs/decisions.md`](docs/decisions.md).
 Interaktívny 3D model v `app/`. Číta výhradne `spec/derived/parts.json` — **nepočíta žiadnu geometriu**.
 
 - **klik** na diel → rozmer, materiál, hrana a rozhodnutie z `docs/decisions.md`, ktoré ten rozmer vysvetľuje
-- **dvojklik** na zásuvku → vysunie sa na plný výsuv 700 mm a ukáže svetlosť boxu (815 × 130 × 668, spodný rad 815 × 180 × 668). Výsuv ide s ňou polovičnou dráhou, ako stredný člen naozaj — pri plnom otvorení trčí 342 mm pred korpus
-- rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 800
+- **dvojklik** na zásuvku → vysunie sa na plný výsuv 550 mm a ukáže svetlosť boxu (815 × 130 × 518, spodný rad 815 × 230 × 518). Výsuv ide s ňou polovičnou dráhou, ako stredný člen naozaj — pri plnom otvorení trčí 267 mm pred korpus
+- rozstrel na slideri, prepínanie vrstiev, obálka 1800 × 1050 × 650
 - **nárys / bokorys / pôdorys** ako čisté SVG s kótami — ortografický priemet sa počíta priamo z `parts.json`, nie cez 3D kameru, takže čiary sú ostré a tlač je presná
-- **rez A–A / B–B** s posuvnou rovinou. Šrafované diely rovina pretína, tenké sú za ňou, materiál pred ňou sa nekreslí. Stopa roviny je čiarkovane vyznačená v náryse. Rez A–A rozpisuje hĺbkovú skladbu 18 + 8 + 700 + 33 + 18 + 8 + 15 = 800 a svetlo 733 mm pre box; rez B–B šírkovú 18 + 873 + 18 + 873 + 18 = 1800
+- **rez A–A / B–B** s posuvnou rovinou. Šrafované diely rovina pretína, tenké sú za ňou, materiál pred ňou sa nekreslí. Stopa roviny je čiarkovane vyznačená v náryse. Rez A–A rozpisuje hĺbkovú skladbu 18 + 8 + 550 + 33 + 18 + 8 + 15 = 650 a svetlo 583 mm pre box; rez B–B šírkovú 18 + 873 + 18 + 873 + 18 = 1800
 - **kovanie** — panel so zoznamom z `cutlist.json`, tlačidlo *len kovanie* a **röntgen**, v ktorom drevo zpriehľadní a kliká sa priamo na výsuvy a kotvy. Bez toho ich vidieť nie je: výsuv je medzi bokom a boxom, kotva za chrbtom
 - **rozmery pri dieli** — po kliknutí sa okótuje priamo v scéne aj vo výkrese, nielen v tabuľke
 - **cutlist** ako tlačiteľná tabuľka z `spec/derived/cutlist.json`

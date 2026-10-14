@@ -1,27 +1,48 @@
 {
-  "generated": "2026-08-31",
+  "generated": "2026-10-14",
   "source": "spec/komoda.json",
   "warning": "GENEROVANÉ — needituj ručne. Zmeň spec a spusti npm run build.",
   "carcass": {
     "width": 1800,
-    "height": 950,
-    "depth": 782,
-    "bottomY": 100,
-    "sideHeight": 907,
+    "height": 990,
+    "depth": 632,
+    "bottomY": 60,
+    "sideHeight": 947,
     "openingWidth": 873,
-    "clearHeight": 907,
+    "clearHeight": 947,
     "dividerX": 891
   },
   "top": {
     "y0": 1025,
     "y1": 1050,
-    "depth": 800,
+    "depth": 650,
     "frontOverhang": 18
   },
   "frontZone": {
-    "height": 925,
-    "y0": 100,
+    "height": 965,
+    "y0": 60,
     "y1": 1025
+  },
+  "plinth": {
+    "height": 60,
+    "x": [
+      50,
+      1750
+    ],
+    "z": [
+      50,
+      620
+    ],
+    "y": [
+      15,
+      60
+    ],
+    "inset": {
+      "front": 50,
+      "left": 50,
+      "right": 50,
+      "rear": 30
+    }
   },
   "rows": [
     {
@@ -47,10 +68,10 @@
     },
     {
       "row": 3,
-      "frontHeight": 270,
+      "frontHeight": 310,
       "frontTopY": 370,
-      "frontBottomY": 100,
-      "boxSideHeight": 200
+      "frontBottomY": 60,
+      "boxSideHeight": 250
     }
   ],
   "columnsX": [
@@ -67,12 +88,12 @@
   ],
   "drawerBox": {
     "width": 847,
-    "depth": 700,
-    "usableDepth": 733,
-    "usableDepthBelowRail": 751,
+    "depth": 550,
+    "usableDepth": 583,
+    "usableDepthBelowRail": 601,
     "spaceZ": [
       26,
-      759
+      609
     ]
   },
   "changingPad": {

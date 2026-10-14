@@ -2,15 +2,15 @@
   "$schema": "./komoda.schema.json",
   "id": "komoda-prebalovaci-pult",
   "name": "Komoda / prebaľovací pult",
-  "version": "1.0.0",
-  "revision": "2026-08-31",
+  "version": "1.1.0",
+  "revision": "2026-10-14",
   "units": "mm",
   "note": "Toto je JEDINÝ zdroj pravdy pre geometriu. Odvodené rozmery počíta scripts/build.mjs — nezapisuj ich sem ručne.",
 
   "overall": {
     "width": 1800,
     "height": 1050,
-    "depth": 800
+    "depth": 650
   },
 
   "materials": {
@@ -61,18 +61,26 @@
     "note": "Pri drevenom dekore musí byť hrana s potlačou. Jednofarebná hrana je na dube okamžite vidieť."
   },
 
-  "legs": {
-    "height": 100,
-    "adjustable": true,
-    "adjustRangeApprox": 15,
-    "count": 6,
-    "cornerInset": 60,
-    "layout": "4 rohy + 2 pod strednou priečkou",
-    "note": "Nastaviteľnosť je na vyrovnanie podlahy (±15 mm), nie na zmenu ergonómie."
+  "plinth": {
+    "type": "frame",
+    "height": 60,
+    "material": "ldtd18",
+    "inset": { "front": 50, "left": 50, "right": 50, "rear": 30 },
+    "insetNote": "front sa meria od roviny čiel (z 0), nie od čelnej hrany korpusu. rear je odsadenie od steny, aby pod komodu vošla soklová lišta — over jej hrúbku.",
+    "floorGap": 15,
+    "middleBoard": true,
+    "levelers": {
+      "type": "rektifikačná pätka v spodnej hrane rámu",
+      "count": 6,
+      "adjustRangeApprox": 15,
+      "layout": "4 rohy rámu + 2 pod strednou priečkou",
+      "note": "Rám nesie korpus a stojí na pätkách. floorGap je ich vysunutie v strednej polohe."
+    },
+    "note": "Samostatný rám pod nezmeneným korpusom. Stredná doska rámu je pod priečkou, ktorá inak nemá oporu. Vôľa pod rámom musí byť aspoň taká ako rozsah rektifikácie, inak pri znížení pätiek dosadne rám na podlahu."
   },
 
   "carcass": {
-    "height": 950,
+    "height": 990,
     "construction": "boky stoja na dne; horná doska leží na bokoch",
     "parts": {
       "bottom": { "material": "ldtd18", "spansFullWidth": true },
@@ -81,7 +89,7 @@
       "top": {
         "material": "ldtd25",
         "width": 1800,
-        "depth": 800,
+        "depth": 650,
         "overhang": { "front": 18, "left": 0, "right": 0 },
         "note": "Presah vpredu 18 mm je nutný, aby doska lícovala s full-overlay čelami."
       },
@@ -133,8 +141,8 @@
     "width": 898,
     "centerGap": 4,
     "sideGap": 0,
-    "heights": [190, 190, 190, 270],
-    "heightsNote": "Odstupňované — spodný rad vyšší na objemné veci (plienky, deky). Vnútorná svetlosť spodnej zásuvky ~227 mm.",
+    "heights": [190, 190, 190, 310],
+    "heightsNote": "Odstupňované — spodný rad vyšší na objemné veci (plienky, deky). Vnútorná výška spodného boxu 230 mm, horných 130 mm (počíta build).",
     "grain": {
       "direction": "horizontal",
       "sequentialCut": true,
@@ -144,15 +152,15 @@
 
   "drawers": {
     "count": 8,
-    "boxDepth": 700,
+    "boxDepth": 550,
     "boxSideMaterial": "ldtd16",
     "boxBottomMaterial": "hdf10",
-    "boxSideHeights": [150, 150, 150, 200],
+    "boxSideHeights": [150, 150, 150, 250],
     "slide": {
       "mount": "side",
       "extension": "full",
       "softClose": true,
-      "length": 700,
+      "length": 550,
       "clearancePerSide": 12.7,
       "loadKg": 40,
       "note": "12,7 mm (½\") je priemyselný štandard pre bočné guličkové výsuvy. Over v datasheete pred nárezom boxov."
@@ -161,13 +169,13 @@
 
   "changingPad": {
     "width": 800,
-    "depth": 700,
+    "depth": 600,
     "thickness": null,
     "removable": true,
     "raisedSides": true,
     "alignment": { "horizontal": "center", "depth": "rear" },
     "status": "PLACEHOLDER",
-    "note": "Rozmery sú zatiaľ z výkresu, nie z reálneho produktu. Kúpiť podložku PRVÚ, potom zakótovať zónu podľa nej. Bežné podložky majú 700–850 × 500–750 mm."
+    "note": "Rozmery sú placeholder, nie reálny produkt. Pôvodných 800 × 700 z výkresu sa na dosku hlbokú 650 nezmestí. Kúpiť podložku PRVÚ (hĺbka najviac 650), potom zakótovať zónu podľa nej. Bežné podložky majú 700–850 × 500–750 mm."
   },
 
   "wallAnchor": {
@@ -190,13 +198,19 @@
     {
       "id": "gola-reveal-verify",
       "q": "Over reveal zvoleného gola profilu v montážnom návode.",
-      "impact": "Ak nie je 21/22 mm, prepočítajú sa výšky čiel (súčet musí ostať 925).",
+      "impact": "Ak nie je 21/22 mm, prepočítajú sa výšky čiel (súčet musí ostať 965).",
       "blocking": true
     },
     {
       "id": "pad-dimensions",
       "q": "Reálne rozmery a hrúbka kúpenej prebaľovacej podložky.",
       "impact": "Zóna na doske + finálna pracovná výška.",
+      "blocking": false
+    },
+    {
+      "id": "skirting",
+      "q": "Hrúbka a výška soklovej lišty na stene za komodou.",
+      "impact": "Lišta smie byť najviac 30 mm hrubá (plinth.inset.rear) a 60 mm vysoká (dno korpusu je na 60). Inak komoda nedosadne k stene — treba zväčšiť odsadenie, alebo lištu za komodou odrezať.",
       "blocking": false
     },
     {

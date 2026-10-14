@@ -99,12 +99,12 @@ function chain(bounds: number[], dir: "h" | "v", level: number): Dim[] {
 
 function dimensionsFor(view: ViewId): Dim[] {
   const T = partById("side-left")?.size[0] ?? 18;
-  const legH = partById("leg-1")?.size[1] ?? 100;
   const { rows, columnsX, carcass, top } = geometry;
+  const plinthH = carcass.bottomY;
 
   if (view === "front") {
-    // zvislá reťaz zdola: nožičky → čelá a gola škáry → doska
-    const vBounds = [0, legH];
+    // zvislá reťaz zdola: sokel → čelá a gola škáry → doska
+    const vBounds = [0, plinthH];
     for (let i = rows.length - 1; i >= 0; i--) {
       vBounds.push(rows[i].frontTopY);
       if (i > 0) vBounds.push(rows[i - 1].frontBottomY);
@@ -125,7 +125,7 @@ function dimensionsFor(view: ViewId): Dim[] {
       ...chain([0, T, ENV.depth], "h", 0),
       { dir: "h", from: boxFront, to: boxFront + boxDepth, level: 1, label: `box ${boxDepth}` },
       { dir: "h", from: 0, to: top.depth, level: 2 },
-      ...chain([0, legH, top.y0, top.y1], "v", 0),
+      ...chain([0, plinthH, top.y0, top.y1], "v", 0),
       { dir: "v", from: 0, to: ENV.height, level: 1 },
     ];
   }
@@ -152,7 +152,7 @@ function dimensionsFor(view: ViewId): Dim[] {
     if (back) hBounds.push(back.position[2] + back.size[2]);
     hBounds.push(ENV.depth);
 
-    const vBounds = [0, legH];
+    const vBounds = [0, plinthH];
     for (let i = rows.length - 1; i >= 0; i--) {
       vBounds.push(rows[i].frontTopY);
       if (i > 0) vBounds.push(rows[i - 1].frontBottomY);

@@ -61,7 +61,7 @@ export interface PartsDoc {
 
 export const doc = partsJson as unknown as PartsDoc;
 export const geometry = geometryJson as unknown as {
-  carcass: { openingWidth: number; clearHeight: number; depth: number; dividerX: number };
+  carcass: { openingWidth: number; clearHeight: number; depth: number; dividerX: number; bottomY: number };
   top: { y0: number; y1: number; depth: number; frontOverhang: number };
   drawerBox: {
     width: number;
@@ -131,14 +131,15 @@ export const GROUP_COLOR: Record<string, string> = {
   "zásuvky": "#7fae9f",
   gola: "#525c69",
   "výsuvy": "#9aa1a8",
-  "nožičky": "#9aa3ad",
+  sokel: "#6f7f91",
+  "pätky": "#9aa3ad",
   kotvenie: "#c05a44",
 };
 
-export const GROUP_ORDER = ["korpus", "čelá", "gola", "zásuvky", "výsuvy", "nožičky", "kotvenie"];
+export const GROUP_ORDER = ["korpus", "čelá", "gola", "zásuvky", "výsuvy", "sokel", "pätky", "kotvenie"];
 
 export const isMetal = (group: string) =>
-  group === "gola" || group === "výsuvy" || group === "nožičky" || group === "kotvenie";
+  group === "gola" || group === "výsuvy" || group === "pätky" || group === "kotvenie";
 
 /*
  * Dve palety. "schéma" odlišuje diely podľa funkcie — na čítanie
@@ -158,7 +159,7 @@ const DECOR_MATERIAL: Record<string, string> = {
 const DECOR_GROUP: Record<string, string> = {
   gola: "#1f2227",
   "výsuvy": "#8d949c",
-  "nožičky": "#34383f",
+  "pätky": "#34383f",
   kotvenie: "#a84f3c",
 };
 
@@ -184,17 +185,19 @@ export function countByGroup(parts: Part[]): Record<string, number> {
 
 /** Odkazy na docs/decisions.md — vysvetlenie, prečo má diel taký rozmer. */
 export const DECISION_TITLE: Record<string, string> = {
-  D1: "Full overlay čelá → korpus 782 mm",
+  D1: "Full overlay čelá → korpus 632 mm",
   D2: "Gola namiesto frézovaného úchytu",
   D3: "Reveal 21/22 mm je zvolený, nie odčítaný",
   D4: "Čelo 898 mm, stredná škára 4 mm",
-  D5: "Odstupňované výšky čiel 190/190/190/270",
-  D6: "Bočné výsuvy, box 847 mm",
+  D5: "Odstupňované výšky čiel 190/190/190/310",
+  D6: "Bočné výsuvy, box 847 × 550 mm",
   D7: "Zadná výstuha je povinná",
   D8: "Pracovná výška 1050 mm ponechaná",
   D9: "Podložka: zóna je placeholder",
   D10: "Dekor svetlý dub, dôsledky pre nárez",
   D11: "Chrbát 891 mm, drážka v priečke plytšia",
+  D12: "Hĺbka 650 mm",
+  D13: "Sokel 60 mm ako rám na rektifikačných pätkách",
 };
 
 export const DECISIONS_URL =

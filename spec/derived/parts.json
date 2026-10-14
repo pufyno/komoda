@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-31",
+  "generated": "2026-10-14",
   "source": "spec/komoda.json",
   "warning": "GENEROVANÉ — needituj ručne. Zmeň spec a spusti npm run build.",
   "units": "mm",
@@ -12,7 +12,7 @@
   "envelope": {
     "width": 1800,
     "height": 1050,
-    "depth": 800
+    "depth": 650
   },
   "note": "position = minimálny roh kvádra, size = [dx, dy, dz], center = stred (pre BoxGeometry).",
   "assumptions": [
@@ -24,10 +24,12 @@
     "Gola profil je rozdelený na lištu v škáre (z 0..18) a montážnu stenu za čelami (z 18..26); prierez 73.5 mm je zo specu, tvar J/C je zjednodušený na dva kvádre.",
     "C profil je zvislo vycentrovaný na svoju škáru (center); presné rozdelenie nad/pod škáru datasheet neuvádza.",
     "Plnovýsuv je kreslený jedným dielom za stredný člen a ide 50 % dráhy zásuvky; skriňový a zásuvkový člen model nemá.",
-    "Nožičky sú valce s odsadením cornerInset od hrán korpusu."
+    "Rektifikačné pätky sú valce Ø 25 mm pod prednou a zadnou doskou rámu, rohové 40 mm od rohu, stredné pod priečkou.",
+    "Krajné kotvy sú 60 mm od vonkajšieho boku."
   ],
   "groups": [
-    "nožičky",
+    "sokel",
+    "pätky",
     "korpus",
     "gola",
     "čelá",
@@ -44,10 +46,10 @@
       "boxSideHeight": 150,
       "inner": {
         "width": 815,
-        "depth": 668,
+        "depth": 518,
         "height": 130
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         31,
         833,
@@ -62,10 +64,10 @@
       "boxSideHeight": 150,
       "inner": {
         "width": 815,
-        "depth": 668,
+        "depth": 518,
         "height": 130
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         922,
         833,
@@ -80,10 +82,10 @@
       "boxSideHeight": 150,
       "inner": {
         "width": 815,
-        "depth": 668,
+        "depth": 518,
         "height": 130
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         31,
         622,
@@ -98,10 +100,10 @@
       "boxSideHeight": 150,
       "inner": {
         "width": 815,
-        "depth": 668,
+        "depth": 518,
         "height": 130
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         922,
         622,
@@ -116,10 +118,10 @@
       "boxSideHeight": 150,
       "inner": {
         "width": 815,
-        "depth": 668,
+        "depth": 518,
         "height": 130
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         31,
         411,
@@ -134,10 +136,10 @@
       "boxSideHeight": 150,
       "inner": {
         "width": 815,
-        "depth": 668,
+        "depth": 518,
         "height": 130
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         922,
         411,
@@ -148,17 +150,17 @@
       "id": "r4c1",
       "row": 3,
       "col": 0,
-      "frontHeight": 270,
-      "boxSideHeight": 200,
+      "frontHeight": 310,
+      "boxSideHeight": 250,
       "inner": {
         "width": 815,
-        "depth": 668,
-        "height": 180
+        "depth": 518,
+        "height": 230
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         31,
-        135,
+        90,
         26
       ]
     },
@@ -166,171 +168,295 @@
       "id": "r4c2",
       "row": 3,
       "col": 1,
-      "frontHeight": 270,
-      "boxSideHeight": 200,
+      "frontHeight": 310,
+      "boxSideHeight": 250,
       "inner": {
         "width": 815,
-        "depth": 668,
-        "height": 180
+        "depth": 518,
+        "height": 230
       },
-      "travel": 700,
+      "travel": 550,
       "openTo": [
         922,
-        135,
+        90,
         26
       ]
     }
   ],
   "parts": [
     {
-      "id": "leg-1",
-      "group": "nožičky",
-      "label": "Nastaviteľná nožička",
-      "material": null,
+      "id": "plinth-front",
+      "group": "sokel",
+      "label": "Sokel — predná doska",
+      "material": "ldtd18",
       "size": [
-        50,
-        100,
-        50
+        1700,
+        45,
+        18
       ],
       "position": [
-        35,
-        0,
-        53
-      ],
-      "center": [
-        60,
         50,
-        78
-      ],
-      "shape": "cylinder",
-      "diameter": 50,
-      "decision": "D8",
-      "hardware": true
-    },
-    {
-      "id": "leg-2",
-      "group": "nožičky",
-      "label": "Nastaviteľná nožička",
-      "material": null,
-      "size": [
-        50,
-        100,
+        15,
         50
-      ],
-      "position": [
-        35,
-        0,
-        715
-      ],
-      "center": [
-        60,
-        50,
-        740
-      ],
-      "shape": "cylinder",
-      "diameter": 50,
-      "decision": "D8",
-      "hardware": true
-    },
-    {
-      "id": "leg-3",
-      "group": "nožičky",
-      "label": "Nastaviteľná nožička",
-      "material": null,
-      "size": [
-        50,
-        100,
-        50
-      ],
-      "position": [
-        875,
-        0,
-        53
       ],
       "center": [
         900,
-        50,
-        78
+        37.5,
+        59
       ],
-      "shape": "cylinder",
-      "diameter": 50,
-      "decision": "D8",
-      "hardware": true
+      "shape": "box",
+      "decision": "D13",
+      "note": "50 mm za rovinou čiel"
     },
     {
-      "id": "leg-4",
-      "group": "nožičky",
-      "label": "Nastaviteľná nožička",
-      "material": null,
+      "id": "plinth-rear",
+      "group": "sokel",
+      "label": "Sokel — zadná doska",
+      "material": "ldtd18",
       "size": [
-        50,
-        100,
-        50
+        1700,
+        45,
+        18
       ],
       "position": [
-        875,
-        0,
-        715
+        50,
+        15,
+        602
       ],
       "center": [
         900,
-        50,
-        740
+        37.5,
+        611
       ],
-      "shape": "cylinder",
-      "diameter": 50,
-      "decision": "D8",
-      "hardware": true
+      "shape": "box",
+      "decision": "D13",
+      "note": "30 mm od steny kvôli soklovej lište"
     },
     {
-      "id": "leg-5",
-      "group": "nožičky",
-      "label": "Nastaviteľná nožička",
-      "material": null,
+      "id": "plinth-left",
+      "group": "sokel",
+      "label": "Sokel — bočná doska",
+      "material": "ldtd18",
       "size": [
-        50,
-        100,
-        50
+        18,
+        45,
+        534
       ],
       "position": [
-        1715,
-        0,
-        53
+        50,
+        15,
+        68
       ],
       "center": [
-        1740,
-        50,
-        78
+        59,
+        37.5,
+        335
       ],
-      "shape": "cylinder",
-      "diameter": 50,
-      "decision": "D8",
-      "hardware": true
+      "shape": "box",
+      "decision": "D13"
     },
     {
-      "id": "leg-6",
-      "group": "nožičky",
-      "label": "Nastaviteľná nožička",
-      "material": null,
+      "id": "plinth-right",
+      "group": "sokel",
+      "label": "Sokel — bočná doska",
+      "material": "ldtd18",
       "size": [
-        50,
-        100,
-        50
+        18,
+        45,
+        534
       ],
       "position": [
-        1715,
-        0,
-        715
+        1732,
+        15,
+        68
       ],
       "center": [
-        1740,
-        50,
-        740
+        1741,
+        37.5,
+        335
+      ],
+      "shape": "box",
+      "decision": "D13"
+    },
+    {
+      "id": "plinth-middle",
+      "group": "sokel",
+      "label": "Sokel — stredná doska",
+      "material": "ldtd18",
+      "size": [
+        18,
+        45,
+        534
+      ],
+      "position": [
+        891,
+        15,
+        68
+      ],
+      "center": [
+        900,
+        37.5,
+        335
+      ],
+      "shape": "box",
+      "decision": "D13",
+      "note": "pod strednou priečkou, ktorá inak nemá oporu"
+    },
+    {
+      "id": "leveler-1",
+      "group": "pätky",
+      "label": "Rektifikačná pätka",
+      "material": null,
+      "size": [
+        25,
+        15,
+        25
+      ],
+      "position": [
+        77.5,
+        0,
+        46.5
+      ],
+      "center": [
+        90,
+        7.5,
+        59
       ],
       "shape": "cylinder",
-      "diameter": 50,
-      "decision": "D8",
-      "hardware": true
+      "diameter": 25,
+      "decision": "D13",
+      "hardware": true,
+      "note": "±15 mm na vyrovnanie podlahy"
+    },
+    {
+      "id": "leveler-2",
+      "group": "pätky",
+      "label": "Rektifikačná pätka",
+      "material": null,
+      "size": [
+        25,
+        15,
+        25
+      ],
+      "position": [
+        77.5,
+        0,
+        598.5
+      ],
+      "center": [
+        90,
+        7.5,
+        611
+      ],
+      "shape": "cylinder",
+      "diameter": 25,
+      "decision": "D13",
+      "hardware": true,
+      "note": "±15 mm na vyrovnanie podlahy"
+    },
+    {
+      "id": "leveler-3",
+      "group": "pätky",
+      "label": "Rektifikačná pätka",
+      "material": null,
+      "size": [
+        25,
+        15,
+        25
+      ],
+      "position": [
+        887.5,
+        0,
+        46.5
+      ],
+      "center": [
+        900,
+        7.5,
+        59
+      ],
+      "shape": "cylinder",
+      "diameter": 25,
+      "decision": "D13",
+      "hardware": true,
+      "note": "±15 mm na vyrovnanie podlahy"
+    },
+    {
+      "id": "leveler-4",
+      "group": "pätky",
+      "label": "Rektifikačná pätka",
+      "material": null,
+      "size": [
+        25,
+        15,
+        25
+      ],
+      "position": [
+        887.5,
+        0,
+        598.5
+      ],
+      "center": [
+        900,
+        7.5,
+        611
+      ],
+      "shape": "cylinder",
+      "diameter": 25,
+      "decision": "D13",
+      "hardware": true,
+      "note": "±15 mm na vyrovnanie podlahy"
+    },
+    {
+      "id": "leveler-5",
+      "group": "pätky",
+      "label": "Rektifikačná pätka",
+      "material": null,
+      "size": [
+        25,
+        15,
+        25
+      ],
+      "position": [
+        1697.5,
+        0,
+        46.5
+      ],
+      "center": [
+        1710,
+        7.5,
+        59
+      ],
+      "shape": "cylinder",
+      "diameter": 25,
+      "decision": "D13",
+      "hardware": true,
+      "note": "±15 mm na vyrovnanie podlahy"
+    },
+    {
+      "id": "leveler-6",
+      "group": "pätky",
+      "label": "Rektifikačná pätka",
+      "material": null,
+      "size": [
+        25,
+        15,
+        25
+      ],
+      "position": [
+        1697.5,
+        0,
+        598.5
+      ],
+      "center": [
+        1710,
+        7.5,
+        611
+      ],
+      "shape": "cylinder",
+      "diameter": 25,
+      "decision": "D13",
+      "hardware": true,
+      "note": "±15 mm na vyrovnanie podlahy"
     },
     {
       "id": "bottom",
@@ -340,21 +466,21 @@
       "size": [
         1800,
         18,
-        782
+        632
       ],
       "position": [
         0,
-        100,
+        60,
         18
       ],
       "center": [
         900,
-        109,
-        409
+        69,
+        334
       ],
       "shape": "box",
       "decision": "D1",
-      "note": "nesie nožičky"
+      "note": "leží na ráme sokla"
     },
     {
       "id": "side-left",
@@ -363,18 +489,18 @@
       "material": "ldtd18",
       "size": [
         18,
-        907,
-        782
+        947,
+        632
       ],
       "position": [
         0,
-        118,
+        78,
         18
       ],
       "center": [
         9,
-        571.5,
-        409
+        551.5,
+        334
       ],
       "shape": "box",
       "decision": "D1"
@@ -386,18 +512,18 @@
       "material": "ldtd18",
       "size": [
         18,
-        907,
-        782
+        947,
+        632
       ],
       "position": [
         1782,
-        118,
+        78,
         18
       ],
       "center": [
         1791,
-        571.5,
-        409
+        551.5,
+        334
       ],
       "shape": "box",
       "decision": "D1"
@@ -409,18 +535,18 @@
       "material": "ldtd18",
       "size": [
         18,
-        907,
-        782
+        947,
+        632
       ],
       "position": [
         891,
-        118,
+        78,
         18
       ],
       "center": [
         900,
-        571.5,
-        409
+        551.5,
+        334
       ],
       "shape": "box",
       "note": "výrez 100 × 18 vzadu hore pre zadnú výstuhu"
@@ -433,7 +559,7 @@
       "size": [
         1800,
         25,
-        800
+        650
       ],
       "position": [
         0,
@@ -443,7 +569,7 @@
       "center": [
         900,
         1037.5,
-        400
+        325
       ],
       "shape": "box",
       "decision": "D1",
@@ -462,12 +588,12 @@
       "position": [
         18,
         925,
-        759
+        609
       ],
       "center": [
         900,
         975,
-        768
+        618
       ],
       "shape": "box",
       "decision": "D7",
@@ -480,18 +606,18 @@
       "material": "hdf8",
       "size": [
         891,
-        917,
+        957,
         8
       ],
       "position": [
         8,
-        108,
-        777
+        68,
+        627
       ],
       "center": [
         453.5,
-        566.5,
-        781
+        546.5,
+        631
       ],
       "shape": "box",
       "note": "10 mm do boku, 8 mm do priečky"
@@ -503,18 +629,18 @@
       "material": "hdf8",
       "size": [
         891,
-        917,
+        957,
         8
       ],
       "position": [
         901,
-        108,
-        777
+        68,
+        627
       ],
       "center": [
         1346.5,
-        566.5,
-        781
+        546.5,
+        631
       ],
       "shape": "box",
       "note": "10 mm do boku, 8 mm do priečky"
@@ -667,7 +793,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         31,
@@ -677,7 +803,7 @@
       "center": [
         39,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -691,7 +817,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         862,
@@ -701,7 +827,7 @@
       "center": [
         870,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -744,12 +870,12 @@
       "position": [
         47,
         833,
-        710
+        560
       ],
       "center": [
         454.5,
         908,
-        718
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -763,7 +889,7 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         39,
@@ -773,7 +899,7 @@
       "center": [
         454.5,
         848,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -788,7 +914,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         18,
@@ -798,7 +924,7 @@
       "center": [
         24.35,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -815,7 +941,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         878.3,
@@ -825,7 +951,7 @@
       "center": [
         884.65,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -868,7 +994,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         922,
@@ -878,7 +1004,7 @@
       "center": [
         930,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -892,7 +1018,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         1753,
@@ -902,7 +1028,7 @@
       "center": [
         1761,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -945,12 +1071,12 @@
       "position": [
         938,
         833,
-        710
+        560
       ],
       "center": [
         1345.5,
         908,
-        718
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -964,7 +1090,7 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         930,
@@ -974,7 +1100,7 @@
       "center": [
         1345.5,
         848,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -989,7 +1115,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         909,
@@ -999,7 +1125,7 @@
       "center": [
         915.35,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1016,7 +1142,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         1769.3,
@@ -1026,7 +1152,7 @@
       "center": [
         1775.65,
         908,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1126,7 +1252,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         31,
@@ -1136,7 +1262,7 @@
       "center": [
         39,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1150,7 +1276,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         862,
@@ -1160,7 +1286,7 @@
       "center": [
         870,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1203,12 +1329,12 @@
       "position": [
         47,
         622,
-        710
+        560
       ],
       "center": [
         454.5,
         697,
-        718
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -1222,7 +1348,7 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         39,
@@ -1232,7 +1358,7 @@
       "center": [
         454.5,
         637,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1247,7 +1373,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         18,
@@ -1257,7 +1383,7 @@
       "center": [
         24.35,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1274,7 +1400,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         878.3,
@@ -1284,7 +1410,7 @@
       "center": [
         884.65,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1327,7 +1453,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         922,
@@ -1337,7 +1463,7 @@
       "center": [
         930,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1351,7 +1477,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         1753,
@@ -1361,7 +1487,7 @@
       "center": [
         1761,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1404,12 +1530,12 @@
       "position": [
         938,
         622,
-        710
+        560
       ],
       "center": [
         1345.5,
         697,
-        718
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -1423,7 +1549,7 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         930,
@@ -1433,7 +1559,7 @@
       "center": [
         1345.5,
         637,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1448,7 +1574,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         909,
@@ -1458,7 +1584,7 @@
       "center": [
         915.35,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1475,7 +1601,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         1769.3,
@@ -1485,7 +1611,7 @@
       "center": [
         1775.65,
         697,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1585,7 +1711,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         31,
@@ -1595,7 +1721,7 @@
       "center": [
         39,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1609,7 +1735,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         862,
@@ -1619,7 +1745,7 @@
       "center": [
         870,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1662,12 +1788,12 @@
       "position": [
         47,
         411,
-        710
+        560
       ],
       "center": [
         454.5,
         486,
-        718
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -1681,7 +1807,7 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         39,
@@ -1691,7 +1817,7 @@
       "center": [
         454.5,
         426,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1706,7 +1832,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         18,
@@ -1716,7 +1842,7 @@
       "center": [
         24.35,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1733,7 +1859,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         878.3,
@@ -1743,7 +1869,7 @@
       "center": [
         884.65,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1786,7 +1912,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         922,
@@ -1796,7 +1922,7 @@
       "center": [
         930,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1810,7 +1936,7 @@
       "size": [
         16,
         150,
-        700
+        550
       ],
       "position": [
         1753,
@@ -1820,7 +1946,7 @@
       "center": [
         1761,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1863,12 +1989,12 @@
       "position": [
         938,
         411,
-        710
+        560
       ],
       "center": [
         1345.5,
         486,
-        718
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -1882,7 +2008,7 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         930,
@@ -1892,7 +2018,7 @@
       "center": [
         1345.5,
         426,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1907,7 +2033,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         909,
@@ -1917,7 +2043,7 @@
       "center": [
         915.35,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1934,7 +2060,7 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         1769.3,
@@ -1944,7 +2070,7 @@
       "center": [
         1775.65,
         486,
-        376
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -1956,21 +2082,21 @@
     {
       "id": "front-r4c1",
       "group": "čelá",
-      "label": "Čelo 270 mm",
+      "label": "Čelo 310 mm",
       "material": "ldtd18",
       "size": [
         898,
-        270,
+        310,
         18
       ],
       "position": [
         0,
-        100,
+        60,
         0
       ],
       "center": [
         449,
-        235,
+        215,
         9
       ],
       "shape": "box",
@@ -1986,18 +2112,18 @@
       "material": "ldtd16",
       "size": [
         16,
-        200,
-        700
+        250,
+        550
       ],
       "position": [
         31,
-        135,
+        90,
         26
       ],
       "center": [
         39,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2010,18 +2136,18 @@
       "material": "ldtd16",
       "size": [
         16,
-        200,
-        700
+        250,
+        550
       ],
       "position": [
         862,
-        135,
+        90,
         26
       ],
       "center": [
         870,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2034,17 +2160,17 @@
       "material": "ldtd16",
       "size": [
         815,
-        200,
+        250,
         16
       ],
       "position": [
         47,
-        135,
+        90,
         26
       ],
       "center": [
         454.5,
-        235,
+        215,
         34
       ],
       "shape": "box",
@@ -2058,18 +2184,18 @@
       "material": "ldtd16",
       "size": [
         815,
-        200,
+        250,
         16
       ],
       "position": [
         47,
-        135,
-        710
+        90,
+        560
       ],
       "center": [
         454.5,
-        235,
-        718
+        215,
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -2083,17 +2209,17 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         39,
-        145,
+        100,
         34
       ],
       "center": [
         454.5,
-        150,
-        376
+        105,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2108,17 +2234,17 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         18,
-        212.5,
+        192.5,
         26
       ],
       "center": [
         24.35,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2135,17 +2261,17 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         878.3,
-        212.5,
+        192.5,
         26
       ],
       "center": [
         884.65,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2157,21 +2283,21 @@
     {
       "id": "front-r4c2",
       "group": "čelá",
-      "label": "Čelo 270 mm",
+      "label": "Čelo 310 mm",
       "material": "ldtd18",
       "size": [
         898,
-        270,
+        310,
         18
       ],
       "position": [
         902,
-        100,
+        60,
         0
       ],
       "center": [
         1351,
-        235,
+        215,
         9
       ],
       "shape": "box",
@@ -2187,18 +2313,18 @@
       "material": "ldtd16",
       "size": [
         16,
-        200,
-        700
+        250,
+        550
       ],
       "position": [
         922,
-        135,
+        90,
         26
       ],
       "center": [
         930,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2211,18 +2337,18 @@
       "material": "ldtd16",
       "size": [
         16,
-        200,
-        700
+        250,
+        550
       ],
       "position": [
         1753,
-        135,
+        90,
         26
       ],
       "center": [
         1761,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2235,17 +2361,17 @@
       "material": "ldtd16",
       "size": [
         815,
-        200,
+        250,
         16
       ],
       "position": [
         938,
-        135,
+        90,
         26
       ],
       "center": [
         1345.5,
-        235,
+        215,
         34
       ],
       "shape": "box",
@@ -2259,18 +2385,18 @@
       "material": "ldtd16",
       "size": [
         815,
-        200,
+        250,
         16
       ],
       "position": [
         938,
-        135,
-        710
+        90,
+        560
       ],
       "center": [
         1345.5,
-        235,
-        718
+        215,
+        568
       ],
       "shape": "box",
       "decision": "D6",
@@ -2284,17 +2410,17 @@
       "size": [
         831,
         10,
-        684
+        534
       ],
       "position": [
         930,
-        145,
+        100,
         34
       ],
       "center": [
         1345.5,
-        150,
-        376
+        105,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2309,17 +2435,17 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         909,
-        212.5,
+        192.5,
         26
       ],
       "center": [
         915.35,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2336,17 +2462,17 @@
       "size": [
         12.7,
         45,
-        700
+        550
       ],
       "position": [
         1769.3,
-        212.5,
+        192.5,
         26
       ],
       "center": [
         1775.65,
-        235,
-        376
+        215,
+        301
       ],
       "shape": "box",
       "decision": "D6",
@@ -2368,12 +2494,12 @@
       "position": [
         55,
         975,
-        759
+        609
       ],
       "center": [
         60,
         980,
-        768
+        618
       ],
       "shape": "cylinder",
       "axis": "z",
@@ -2395,12 +2521,12 @@
       "position": [
         846,
         975,
-        759
+        609
       ],
       "center": [
         851,
         980,
-        768
+        618
       ],
       "shape": "cylinder",
       "axis": "z",
@@ -2422,12 +2548,12 @@
       "position": [
         1735,
         975,
-        759
+        609
       ],
       "center": [
         1740,
         980,
-        768
+        618
       ],
       "shape": "cylinder",
       "axis": "z",
@@ -2463,7 +2589,7 @@
       "b": "back-1",
       "overlap": [
         10,
-        907,
+        947,
         8
       ],
       "reason": "chrbát v drážke v boku"
@@ -2513,7 +2639,7 @@
       "b": "back-2",
       "overlap": [
         10,
-        907,
+        947,
         8
       ],
       "reason": "chrbát v drážke v boku"
@@ -2573,7 +2699,7 @@
       "b": "back-1",
       "overlap": [
         8,
-        907,
+        947,
         8
       ],
       "reason": "chrbát v plytšej drážke v priečke"
@@ -2583,7 +2709,7 @@
       "b": "back-2",
       "overlap": [
         8,
-        907,
+        947,
         8
       ],
       "reason": "chrbát v plytšej drážke v priečke"
@@ -2664,7 +2790,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2674,7 +2800,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2704,7 +2830,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2714,7 +2840,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2744,7 +2870,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2754,7 +2880,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2784,7 +2910,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2794,7 +2920,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2824,7 +2950,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2834,7 +2960,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2864,7 +2990,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2874,7 +3000,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2904,7 +3030,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2914,7 +3040,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2944,7 +3070,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },
@@ -2954,7 +3080,7 @@
       "overlap": [
         8,
         10,
-        684
+        534
       ],
       "reason": "dno boxu v drážke boku"
     },

@@ -4,7 +4,7 @@
   "title": "Komoda — parametrický spec nábytku",
   "description": "Štruktúra zdroja pravdy. Aritmetické invarianty (súčty, lícovanie) kontroluje scripts/build.mjs — JSON Schema ich vyjadriť nevie.",
   "type": "object",
-  "required": ["id", "version", "units", "overall", "materials", "legs", "carcass", "gola", "fronts", "drawers", "wallAnchor"],
+  "required": ["id", "version", "units", "overall", "materials", "plinth", "carcass", "gola", "fronts", "drawers", "wallAnchor"],
   "additionalProperties": true,
 
   "$defs": {
@@ -67,16 +67,39 @@
       "additionalProperties": false
     },
 
-    "legs": {
+    "plinth": {
       "type": "object",
-      "required": ["height", "count"],
+      "required": ["type", "height", "material", "inset", "floorGap", "levelers"],
       "properties": {
+        "type": { "const": "frame" },
         "height": { "$ref": "#/$defs/mm" },
-        "adjustable": { "type": "boolean" },
-        "adjustRangeApprox": { "$ref": "#/$defs/mm" },
-        "count": { "type": "integer", "minimum": 4, "maximum": 12 },
-        "cornerInset": { "$ref": "#/$defs/mm" },
-        "layout": { "type": "string" },
+        "material": { "$ref": "#/$defs/materialRef" },
+        "inset": {
+          "type": "object",
+          "required": ["front", "left", "right", "rear"],
+          "properties": {
+            "front": { "type": "number", "minimum": 0 },
+            "left": { "type": "number", "minimum": 0 },
+            "right": { "type": "number", "minimum": 0 },
+            "rear": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "insetNote": { "type": "string" },
+        "floorGap": { "type": "number", "minimum": 0 },
+        "middleBoard": { "type": "boolean" },
+        "levelers": {
+          "type": "object",
+          "required": ["count", "adjustRangeApprox"],
+          "properties": {
+            "type": { "type": "string" },
+            "count": { "type": "integer", "minimum": 4, "maximum": 12 },
+            "adjustRangeApprox": { "$ref": "#/$defs/mm" },
+            "layout": { "type": "string" },
+            "note": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
         "note": { "type": "string" }
       },
       "additionalProperties": false

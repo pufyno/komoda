@@ -1,4 +1,4 @@
-import { cutlist, doc } from "../data";
+import { cutlist, doc, ENV } from "../data";
 
 const MATERIAL_LABEL: Record<string, string> = {
   ldtd25: "LDTD 25",
@@ -17,7 +17,7 @@ export default function Cutlist() {
       <header>
         <h2>Nárezový plán</h2>
         <p>
-          Komoda 1800 × 1050 × 800 mm · {totalPieces} kusov · generované {cutlist.generated}
+          Komoda {ENV.width} × {ENV.height} × {ENV.depth} mm · {totalPieces} kusov · generované {cutlist.generated}
           <br />
           Rozmery v mm, dĺžka × šírka. Hrany ABS 2 mm s potlačou v dekore.
         </p>

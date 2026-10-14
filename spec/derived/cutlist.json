@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-31",
+  "generated": "2026-10-14",
   "source": "spec/komoda.json",
   "warning": "GENEROVANÉ — needituj ručne. Zmeň spec a spusti npm run build.",
   "parts": [
@@ -8,17 +8,17 @@
       "name": "Dno",
       "qty": 1,
       "length": 1800,
-      "width": 782,
+      "width": 632,
       "thickness": 18,
       "material": "ldtd18",
-      "note": "nesie nožičky"
+      "note": "leží na ráme sokla"
     },
     {
       "group": "korpus",
       "name": "Bok",
       "qty": 2,
-      "length": 907,
-      "width": 782,
+      "length": 947,
+      "width": 632,
       "thickness": 18,
       "material": "ldtd18",
       "note": "stojí na dne"
@@ -27,8 +27,8 @@
       "group": "korpus",
       "name": "Stredná priečka",
       "qty": 1,
-      "length": 907,
-      "width": 782,
+      "length": 947,
+      "width": 632,
       "thickness": 18,
       "material": "ldtd18",
       "note": ""
@@ -38,7 +38,7 @@
       "name": "Horná doska",
       "qty": 1,
       "length": 1800,
-      "width": 800,
+      "width": 650,
       "thickness": 25,
       "material": "ldtd25",
       "note": "presah vpredu 18 mm"
@@ -57,11 +57,41 @@
       "group": "korpus",
       "name": "Chrbát",
       "qty": 2,
-      "length": 917,
+      "length": 957,
       "width": 891,
       "thickness": 8,
       "material": "hdf8",
       "note": "drážka 8 mm; 10 do boku, 8 do priečky"
+    },
+    {
+      "group": "sokel",
+      "name": "Predná/zadná doska sokla",
+      "qty": 2,
+      "length": 1700,
+      "width": 45,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "predná odsadená 50 mm za rovinu čiel, ABS na viditeľných hranách"
+    },
+    {
+      "group": "sokel",
+      "name": "Bočná doska sokla",
+      "qty": 2,
+      "length": 534,
+      "width": 45,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "medzi prednou a zadnou"
+    },
+    {
+      "group": "sokel",
+      "name": "Stredná doska sokla",
+      "qty": 1,
+      "length": 534,
+      "width": 45,
+      "thickness": 18,
+      "material": "ldtd18",
+      "note": "pod strednou priečkou"
     },
     {
       "group": "čelá",
@@ -75,10 +105,10 @@
     },
     {
       "group": "čelá",
-      "name": "Čelo 270 mm",
+      "name": "Čelo 310 mm",
       "qty": 2,
       "length": 898,
-      "width": 270,
+      "width": 310,
       "thickness": 18,
       "material": "ldtd18",
       "note": "ABS 2 mm dookola"
@@ -87,7 +117,7 @@
       "group": "zásuvky",
       "name": "Bok boxu (rad 1)",
       "qty": 4,
-      "length": 700,
+      "length": 550,
       "width": 150,
       "thickness": 16,
       "material": "ldtd16",
@@ -108,7 +138,7 @@
       "name": "Dno boxu (rad 1)",
       "qty": 2,
       "length": 831,
-      "width": 684,
+      "width": 534,
       "thickness": 10,
       "material": "hdf10",
       "note": ""
@@ -117,7 +147,7 @@
       "group": "zásuvky",
       "name": "Bok boxu (rad 2)",
       "qty": 4,
-      "length": 700,
+      "length": 550,
       "width": 150,
       "thickness": 16,
       "material": "ldtd16",
@@ -138,7 +168,7 @@
       "name": "Dno boxu (rad 2)",
       "qty": 2,
       "length": 831,
-      "width": 684,
+      "width": 534,
       "thickness": 10,
       "material": "hdf10",
       "note": ""
@@ -147,7 +177,7 @@
       "group": "zásuvky",
       "name": "Bok boxu (rad 3)",
       "qty": 4,
-      "length": 700,
+      "length": 550,
       "width": 150,
       "thickness": 16,
       "material": "ldtd16",
@@ -168,7 +198,7 @@
       "name": "Dno boxu (rad 3)",
       "qty": 2,
       "length": 831,
-      "width": 684,
+      "width": 534,
       "thickness": 10,
       "material": "hdf10",
       "note": ""
@@ -177,8 +207,8 @@
       "group": "zásuvky",
       "name": "Bok boxu (rad 4)",
       "qty": 4,
-      "length": 700,
-      "width": 200,
+      "length": 550,
+      "width": 250,
       "thickness": 16,
       "material": "ldtd16",
       "note": ""
@@ -188,7 +218,7 @@
       "name": "Predok/zadok boxu (rad 4)",
       "qty": 4,
       "length": 815,
-      "width": 200,
+      "width": 250,
       "thickness": 16,
       "material": "ldtd16",
       "note": ""
@@ -198,7 +228,7 @@
       "name": "Dno boxu (rad 4)",
       "qty": 2,
       "length": 831,
-      "width": 684,
+      "width": 534,
       "thickness": 10,
       "material": "hdf10",
       "note": ""
@@ -220,14 +250,14 @@
     {
       "item": "Bočný plnovýsuv s tlmením",
       "qty": "8 párov",
-      "length": 700,
+      "length": 550,
       "note": "12.7 mm/stranu, 40 kg"
     },
     {
-      "item": "Nastaviteľná nožička",
+      "item": "Rektifikačná pätka",
       "qty": 6,
-      "length": 100,
-      "note": "4 rohy + 2 pod strednou priečkou"
+      "length": null,
+      "note": "rektifikačná pätka v spodnej hrane rámu; 4 rohy rámu + 2 pod strednou priečkou, vysunutie 15 mm, rozsah ±15 mm"
     },
     {
       "item": "Hmoždinka do tehly",

@@ -98,22 +98,24 @@ describe("typické chybné opravy (.claude/CLAUDE.md)", () => {
     expectFail((s) => { s.gola.top.reveal = 21; }, /zóna čiel/);
   });
 
-  test("zrovnanie čiel na 4 × 210 zoberie jedinú hlbokú zásuvku", () => {
-    // Súčet 840 + 85 = 925 sedí, takže sumu to prejde — chytiť to musí
+  test("zrovnanie čiel na 4 × 220 zoberie jedinú hlbokú zásuvku", () => {
+    // Súčet 880 + 85 = 965 sedí, takže sumu to prejde — chytiť to musí
     // invariant o odstupňovaní (D5).
-    expectFail((s) => { s.fronts.heights = [210, 210, 210, 210]; }, /spodný rad je najvyšší/);
+    expectFail((s) => { s.fronts.heights = [220, 220, 220, 220]; }, /spodný rad je najvyšší/);
   });
 
   test("predĺženie boxu za zadnú výstuhu prekročí využiteľnú hĺbku", () => {
-    // Medzi zadnou rovinou gola profilu (z 26) a výstuhou (z 759) je 733 mm.
-    expectFail((s) => { s.drawers.boxDepth = 760; }, /hĺbka na výsuv/);
+    // Medzi zadnou rovinou gola profilu (z 26) a výstuhou (z 609) je 583 mm.
+    // Najbližší dlhší výsuv v katalógu je 600.
+    expectFail((s) => { s.drawers.boxDepth = 600; s.drawers.slide.length = 600; }, /hĺbka na výsuv/);
   });
 
-  test("hranica 733 mm je presná — 733 ešte prejde, 734 už nie", () => {
-    // Ak by invariant hlásil viac než 733, prvý rad by narazil do výstuhy
+  test("hranica 583 mm je presná — 583 ešte prejde, 584 už nie", () => {
+    // Ak by invariant hlásil viac než 583, prvý rad by narazil do výstuhy
     // a odhalila by to až kolízna kontrola. Obe hranice musia sedieť.
-    assert.equal(run(BUILD, (s) => { s.drawers.boxDepth = 733; }).code, 0);
-    expectFail((s) => { s.drawers.boxDepth = 734; }, /hĺbka na výsuv/);
+    const box = (d) => (s) => { s.drawers.boxDepth = d; s.drawers.slide.length = d; };
+    assert.equal(run(BUILD, box(583)).code, 0);
+    expectFail(box(584), /hĺbka na výsuv/);
   });
 
   test("wallAnchor.required: false neprejde schémou", () => {
@@ -121,8 +123,53 @@ describe("typické chybné opravy (.claude/CLAUDE.md)", () => {
   });
 });
 
+describe("zmena hĺbky", () => {
+  test("zmena hĺbky obálky bez zmeny dosky", () => {
+    // Presne tá chyba, ktorá hrozí pri zmenšení komody: overall.depth sa zmení,
+    // carcass.parts.top.depth ostane na pôvodnej hodnote.
+    expectFail((s) => { s.overall.depth = 600; }, /doska = hĺbka obálky/);
+  });
+
+  test("kratší box bez kratšieho výsuvu", () => {
+    expectFail((s) => { s.drawers.boxDepth = 500; }, /výsuv = hĺbka boxu/);
+  });
+
+  test("podložka z pôvodného výkresu (800 × 700) sa na dosku 650 nezmestí", () => {
+    expectFail((s) => { s.changingPad.depth = 700; }, /podložka sa zmestí na dosku/);
+  });
+});
+
+describe("sokel", () => {
+  test("rám nižšie nad podlahou než rozsah rektifikácie", () => {
+    // Pri znížení nožičiek by rám dosadol na podlahu skôr než ony.
+    expectFail((s) => { s.plinth.floorGap = 10; }, /vôľa pod soklom/);
+  });
+
+  test("rám zapustený zboku až za priečku narazí do strednej dosky", () => {
+    // Stredná doska stojí pod priečkou na pevnom mieste, bočná ide s odsadením.
+    // Chytiť to musí kolízna kontrola — samostatný invariant na to nie je.
+    expectFail((s) => { s.plinth.inset.left = 885; }, /plinth-left × plinth-middle/);
+  });
+
+  test("stredná doska rámu je presne pod priečkou", () => {
+    // Rám nesie korpus. Priečka nesie polovicu zásuviek a bez dosky pod
+    // sebou by ťahala dno korpusu do priehybu.
+    const r = run(BUILD, null);
+    const parts = JSON.parse(readFileSync(join(r.outDir, "parts.json"), "utf8")).parts;
+    const mid = parts.find((p) => p.id === "plinth-middle");
+    const div = parts.find((p) => p.id === "divider");
+    assert.equal(mid.position[0], div.position[0]);
+    assert.equal(mid.size[0], div.size[0]);
+    assert.equal(mid.position[1] + mid.size[1], parts.find((p) => p.id === "bottom").position[1]);
+  });
+
+  test("rám vytŕča zboku z obálky", () => {
+    expectFail((s) => { s.plinth.inset.left = -20; }, /inset|minimum/, SCHEMA);
+  });
+});
+
 describe("zvislá a vodorovná skladba", () => {
-  test("zmena výšky korpusu bez zmeny nožičiek", () => {
+  test("zmena výšky korpusu bez zmeny sokla", () => {
     expectFail((s) => { s.carcass.height = 900; }, /celková výška/);
   });
 
@@ -142,8 +189,9 @@ describe("zvislá a vodorovná skladba", () => {
 });
 
 describe("kolízie a obálka", () => {
-  test("hlbší korpus než obálka vysunie diely von", () => {
-    expectFail((s) => { s.overall.depth = 700; }, /všetky diely v obálke|box sa zmestí|hĺbka na výsuv/);
+  test("plytšia komoda s pôvodným boxom", () => {
+    expectFail((s) => { s.overall.depth = 550; s.carcass.parts.top.depth = 550; },
+      /všetky diely v obálke|box sa zmestí|hĺbka na výsuv/);
   });
 
   test("hlbší gola profil zareže do boxu", () => {

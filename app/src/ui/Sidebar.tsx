@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, geometry, spec, cutlist, GROUP_COLOR, GROUP_ORDER, countByGroup, type Palette } from "../data";
+import { doc, geometry, spec, cutlist, ENV, GROUP_COLOR, GROUP_ORDER, countByGroup, type Palette } from "../data";
 import { SECTION, VIEW_LABEL, type SectionId } from "../views/Drawing";
 
 interface Props {
@@ -45,7 +45,7 @@ export default function Sidebar({
       </h1>
 
       <p className="dims">
-        1800 × 1050 × 800 mm · 8 zásuviek · gola
+        {ENV.width} × {ENV.height} × {ENV.depth} mm · {doc.drawers.length} zásuviek · gola
       </p>
 
       <section>
